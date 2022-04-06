@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Manager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ManagerController extends Controller
 {
@@ -14,7 +15,9 @@ class ManagerController extends Controller
      */
     public function index()
     {
-        //
+        $managers = Manager::all();
+        // return $users;
+        return view('admin.managers.index',compact('managers'));
     }
 
     /**
@@ -24,7 +27,7 @@ class ManagerController extends Controller
      */
     public function create()
     {
-        //
+       return view('admin.managers.create');
     }
 
     /**
@@ -35,7 +38,19 @@ class ManagerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->validate([
+            'name'=> 'required|string|max:255',
+            'email'=> 'required| email| max:255',
+            'password'=> 'required',
+        ]);
+        $manager = Manager::create([
+            'name'=> $input['name'],
+            'email'=> $input['email'],
+            'password'=> Hash::make($input['password']) ,
+        ]);
+        session()->flash('manager_created');
+
+        return redirect(route('Managers.index'));
     }
 
     /**
@@ -55,9 +70,11 @@ class ManagerController extends Controller
      * @param  \App\Models\Manager  $manager
      * @return \Illuminate\Http\Response
      */
-    public function edit(Manager $manager)
+    public function edit($id)
     {
-        //
+        $manager = Manager::find($id);
+        
+       return view('admin.managers.edit',compact('manager'));
     }
 
     /**
@@ -67,9 +84,24 @@ class ManagerController extends Controller
      * @param  \App\Models\Manager  $manager
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Manager $manager)
+    public function update(Request $request,  $id)
     {
-        //
+        $manager = Manager::find($id);
+        $input = $request->validate([
+            'name'=> 'required|string|max:255',
+            'email'=> 'required| email| max:255',
+            
+        ]);
+        $manager->name =$input['name']; 
+        $manager->email =$input['email']; 
+        if ($request['password'] !==null) {
+            
+            $manager->password = Hash::make($request['password']); 
+        }
+        $manager ->save();
+        session()->flash('manager_updated');
+
+        return back();
     }
 
     /**
@@ -78,8 +110,11 @@ class ManagerController extends Controller
      * @param  \App\Models\Manager  $manager
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Manager $manager)
+    public function destroy( $id)
     {
-        //
+        $manager = Manager::find($id);
+        $manager->delete();
+        session()->flash('manager_deleted');
+        return back();
     }
 }

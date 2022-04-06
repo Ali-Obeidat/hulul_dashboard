@@ -9,26 +9,33 @@
 
 
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Manage Users /</span> View All Users
+            <span class="text-muted fw-light">Manage Managers /</span> View All Managers
         </h4>
 
         <!-- Ajax Sourced Server-side -->
         <div class="card">
-            <h5 class="card-header">Users Table</h5>
-            @if(Session('user_deleted'))
+            <h5 class="card-header">Managers Table</h5>
+            @if(Session('manager_deleted'))
             <div class="alert alert-danger alert-dismissible col-6" role="alert">
-                <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">User Deleted!!</h6>
-                <p class="mb-0">Aww yeah, you successfully Deleted the user.</p>
+                <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">Managers Deleted!!</h6>
+                <p class="mb-0">Aww yeah, you successfully Deleted the managers.</p>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                 </button>
             </div>
             @elseif(Session('user_updated'))
             <div class="alert alert-primary alert-dismissible" role="alert">
-                <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">Edit User</h6>
-                <p class="mb-0">You successfully Edited the user.</p>
+                <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">Edit Manager</h6>
+                <p class="mb-0">You successfully Edited the managers.</p>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                 </button>
             </div>
+            @elseif(Session('manager_created'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+          <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">Well done :)</h6>
+          <p class="mb-0">You successfully Create manager.</p>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+          </button>
+        </div>
             @endif
             <div class="card-datatable text-nowrap">
                 <table id="example" class="table table-striped" style="width:100%">
@@ -37,32 +44,28 @@
                             <th>#id</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Phone</th>
-                            <th>type</th>
-                            <th>country</th>
+                            <th>Role</th>
                             <th>Created at</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($users as $user)
+                        @foreach($managers as $manager)
                         <tr>
-                            <td>{{$user->id}}</td>
-                            <td>{{$user->name}}</td>
-                            <td>{{$user->email}}</td>
-                            <td>{{$user->Phone}}</td>
-                            <td>{{$user->type}}</td>
-                            <td>{{$user->country}}</td>
-                            <td>{{$user->created_at}}</td>
+                            <td>{{$manager->id}}</td>
+                            <td>{{$manager->name}}</td>
+                            <td>{{$manager->email}}</td>
+                            <td>{{$manager->role}}</td>
+                            <td>{{$manager->created_at}}</td>
 
                             <td>
-                                <a href="{{route('users.edit',$user->id)}}">
+                                <a href="{{route('Managers.edit',$manager->id)}}">
                                     <button type="button" class="btn rounded-pill btn-label-info">Edit</button>
                                 </a>
                             </td>
                             <td>
-                                <form action="{{route('users.destroy',$user->id)}}" method="post">
+                                <form action="{{route('Managers.destroy',$manager->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn rounded-pill btn-label-danger">Delete</button>
@@ -77,12 +80,10 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>#id</th>
+                        <th>#id</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Phone</th>
-                            <th>type</th>
-                            <th>country</th>
+                            <th>Role</th>
                             <th>Created at</th>
                             <th>Edit</th>
                             <th>Delete</th>
