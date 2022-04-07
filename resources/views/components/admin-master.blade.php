@@ -266,49 +266,41 @@
           </li>
           <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons bx bx-user"></i>
-              <div data-i18n="Users">Users</div>
+              <i class='menu-icon tf-icons bx bx-check-shield'></i>
+              <div data-i18n="Manage Requests">Manage Requests</div>
             </a>
             <ul class="menu-sub">
               <li class="menu-item">
-                <a href="app-user-list.html" class="menu-link">
-                  <div data-i18n="List">List</div>
+                <a href="{{route('UsersRequests.index')}}" class="menu-link">
+                  <div data-i18n="Deposit & Withdraw">Deposit & Withdraw </div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                  <div data-i18n="View">View</div>
+                <a href="{{route('usersDocuments.index')}}" class="menu-link">
+                  <div data-i18n="usersDocuments">usersDocuments</div>
                 </a>
-                <ul class="menu-sub">
-                  <li class="menu-item">
-                    <a href="app-user-view-account.html" class="menu-link">
-                      <div data-i18n="Account">Account</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a href="app-user-view-security.html" class="menu-link">
-                      <div data-i18n="Security">Security</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a href="app-user-view-billing.html" class="menu-link">
-                      <div data-i18n="Billing & Plans">Billing & Plans</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a href="app-user-view-notifications.html" class="menu-link">
-                      <div data-i18n="Notifications">Notifications</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a href="app-user-view-connections.html" class="menu-link">
-                      <div data-i18n="Connections">Connections</div>
-                    </a>
-                  </li>
-                </ul>
               </li>
             </ul>
           </li>
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+              <div data-i18n="Manager Emails">Manager Emails</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item">
+                <a href="{{route('ManagerEmails.create')}}" class="menu-link">
+                  <div data-i18n="Send New Email">Send New Email</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="{{route('ManagerEmails.index')}}" class="menu-link">
+                  <div data-i18n="View All Emails">View All Emails</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+      
           <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
               <i class='menu-icon tf-icons bx bx-check-shield'></i>

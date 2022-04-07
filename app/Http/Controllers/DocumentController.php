@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DocumentStatus;
 use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DocumentController extends Controller
 {
@@ -14,7 +17,10 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        //
+        // $usersDocuments = Document::with('user')-> where('document_status','processing')->orderBy('created_at','desc')->get();
+        $usersDocuments = Document::with('user')->orderBy('created_at','desc')->get();
+        // return $usersDocuments[0]->user->name;
+        return view('admin.requests.usersDocuments',compact('usersDocuments'));
     }
 
     /**
@@ -67,9 +73,32 @@ class DocumentController extends Controller
      * @param  \App\Models\Document  $document
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Document $document)
+    public function update(Request $request,  $id)
     {
-        //
+        
+        $document = Document::find($id);
+        // return $document->user->email;
+        if ($request->document_status === 'accepted' ) {
+            $document->document_status = $request->document_status;
+            $document->save();
+        Alert::success('Document Status', 'The Document was '.$request->document_status );
+
+            // return $document;
+        }elseif ($request->document_status === 'rejected') {
+            $document->document_status = $request->document_status;
+            $document->save();
+        Alert::error('Document Status', 'The Document was '.$request->document_status );
+
+        }
+        
+        try {
+            Mail::to($document->user->email)->send(new DocumentStatus($request->document_status));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        
+        
+        return back();
     }
 
     /**
