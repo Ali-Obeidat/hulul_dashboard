@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
+use App\Models\Bonus;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class BonusController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Application|Factory|View
+     * @return \Illuminate\Http\Response
      */
-    public function index(): View|Factory|Application
+    public function index()
     {
-        $users = User::all();
-        return view('admin.users.index',compact('users'));
+        //
     }
 
     /**
@@ -45,10 +41,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Bonus  $bonus
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Bonus $bonus)
     {
         //
     }
@@ -56,10 +52,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Bonus  $bonus
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Bonus $bonus)
     {
         //
     }
@@ -68,10 +64,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Bonus  $bonus
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Bonus $bonus)
     {
         //
     }
@@ -79,10 +75,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Bonus  $bonus
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Bonus $bonus)
     {
         //
     }
