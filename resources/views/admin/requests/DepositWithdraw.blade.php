@@ -14,14 +14,24 @@
 
         <!-- Ajax Sourced Server-side -->
         <div class="card">
-            <h5 class="card-header">Users Table</h5>
+            <h5 class="card-header">Deposit & Withdraw Requests Table</h5>
+            <form action="/api/UsersRequests/filter" method="get">
+                
+            <div class="mb-3" hidden>
+          <label for="exampleFormControlSelect1" class="form-label">Deposit & Withdraw Filter</label>
+          <select name="agreed" onchange="this.form.submit()" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
+            <option @if(!empty($requestStatus)) @if($requestStatus == 'all') selected @endif @endif value="all" >all</option>
+            <option @if(!empty($requestStatus)) @if($requestStatus == 'Accept') selected @endif  @endif value="Accept">Accepted</option>
+            <option @if(!empty($requestStatus)) @if($requestStatus == 'Reject') selected @endif  @endif value="Reject">Rejected</option>
+          </select>
+        </div>
+        </form>
             @if(Session('user_deleted'))
             <div class="alert alert-danger alert-dismissible col-6" role="alert">
                 <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">User Deleted!!</h6>
                 <p class="mb-0">Aww yeah, you successfully Deleted the user.</p>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                 </button>
-
             </div>
             @elseif(Session('user_updated'))
             <div class="alert alert-primary alert-dismissible" role="alert">
@@ -35,38 +45,40 @@
                 <table id="example" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th>#id</th>
+                            <th>#</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>type</th>
-                            <th>country</th>
-                            <th>Created at</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>amount</th>
+                            <th>User Login</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Accept</th>
+                            <th>Reject</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($users as $user)
+                        @foreach($Deposit_Withdraw as $value)
                         <tr>
-                            <td>{{$user->id}}</td>
-                            <td>{{$user->name}}</td>
-                            <td>{{$user->email}}</td>
-                            <td>{{$user->Phone}}</td>
-                            <td>{{$user->type}}</td>
-                            <td>{{$user->country}}</td>
-                            <td>{{$user->created_at}}</td>
-
+                            <th scope="row">{{$value->id}}</th>
+                            <td>{{$value->user->name}}</td>
+                            <td>{{$value->Amount}}</td>
+                            <td>{{$value->user_login}}</td>
+                            <td> @if($value->agreed == null ) being reviewed  @else {{$value->agreed}} @endif</td>
+                            <td>{{$value->date}}</td>
                             <td>
-                                <a href="{{route('users.edit',$user->id)}}">
-                                    <button type="button" class="btn rounded-pill btn-label-info">Edit</button>
-                                </a>
+
+                                <form method="post" action="{{route('UsersRequests.update',$value->id)}}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input hidden type="text" name="agreed" value="Accepted">
+                                    <button @if($value->agreed !== null && $value->agreed == 'Accepted' ) disabled @endif class="btn btn-primary">Accept</button>
+                                </form>
                             </td>
                             <td>
-                                <form action="{{route('users.destroy',$user->id)}}" method="post">
+                                <form method="post" action="{{route('UsersRequests.update',$value->id)}}">
                                     @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn rounded-pill btn-label-danger">Delete</button>
+                                    @method('PUT')
+                                    <input hidden type="text" name="agreed" value="Rejected">
+                                    <button @if($value->agreed !== null && $value->agreed == 'Rejected' ) disabled @endif class="btn btn-danger">Reject</button>
                                 </form>
                             </td>
                         </tr>
@@ -74,24 +86,27 @@
 
 
 
-
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>#id</th>
+                            <th>#</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>type</th>
-                            <th>country</th>
-                            <th>Created at</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>amount</th>
+                            <th>User Login</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Accept</th>
+                            <th>Reject</th>
                         </tr>
                     </tfoot>
                 </table>
                 </table>
             </div>
+
+
+
+
+
         </div>
 
         @endsection

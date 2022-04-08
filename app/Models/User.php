@@ -50,8 +50,8 @@ class User extends Authenticatable
         return $this->hasOne(Quc::class);
         
     }
-    public function accounts(){
-        return $this->hasMany(UserAccounts::class);
+    public function requests(){
+        return $this->hasMany(UserRequest::class);
         
     }
     public function documents(){

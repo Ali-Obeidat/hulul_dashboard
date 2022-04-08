@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AgreeddEmail;
+use App\Models\User;
 use App\Models\UserAccounts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UserAccountsController extends Controller
 {
@@ -14,7 +17,24 @@ class UserAccountsController extends Controller
      */
     public function index()
     {
-        //
+        $Deposit_Withdraw = UserAccounts::with('user')->get();
+        // return $Deposit_Withdraw  ;
+        return view('admin.requests.DepositWithdraw', compact('Deposit_Withdraw'));
+    }
+
+
+    public function DepositWithdrawFilter(Request $request)
+    {
+        $requestStatus = $request['agreed'];
+        // return 'asdasdsad';
+        if ($requestStatus == 'all') {
+            $Deposit_Withdraw = UserAccounts::with('user')->get();
+            // return $Deposit_Withdraw  ;
+            return view('admin.requests.DepositWithdraw', compact('Deposit_Withdraw', 'requestStatus'));
+        }
+        $Deposit_Withdraw = UserAccounts::with('user')->where('agreed', $requestStatus)->get();
+        // return $Deposit_Withdraw  ;
+        return view('admin.requests.DepositWithdraw', compact('Deposit_Withdraw', 'requestStatus'));
     }
 
     /**
@@ -67,9 +87,22 @@ class UserAccountsController extends Controller
      * @param  \App\Models\UserAccounts  $userAccounts
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UserAccounts $userAccounts)
+    public function update(Request $request,  $id)
     {
-        //
+        // $requestStatus = $request['agreed'];
+
+        $userAccount = UserAccounts::find($id);
+        $userAccount->agreed = $request['agreed'];
+        $userAccount->save();
+        // return $userAccount['user_login'];
+
+        try {
+            Mail::to($userAccount->user->email)->send(new AgreeddEmail($userAccount));
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        return back();
     }
 
     /**
