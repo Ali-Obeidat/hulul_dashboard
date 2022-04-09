@@ -21,6 +21,7 @@
                 <p class="mb-0">Aww yeah, you successfully Deleted the user.</p>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                 </button>
+
             </div>
             @elseif(Session('user_updated'))
             <div class="alert alert-primary alert-dismissible" role="alert">
@@ -91,11 +92,6 @@
                 </table>
                 </table>
             </div>
-
-
-
-
-
         </div>
 
         @endsection
