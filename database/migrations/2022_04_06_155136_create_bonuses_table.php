@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->string('quantity');
-            $table->timestamp('from')->useCurrent();
-            $table->timestamp('to')->nullable();
+            $table->timestamp('from');
+            $table->timestamp('to');
             $table->timestamps();
         });
     }

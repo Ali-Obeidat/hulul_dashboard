@@ -1,0 +1,3 @@
+.bg-menu-theme .menu-inner>.menu-item.active:before{
+    background:linear-gradient(to left, #6149cd, #a654ac, #ea5f8b) !important;
+}
