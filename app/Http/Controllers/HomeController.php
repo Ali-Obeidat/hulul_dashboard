@@ -340,10 +340,18 @@ class HomeController extends Controller
                $aff[] = (int)($item['referred_by']);
             }
             $affCount = array_count_values($aff);
+            $topTen = [];
+            foreach ($affCount as $key => $value) {
+                // echo $key;
+                if ($key == null ) {
+                    continue;
+                }
+                $topTen[] = (int)($key);
+            }
            arsort($affCount);
-           $finalTen = User::find($affCount)->take(10);
+           $finalTen = User::whereIn('id',$topTen)->get()->take(10);
 
-        //  return  $maxVisitorsCount;
+        //  return  $finalTen;
 
         return view('admin.index', compact('affiliatesNum', 'maxAffiliatesCount', 
         'twoWeeks', 'userNum',
