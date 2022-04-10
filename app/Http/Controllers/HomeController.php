@@ -148,21 +148,7 @@ class HomeController extends Controller
         }
         // return $TotalWithdrawalsSum;
         ///////////////////////////////////////////////////////
-        // foreach ($topUsers as $id => $values) {
-        //     // $twoWeeks[]= $day;
-        //     $topUsersCount[$id] = count($values);
-        // }
-
-        // $top10 = collect($topUsersCount)->sortDesc();
-
-        //  sort($topUsersCount);
-        // $topAffiliateUsersCount = [];
-        // foreach ($topUsersCount as $id => $val) {
-        //     // echo $key;
-        //     $topAffiliateUsersCount[] = array_push($topAffiliateUsersCount, 22);
-        // }
-        // return $DepositsCount;
-        ///////////////////////////////////////////////////////
+      
         // return $top10->take(10);
         $userNum = [];
         $WithdrawNum = [];
@@ -348,14 +334,24 @@ class HomeController extends Controller
             $maxWithdrawalsSumNum = 0;
 
         }
+        $maxAffiliates = User::select('referred_by')->get()->toArray();
+        $aff = [];
+            foreach ($maxAffiliates as $item){
+               $aff[] = (int)($item['referred_by']);
+            }
+            $affCount = array_count_values($aff);
+           arsort($affCount);
+           $finalTen = User::find($affCount)->take(10);
 
-
-        // return  $maxVisitorsCount;
+        //  return  $maxVisitorsCount;
 
         return view('admin.index', compact('affiliatesNum', 'maxAffiliatesCount', 
         'twoWeeks', 'userNum',
          'maxUserCount', 'WithdrawNum',
           'maxWithdrawCount','maxVisitorsCount','visitorsNum',
-        'maxDepositsCount','DepositsNum','maxWithdrawalsSumNum','WithdrawalsSumNum'));
+        'maxDepositsCount','DepositsNum','maxWithdrawalsSumNum','WithdrawalsSumNum','finalTen'));
+       
+
+        
     }
 }
