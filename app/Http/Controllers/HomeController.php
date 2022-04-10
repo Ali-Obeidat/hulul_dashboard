@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\UserAccounts;
+use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -89,16 +91,31 @@ class HomeController extends Controller
         $Withdraws = UserAccounts::where('updated_at', '>=', Carbon::now()->subDays(14))->where('agreed', 'Accepted')->orderBy('updated_at', 'asc')->get()->groupBy(function ($data) {
             return Carbon::parse($data->updated_at)->format('m-d');
         });
+        $Deposits = UserAccounts::where('created_at', '>=', Carbon::now()->subDays(14))->where('type', 'Deposit')->orderBy('created_at', 'asc')->get()->groupBy(function ($data) {
+            return Carbon::parse($data->created_at)->format('m-d');
+        });
         $affiliates = User::where('created_at', '>=', Carbon::now()->subDays(14))->where('referred_by', '!=', null)->orderBy('created_at', 'asc')->get()->groupBy(function ($data) {
             return Carbon::parse($data->created_at)->format('m-d');
         });
+        $visitors = Visitor::where('created_at', '>=', Carbon::now()->subDays(14))->orderBy('created_at', 'asc')->get()->groupBy(function ($data) {
+            return Carbon::parse($data->created_at)->format('m-d');
+        });
 
-        // return $users;
+        $TotalWithdrawals = UserAccounts::where('created_at', '>=', Carbon::now()->subDays(14))->where('type', 'Withdraw')->orderBy('created_at', 'asc')->get()->groupBy(function ($data) {
+            return Carbon::parse($data->created_at)->format('m-d');
+        });
+    
+      
+      
+        // return $TotalWithdrawals;
 
         $userCount = [];
         $WithdrawCount = [];
         $affiliateCount = [];
+        $visitorsCount = [];
+        $DepositsCount = [];
         $topUsersCount = [];
+        $TotalWithdrawalsSum = [];
         foreach ($users as $day => $values) {
             // $twoWeeks[]= $day;
             $userCount[$day] = count($values);
@@ -114,20 +131,37 @@ class HomeController extends Controller
             $affiliateCount[$day] = count($values);
         }
         ///////////////////////////////////////////////////////
-        foreach ($topUsers as $id => $values) {
+        foreach ($visitors as $day => $values) {
             // $twoWeeks[]= $day;
-            $topUsersCount[$id] = count($values);
+            $visitorsCount[$day] = count($values);
         }
+        ///////////////////////////////////////////////////////
+        foreach ($Deposits as $day => $values) {
+            // $twoWeeks[]= $day;
+            $DepositsCount[$day] = count($values);
+        }
+        ///////////////////////////////////////////////////////
+        foreach ($TotalWithdrawals as $day => $values) {
+            // $twoWeeks[]= $day;
+           
+            $TotalWithdrawalsSum[$day] = ($values)->sum('Amount');
+        }
+        // return $TotalWithdrawalsSum;
+        ///////////////////////////////////////////////////////
+        // foreach ($topUsers as $id => $values) {
+        //     // $twoWeeks[]= $day;
+        //     $topUsersCount[$id] = count($values);
+        // }
 
-        $top10= collect($topUsersCount)->sortDesc();
+        // $top10 = collect($topUsersCount)->sortDesc();
 
         //  sort($topUsersCount);
-        $topAffiliateUsersCount =[] ;
-        foreach ($topUsersCount as $id => $val) {
-            // echo $key;
-            $topAffiliateUsersCount[]= array_push($topAffiliateUsersCount,22);
-        }
-        // return $topAffiliateUsersCount;
+        // $topAffiliateUsersCount = [];
+        // foreach ($topUsersCount as $id => $val) {
+        //     // echo $key;
+        //     $topAffiliateUsersCount[] = array_push($topAffiliateUsersCount, 22);
+        // }
+        // return $DepositsCount;
         ///////////////////////////////////////////////////////
         // return $top10->take(10);
         $userNum = [];
@@ -202,15 +236,126 @@ class HomeController extends Controller
             }                    //   echo $day;
 
         }
-        // return $WithdrawNum;
+        //////////////////////////////////////////////////////////////////////////////////////
+        $visitorsNum = [];
+        $j = 0;
+        foreach ($visitorsCount as $key => $value) {
+            // echo $value;
+            for ($i = $j; $i < count($twoWeeks); $i++) {
+                // echo "/". $twoWeeks[$i]. "/";
+                // echo "userCount=>". $key . "/twoWeeks=>".  $twoWeeks[$i]."<br>".$value.'<br>'. "i=". $i. "<br>" ;
+                //    if ($i < 14) {
+                if ($key == $twoWeeks[$i]) {
+                    $visitorsNum[$i] = $value;
+                    $j = $i + 1;
+                    break;
+                    // echo $userCount[$twoWeeks[$i]];
+                } else {
+                    $visitorsNum[$i] = 0;
+                    // echo $userCount[$twoWeeks[$i]] .'<br>';
+                }
+                //    }
+
+                // echo "j=". $j .'<br>';
+            }                    //   echo $day;
+
+        }
+        // return $visitorsNum;
+        //////////////////////////////////////////////////////////////////////////////////////
+        $DepositsNum = [];
+        $j = 0;
+        foreach ($DepositsCount as $key => $value) {
+            // echo $value;
+            for ($i = $j; $i < count($twoWeeks); $i++) {
+                // echo "/". $twoWeeks[$i]. "/";
+                // echo "userCount=>". $key . "/twoWeeks=>".  $twoWeeks[$i]."<br>".$value.'<br>'. "i=". $i. "<br>" ;
+                //    if ($i < 14) {
+                if ($key == $twoWeeks[$i]) {
+                    $DepositsNum[$i] = $value;
+                    $j = $i + 1;
+                    break;
+                    // echo $userCount[$twoWeeks[$i]];
+                } else {
+                    $DepositsNum[$i] = 0;
+                    // echo $userCount[$twoWeeks[$i]] .'<br>';
+                }
+                //    }
+
+                // echo "j=". $j .'<br>';
+            }                    //   echo $day;
+
+        }
+        // return $DepositsNum;
+        //////////////////////////////////////////////////////////////////////////////////////
+        $WithdrawalsSumNum = [];
+        $j = 0;
+        foreach ($TotalWithdrawalsSum as $key => $value) {
+            // echo $value;
+            for ($i = $j; $i < count($twoWeeks); $i++) {
+                // echo "/". $twoWeeks[$i]. "/";
+                // echo "userCount=>". $key . "/twoWeeks=>".  $twoWeeks[$i]."<br>".$value.'<br>'. "i=". $i. "<br>" ;
+                //    if ($i < 14) {
+                if ($key == $twoWeeks[$i]) {
+                    $WithdrawalsSumNum[$i] = $value;
+                    $j = $i + 1;
+                    break;
+                    // echo $userCount[$twoWeeks[$i]];
+                } else {
+                    $WithdrawalsSumNum[$i] = 0;
+                    // echo $userCount[$twoWeeks[$i]] .'<br>';
+                }
+                //    }
+
+                // echo "j=". $j .'<br>';
+            }                    //   echo $day;
+
+        }
+        // return $WithdrawalsSumNum;
+
+        try {
+            
+            $maxWithdrawCount = max($WithdrawNum);
+        } catch (\Throwable $th) {
+            $maxWithdrawCount = 0;
+        }
+        try {
+            $maxUserCount = max($userNum);
+        } catch (\Throwable $th) {
+            $maxUserCount = 0;
+
+        }
+        try {
+            $maxAffiliatesCount = max($affiliatesNum);
+        } catch (\Throwable $th) {
+            $maxAffiliatesCount = 0;
+
+        }
+        try {
+            $maxVisitorsCount = max($visitorsNum);
+        } catch (\Throwable $th) {
+            $maxVisitorsCount = 0;
+
+        }
+        try {
+            $maxDepositsCount = max($DepositsNum);
+        } catch (\Throwable $th) {
+            $maxDepositsCount = 0;
+
+        }
+        try {
+            $maxWithdrawalsSumNum = max($WithdrawalsSumNum);
+        } catch (\Throwable $th) {
+            $maxWithdrawalsSumNum = 0;
+
+        }
 
 
+        // return  $maxVisitorsCount;
 
-        $maxUserCount = max($userNum);
-        $maxWithdrawCount = max($WithdrawNum);
-        $maxAffiliatesCount = max($affiliatesNum);
-        // return  $maxUserCount;
-
-        return view('admin.index', compact('affiliatesNum','maxAffiliatesCount','twoWeeks', 'userNum', 'maxUserCount', 'WithdrawNum', 'maxWithdrawCount'));
+        return view('admin.index', compact('affiliatesNum', 'maxAffiliatesCount', 
+        'twoWeeks', 'userNum',
+         'maxUserCount', 'WithdrawNum',
+          'maxWithdrawCount','maxVisitorsCount','visitorsNum',
+        'maxDepositsCount','DepositsNum','maxWithdrawalsSumNum','WithdrawalsSumNum'));
     }
 }
