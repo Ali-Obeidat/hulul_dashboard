@@ -1,6 +1,71 @@
 <x-admin-master>
   @section('content')
-  <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="card m-5" style="margin-top: 15vh !important;">
+            <h5 class="card-header">Top 10 Affiliates Table</h5>
+            @if(Session('user_deleted'))
+                <div class="alert alert-danger alert-dismissible col-6" role="alert">
+                    <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">User Deleted!!</h6>
+                    <p class="mb-0">Aww yeah, you successfully Deleted the user.</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    </button>
+
+                </div>
+            @elseif(Session('user_updated'))
+                <div class="alert alert-primary alert-dismissible" role="alert">
+                    <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">Edit User</h6>
+                    <p class="mb-0">You successfully Edited the user.</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    </button>
+                </div>
+            @endif
+            <div class="card-datatable text-nowrap">
+                <table id="example" class="table table-striped" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>#id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>type</th>
+                        <th>country</th>
+                        <th>Created at</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($finalTen as $user)
+                        <tr>
+                            <td>{{$user->id}}</td>
+                            <td>{{$user->name}}</td>
+                            <td>{{$user->email}}</td>
+                            <td>{{$user->phone}}</td>
+                            <td>{{$user->type}}</td>
+                            <td>{{$user->country}}</td>
+                            <td>{{$user->created_at}}</td>
+
+
+                        </tr>
+                    @endforeach
+
+
+
+
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>#id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>type</th>
+                        <th>country</th>
+                        <th>Created at</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="container-xxl flex-grow-1 container-p-y">
 
 
 
@@ -56,7 +121,7 @@
     var maxAffiliatesCount=JSON.parse('{!! json_encode($maxAffiliatesCount) !!}');
     console.log(day);
   </script>
- 
+
 
 <script>
   const data = {
@@ -193,6 +258,7 @@ const Withdraw = {
       numAffiliates
     );
   </script>
- 
+
   @endsection
+
 </x-admin-master>

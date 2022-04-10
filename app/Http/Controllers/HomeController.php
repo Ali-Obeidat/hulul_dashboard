@@ -119,13 +119,13 @@ class HomeController extends Controller
             $topUsersCount[$id] = count($values);
         }
 
-        $top10= collect($topUsersCount)->sortDesc();
+        $top10 = collect($topUsersCount)->sortDesc();
 
         //  sort($topUsersCount);
-        $topAffiliateUsersCount =[] ;
+        $topAffiliateUsersCount = [];
         foreach ($topUsersCount as $id => $val) {
             // echo $key;
-            $topAffiliateUsersCount[]= array_push($topAffiliateUsersCount,22);
+            $topAffiliateUsersCount[] = array_push($topAffiliateUsersCount, 22);
         }
         // return $topAffiliateUsersCount;
         ///////////////////////////////////////////////////////
@@ -205,12 +205,26 @@ class HomeController extends Controller
         // return $WithdrawNum;
 
 
-
-        $maxUserCount = max($userNum);
-        $maxWithdrawCount = max($WithdrawNum);
-        $maxAffiliatesCount = max($affiliatesNum);
+        if (!empty($userNum)&&!empty($WithdrawNum)&&!empty($affiliatesNum)){
+            $maxUserCount = max($userNum);
+            $maxWithdrawCount = max($WithdrawNum);
+            $maxAffiliatesCount = max($affiliatesNum);
+        }else{
+            $maxUserCount=0;
+            $maxWithdrawCount=0;
+            $maxAffiliatesCount=0;
+        }
         // return  $maxUserCount;
 
-        return view('admin.index', compact('affiliatesNum','maxAffiliatesCount','twoWeeks', 'userNum', 'maxUserCount', 'WithdrawNum', 'maxWithdrawCount'));
+        //To show Top Ten Referrals:
+        $maxAffiliates = User::select('referred_by')->get()->toArray();
+        $aff = [];
+            foreach ($maxAffiliates as $item){
+               $aff[] = (int)($item['referred_by']);
+            }
+            $affCount = array_count_values($aff);
+           arsort($affCount);
+           $finalTen = User::find($affCount)->take(10);
+        return view('admin.index', compact('affiliatesNum', 'maxAffiliatesCount', 'twoWeeks', 'userNum', 'maxUserCount', 'WithdrawNum', 'maxWithdrawCount','finalTen'));
     }
 }

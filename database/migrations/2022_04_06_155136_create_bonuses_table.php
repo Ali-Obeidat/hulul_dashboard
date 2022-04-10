@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('quantity');
             $table->timestamp('from');
-            $table->timestamp('to');
+            $table->timestamp('to')->nullable();
             $table->timestamps();
         });
     }
