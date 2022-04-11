@@ -19,7 +19,8 @@ class UserController extends Controller
     public function index(): View|Factory|Application
     {
         $users = User::all();
-        return view('admin.users.index',compact('users'));
+        $userCount= count($users );
+        return view('admin.users.index',compact('users','userCount'));
     }
 
     /**

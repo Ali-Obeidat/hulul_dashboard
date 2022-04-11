@@ -20,7 +20,7 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     @endsection
     @section('content')
-    <div class="container-xxl flex-grow-1 container-p-y">
+    <div class="container-xxl flex-grow-1 container-p-y" style="padding-left: 85px; padding-right: 85px;">
 
 
                         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Managers/</span> Create Managers</h4>
