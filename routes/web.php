@@ -7,6 +7,7 @@ use App\Http\Controllers\UserAccountsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRequestController;
 use App\Http\Controllers\BonusController;
+use App\Http\Controllers\MtHululController;
 use App\Models\UserAccounts;
 use Illuminate\Support\Facades\Route;
 
@@ -29,11 +30,14 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::resource('/users', UserController::class)->middleware('auth');
+Route::get('/showCompanyUsers', [UserController::class, 'showCompanyUsers'])->middleware('auth')->name('CompanyUsers');
 Route::resource('/Managers', ManagerController::class)->middleware('auth');
 Route::resource('/UsersRequests', UserAccountsController::class)->middleware('auth');
+Route::resource('/UsersAccounts', MtHululController::class)->middleware('auth');
+Route::get('/allUserAccounts', [UserAccountsController::class, 'showUserAccounts'])->middleware('auth')->name('allUserAccounts');
 Route::resource('/usersDocuments', DocumentController::class)->middleware('auth');
-Route::resource('/ManagerEmails',ManagerEmailController ::class)->middleware('auth');
-Route::resource('/bonus',BonusController ::class)->middleware('auth');
-Route::post('/ManagerEmails/send/{id}',[ManagerEmailController ::class, 'sendEmail'])->middleware('auth')->name('sendEmail');
+Route::resource('/ManagerEmails', ManagerEmailController::class)->middleware('auth');
+Route::resource('/bonus', BonusController::class)->middleware('auth');
+Route::post('/ManagerEmails/send/{id}', [ManagerEmailController::class, 'sendEmail'])->middleware('auth')->name('sendEmail');
 
 // Route::get('/UsersRequests/filter', [UserAccountsController::class,'DepositWithdrawFilter'])->name('DepositWithdrawFilter');

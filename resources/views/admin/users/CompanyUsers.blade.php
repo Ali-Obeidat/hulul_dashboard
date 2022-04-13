@@ -117,7 +117,6 @@
                             <th>type</th>
                             <th>country</th>
                             <th>Created at</th>
-                            <th>Accounts</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -133,11 +132,6 @@
                             <td>{{$user->country}}</td>
                             <td>{{$user->created_at}}</td>
 
-                            <td>
-                                <a href="{{route('UsersAccounts.show',$user->id)}}">
-                                    <button type="button" class="btn rounded-pill btn-label-dark">Show</button>
-                                </a>
-                            </td>
                             <td>
                                 <a href="{{route('users.edit',$user->id)}}">
                                     <button type="button" class="btn rounded-pill btn-label-info">Edit</button>

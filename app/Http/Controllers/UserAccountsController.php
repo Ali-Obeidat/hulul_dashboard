@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AgreeddEmail;
+use App\Models\MtHulul;
 use App\Models\User;
 use App\Models\UserAccounts;
 use Illuminate\Http\Request;
@@ -68,6 +69,7 @@ class UserAccountsController extends Controller
     {
         //
     }
+   
 
     /**
      * Show the form for editing the specified resource.
@@ -98,7 +100,6 @@ class UserAccountsController extends Controller
 
         try {
             Mail::to($userAccount->user->email)->send(new AgreeddEmail($userAccount));
-
         } catch (\Throwable $th) {
             //throw $th;
         }

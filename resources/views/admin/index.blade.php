@@ -112,22 +112,22 @@
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                                
-                            @foreach($finalTen as $user)
-                        <tr>
-                            <td>{{$user->id}}</td>
-                            <td>{{$user->name}}</td>
-                            <td>{{$user->email}}</td>
-                            <td>{{$user->phone}}</td>
-                            <td>{{$user->type}}</td>
-                            <td>{{$user->country}}</td>
-                            <td>{{$user->created_at}}</td>
+
+                                @foreach($finalTen as $user)
+                                <tr>
+                                    <td>{{$user->id}}</td>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->phone}}</td>
+                                    <td>{{$user->type}}</td>
+                                    <td>{{$user->country}}</td>
+                                    <td>{{$user->created_at}}</td>
 
 
-                        </tr>
-                    @endforeach
-                              
-                                
+                                </tr>
+                                @endforeach
+
+
                             </tbody>
                         </table>
                     </div>

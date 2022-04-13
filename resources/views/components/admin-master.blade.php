@@ -148,6 +148,11 @@
                   <div data-i18n="View All users">View All users</div>
                 </a>
               </li>
+              <li class="menu-item">
+                <a href="{{route('CompanyUsers')}}" class="menu-link">
+                  <div data-i18n="View All company users">View All company users</div>
+                </a>
+              </li>
 
             </ul>
           </li>
@@ -224,8 +229,22 @@
               </li>
             </ul>
           </li>
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="menu-icon tf-icons bx bx-dock-top"></i>
+              <div data-i18n="Accounts">Accounts</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item">
+                <a href="{{route('UsersAccounts.index')}}" class="menu-link">
+                  <div data-i18n="View Accounts">View Accounts</div>
+                </a>
+              </li>
+             
+            </ul>
+          </li>
 
-      
+
         </ul>
 
 
@@ -324,7 +343,7 @@
 
 
               <!-- Style Switcher -->
-           
+
               <!--/ Style Switcher -->
 
               <!-- Quick links  -->

@@ -18,9 +18,17 @@ class UserController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        $users = User::all();
+        $users = User::whereNot('type','company')->get();
+        // dd($users) ;
         $userCount= count($users );
         return view('admin.users.index',compact('users','userCount'));
+    }
+    public function showCompanyUsers(): View|Factory|Application
+    {
+        $users = User::where('type','company')->get();
+        // dd($users) ;
+        $userCount= count($users );
+        return view('admin.users.CompanyUsers',compact('users','userCount'));
     }
 
     /**
