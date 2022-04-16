@@ -240,7 +240,29 @@
                   <div data-i18n="View Accounts">View Accounts</div>
                 </a>
               </li>
-             
+
+            </ul>
+          </li>
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="menu-icon tf-icons bx bx-food-menu"></i>
+              <div data-i18n="Manage News">Manage News</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item">
+                <a href="{{route('news.index')}}" class="menu-link">
+                  <div data-i18n="View News">View News</div>
+                </a>
+              </li>
+
+            </ul>
+            <ul class="menu-sub">
+              <li class="menu-item">
+                <a href="{{route('news.create')}}" class="menu-link">
+                  <div data-i18n="Create News">Create News</div>
+                </a>
+              </li>
+
             </ul>
           </li>
 

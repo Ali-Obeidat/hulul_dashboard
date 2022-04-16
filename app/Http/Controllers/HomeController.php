@@ -104,10 +104,15 @@ class HomeController extends Controller
         $TotalWithdrawals = UserAccounts::where('created_at', '>=', Carbon::now()->subDays(14))->where('type', 'Withdraw')->orderBy('created_at', 'asc')->get()->groupBy(function ($data) {
             return Carbon::parse($data->created_at)->format('m-d');
         });
-    
-      
-      
-        // return $TotalWithdrawals;
+
+        $Companies = User::where('created_at', '>=', Carbon::now()->subDays(14))->where('type', 'company')->orderBy('created_at', 'asc')->get()->groupBy(function ($data) {
+            return Carbon::parse($data->created_at)->format('m-d');
+        });
+
+
+
+
+        // return $usersCountry;
 
         $userCount = [];
         $WithdrawCount = [];
@@ -115,7 +120,9 @@ class HomeController extends Controller
         $visitorsCount = [];
         $DepositsCount = [];
         $topUsersCount = [];
+        $CompaniesCount = [];
         $TotalWithdrawalsSum = [];
+        $usersCountrySum = [];
         foreach ($users as $day => $values) {
             // $twoWeeks[]= $day;
             $userCount[$day] = count($values);
@@ -143,12 +150,21 @@ class HomeController extends Controller
         ///////////////////////////////////////////////////////
         foreach ($TotalWithdrawals as $day => $values) {
             // $twoWeeks[]= $day;
-           
+
             $TotalWithdrawalsSum[$day] = ($values)->sum('Amount');
         }
         // return $TotalWithdrawalsSum;
         ///////////////////////////////////////////////////////
-      
+        ///////////////////////////////////////////////////////
+        foreach ($Companies as $day => $values) {
+            // $twoWeeks[]= $day;
+
+            $CompaniesCount[$day] = count($values);
+        }
+        // return $CompaniesCount;
+        ///////////////////////////////////////////////////////
+
+
         // return $top10->take(10);
         $userNum = [];
         $WithdrawNum = [];
@@ -297,9 +313,34 @@ class HomeController extends Controller
 
         }
         // return $WithdrawalsSumNum;
+        //////////////////////////////////////////////////////////////////////////////////////
+        $CompaniesNum = [];
+        $j = 0;
+        foreach ($CompaniesCount as $key => $value) {
+            // echo $value;
+            for ($i = $j; $i < count($twoWeeks); $i++) {
+                // echo "/". $twoWeeks[$i]. "/";
+                // echo "userCount=>". $key . "/twoWeeks=>".  $twoWeeks[$i]."<br>".$value.'<br>'. "i=". $i. "<br>" ;
+                //    if ($i < 14) {
+                if ($key == $twoWeeks[$i]) {
+                    $CompaniesNum[$i] = $value;
+                    $j = $i + 1;
+                    break;
+                    // echo $userCount[$twoWeeks[$i]];
+                } else {
+                    $CompaniesNum[$i] = 0;
+                    // echo $userCount[$twoWeeks[$i]] .'<br>';
+                }
+                //    }
+
+                // echo "j=". $j .'<br>';
+            }                    //   echo $day;
+
+        }
+        // return $CompaniesNum;
 
         try {
-            
+
             $maxWithdrawCount = max($WithdrawNum);
         } catch (\Throwable $th) {
             $maxWithdrawCount = 0;
@@ -308,58 +349,101 @@ class HomeController extends Controller
             $maxUserCount = max($userNum);
         } catch (\Throwable $th) {
             $maxUserCount = 0;
-
         }
         try {
             $maxAffiliatesCount = max($affiliatesNum);
         } catch (\Throwable $th) {
             $maxAffiliatesCount = 0;
-
         }
         try {
             $maxVisitorsCount = max($visitorsNum);
         } catch (\Throwable $th) {
             $maxVisitorsCount = 0;
-
         }
         try {
             $maxDepositsCount = max($DepositsNum);
         } catch (\Throwable $th) {
             $maxDepositsCount = 0;
-
         }
         try {
             $maxWithdrawalsSumNum = max($WithdrawalsSumNum);
         } catch (\Throwable $th) {
             $maxWithdrawalsSumNum = 0;
-
         }
+        try {
+            $maxCompaniesNum = max($CompaniesNum);
+        } catch (\Throwable $th) {
+            $maxCompaniesNum = 0;
+        }
+
         $maxAffiliates = User::select('referred_by')->get()->toArray();
+
         $aff = [];
-            foreach ($maxAffiliates as $item){
-               $aff[] = (int)($item['referred_by']);
+        foreach ($maxAffiliates as $item) {
+            $aff[] = (int)($item['referred_by']);
+        }
+        $affCount = array_count_values($aff);
+
+        $topTen = [];
+        foreach ($affCount as $key => $value) {
+            // echo $key;
+            if ($key == null) {
+                continue;
             }
-            $affCount = array_count_values($aff);
-            $topTen = [];
-            foreach ($affCount as $key => $value) {
-                // echo $key;
-                if ($key == null ) {
-                    continue;
-                }
-                $topTen[] = (int)($key);
+            $topTen[] = (int)($key);
+        }
+        arsort($affCount);
+        $finalTen = User::whereIn('id', $topTen)->get()->take(10);
+
+        $usersCountry = User::select('country')->get()->toArray();
+        $Countries = [];
+        foreach ($usersCountry as $item) {
+            if (empty((string)($item['country']))) {
+                continue;
             }
-           arsort($affCount);
-           $finalTen = User::whereIn('id',$topTen)->get()->take(10);
+            $Countries[] = (string)($item['country']);
+        }
+        $CountriesCount = array_count_values($Countries);
+        // return count($CountriesCount) ;
+        $topFive = [];
+        foreach ($CountriesCount as $key => $value) {
+            // echo $key;
+            if ($key == null) {
+                continue;
+            }
+            $CountriesNum[] = (int)($value);
+            $FiveCountries[] = (string)(explode(',', $key)[0]);
+        }
+        // return $finalFiveCountries; 
+        try {
+            $finalCountriesNum =array_slice($CountriesNum, 0, 5);
+            $finalFiveCountries = array_slice($FiveCountries, 0, 5);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        // return $CountriesNum;
+        // $finalTen = User::whereIn('id', $topTen)->get()->take(5);
+        // return  $finalTen;
 
-        //  return  $finalTen;
-
-        return view('admin.index', compact('affiliatesNum', 'maxAffiliatesCount', 
-        'twoWeeks', 'userNum',
-         'maxUserCount', 'WithdrawNum',
-          'maxWithdrawCount','maxVisitorsCount','visitorsNum',
-        'maxDepositsCount','DepositsNum','maxWithdrawalsSumNum','WithdrawalsSumNum','finalTen'));
-       
-
-        
+        return view('admin.index', compact(
+            'affiliatesNum',
+            'maxAffiliatesCount',
+            'twoWeeks',
+            'userNum',
+            'maxUserCount',
+            'WithdrawNum',
+            'maxWithdrawCount',
+            'maxVisitorsCount',
+            'visitorsNum',
+            'maxDepositsCount',
+            'DepositsNum',
+            'maxWithdrawalsSumNum',
+            'WithdrawalsSumNum',
+            'finalTen',
+            'CompaniesNum',
+            'maxCompaniesNum',
+            'finalCountriesNum',
+            'finalFiveCountries'
+        ));
     }
 }

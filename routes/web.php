@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRequestController;
 use App\Http\Controllers\BonusController;
 use App\Http\Controllers\MtHululController;
+use App\Http\Controllers\NewsController;
 use App\Models\UserAccounts;
 use Illuminate\Support\Facades\Route;
 
@@ -39,5 +40,6 @@ Route::resource('/usersDocuments', DocumentController::class)->middleware('auth'
 Route::resource('/ManagerEmails', ManagerEmailController::class)->middleware('auth');
 Route::resource('/bonus', BonusController::class)->middleware('auth');
 Route::post('/ManagerEmails/send/{id}', [ManagerEmailController::class, 'sendEmail'])->middleware('auth')->name('sendEmail');
+Route::resource('/news', NewsController::class)->middleware('auth');
 
 // Route::get('/UsersRequests/filter', [UserAccountsController::class,'DepositWithdrawFilter'])->name('DepositWithdrawFilter');

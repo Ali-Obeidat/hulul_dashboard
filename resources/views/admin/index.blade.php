@@ -139,6 +139,38 @@
 
         </div>
 
+        <hr>
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-ms-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-md-center align-items-start">
+                        <h5 class="card-title mb-0">Companies</h5>
+
+                    </div>
+                    <div>
+                        <canvas id="companyChart"></canvas>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-6 col-md-12 col-ms-12 ml-3">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div>
+                            <h5 class="text-muted">Top Five Countries</h5>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <canvas id="polarChart" class="chartjs" data-height="337"></canvas>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -151,6 +183,7 @@
         var affiliatesNum = JSON.parse('{!! json_encode($affiliatesNum) !!}');
         var visitorsNum = JSON.parse('{!! json_encode($visitorsNum) !!}');
         var DepositsNum = JSON.parse('{!! json_encode($DepositsNum) !!}');
+        var CompaniesNum = JSON.parse('{!! json_encode($CompaniesNum) !!}');
         var maxUserCount = JSON.parse('{!! json_encode($maxUserCount) !!}');
         var WithdrawalsSumNum = JSON.parse('{!! json_encode($WithdrawalsSumNum) !!}');
         var maxWithdrawCount = JSON.parse('{!! json_encode($maxWithdrawCount) !!}');
@@ -158,6 +191,9 @@
         var maxVisitorsCount = JSON.parse('{!! json_encode($maxVisitorsCount) !!}');
         var maxDepositsCount = JSON.parse('{!! json_encode($maxDepositsCount) !!}');
         var maxWithdrawalsSumNum = JSON.parse('{!! json_encode($maxWithdrawalsSumNum) !!}');
+        var maxCompaniesNum = JSON.parse('{!! json_encode($maxCompaniesNum) !!}');
+        var finalFiveCountries = JSON.parse('{!! json_encode($finalFiveCountries) !!}');
+        var finalCountriesNum = JSON.parse('{!! json_encode($finalCountriesNum) !!}');
         console.log(WithdrawalsSumNum);
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -173,7 +209,28 @@
     <script src="../../assets/js/charts-apex.js"></script>
 
     <script src="../../assets/js/charts-chartjs.js"></script>
+    <script>
+        const labels = day
+        const companyData = {
+            labels: labels,
+            datasets: [{
+                label: 'Number of Companies in last two weeks',
+                data: CompaniesNum,
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        };
+        const companyConfig = {
+            type: 'line',
+            data: companyData,
+        };
 
+        const companyChart = new Chart(
+            document.getElementById('companyChart'),
+            companyConfig
+        );
+    </script>
 
 
     <script>
@@ -311,6 +368,8 @@
             WithdrawalsSum
         );
     </script>
+
+
 
     @endsection
 </x-admin-master>

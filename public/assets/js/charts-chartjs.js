@@ -295,14 +295,7 @@
             new Chart(a, {
                 type: "polarArea",
                 data: {
-                    labels: [
-                        "Africa",
-                        "Asia",
-                        "Europe",
-                        "America",
-                        "Antarctica",
-                        "Australia",
-                    ],
+                    labels:finalFiveCountries,
                     datasets: [
                         {
                             label: "Population (millions)",
@@ -312,9 +305,8 @@
                                 "#FF8132",
                                 "#299AFF",
                                 "#4F5D70",
-                                t,
                             ],
-                            data: [19, 17.5, 15, 13.5, 11, 9],
+                            data: finalCountriesNum,
                             borderWidth: 0,
                         },
                     ],
