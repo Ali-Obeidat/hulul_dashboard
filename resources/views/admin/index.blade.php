@@ -2,20 +2,130 @@
     @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
 
+        <div class="row mb-4" id="sortable-cards">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card drag-item cursor-move mb-lg-0 mb-4">
+                    <div class="card-body text-center">
+                        <div class=" card-header header-elements">
+                            <h5 class="card-title mb-0">Number of users last two weeks</h5>
 
-
-        <div class="row">
-            <div class="col-lg-6 col-md-12 col-ms-12">
-                <div class="card-header header-elements">
-                    <h5 class="card-title mb-0">Number of users last two weeks</h5>
-
+                        </div>
+                        <div>
+                            <canvas id="myChart" width=""></canvas>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <canvas id="myChart" width=""></canvas>
-                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card drag-item cursor-move mb-lg-0 mb-4">
+                    <div class="card-body text-center">
+                        <div class="card-header header-elements">
+                            <h5 class="card-title mb-0">Withdrawals in last two weeks</h5>
 
+                        </div>
+                        <div class="card-body">
+                            <canvas id="barChart" class="chartjs" height="340px"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card drag-item cursor-move mb-lg-0 mb-4">
+                    <div class="card-body text-center">
+                        <div>
+                            <h5 class="card-title mb-0">Affiliates</h5>
+                            <small class="text-muted">Number of affiliates users last two weeks</small>
+                        </div>
+                        <div class="card-body">
+                            <div id="lineChart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card drag-item cursor-move mb-lg-0 mb-4">
+                    <div class="card-body text-center">
+                        <div class="card-header d-flex justify-content-between">
+                            <div>
+                                <small class="text-muted">Last Visitors</small>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <div id="lineAreaChart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card drag-item cursor-move mb-lg-0 mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-md-center align-items-start">
+                        <h5 class="card-title mb-0">Deposits</h5>
+
+                    </div>
+                    <div>
+                        <canvas id="BarChart" width="500px"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card drag-item cursor-move mb-lg-0 mb-4">
+                    <div class="card-body text-center">
+                        <div class="card-header d-flex justify-content-between">
+                            <div>
+                                <small class="text-muted">Total withdrawals</small>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <canvas id="TotalWithdrawals" width="500px"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card drag-item cursor-move mb-lg-0 mb-4">
+                    <div class="card-body text-center">
+                        <div class="card-header d-flex justify-content-between align-items-md-center align-items-start">
+                            <h5 class="card-title mb-0">Companies</h5>
+
+                        </div>
+                        <div>
+                            <canvas id="companyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card drag-item cursor-move mb-lg-0 mb-4">
+                    <div class="card-body text-center">
+                        <div class="card-header d-flex justify-content-between">
+                            <div>
+                                <h5 class="text-muted">Top Five Countries</h5>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <canvas id="polarChart" class="chartjs" data-height="337"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row ">
+            <div class="col-lg-6 col-md-12 col-ms-12 " ">
+                <div class=" card-header header-elements">
+                <h5 class="card-title mb-0">Number of users last two weeks</h5>
 
             </div>
+            <div>
+                <canvas id="myChart" width=""></canvas>
+            </div>
+
+
+        </div>
             <div class="col-lg-6 col-md-12 col-ms-12 ml-3">
                 <div class="card">
                     <div class="card-header header-elements">
@@ -29,9 +139,8 @@
 
             </div>
 
-        </div>
-        <hr>
-        <div class="row">
+        </div> -->
+        <!-- <div class="row">
             <div class="col-lg-6 col-md-12 col-ms-12">
                 <div>
                     <h5 class="card-title mb-0">Affiliates</h5>
@@ -58,11 +167,10 @@
 
             </div>
 
-        </div>
+        </div> -->
 
 
-        <hr>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-lg-6 col-md-12 col-ms-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-md-center align-items-start">
@@ -91,8 +199,7 @@
 
             </div>
 
-        </div>
-        <hr>
+        </div> -->
 
         <div class="row">
             <div class="col-lg-12 col-md-12 col-ms-12">
@@ -122,25 +229,17 @@
                                     <td>{{$user->type}}</td>
                                     <td>{{$user->country}}</td>
                                     <td>{{$user->created_at}}</td>
-
-
                                 </tr>
                                 @endforeach
-
-
                             </tbody>
                         </table>
                     </div>
                 </div>
-
-
             </div>
-
-
         </div>
 
         <hr>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-lg-6 col-md-12 col-ms-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-md-center align-items-start">
@@ -170,7 +269,7 @@
 
             </div>
 
-        </div>
+        </div> -->
 
     </div>
 
@@ -196,14 +295,19 @@
         var finalCountriesNum = JSON.parse('{!! json_encode($finalCountriesNum) !!}');
         console.log(WithdrawalsSumNum);
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="../../assets/vendor/libs/sortablejs/sortable.js"></script>
+    <script src="../../assets/js/extended-ui-drag-and-drop.js"></script>
+
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../../assets/vendor/libs/chartjs/chartjs.js"></script>
 
     <!-- Main JS -->
     <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/vendor/libs/jquery/jquery.js"></script>
 
     <!-- Page JS -->
     <script src="../../assets/js/charts-apex.js"></script>
@@ -368,6 +472,8 @@
             WithdrawalsSum
         );
     </script>
+
+
 
 
 
