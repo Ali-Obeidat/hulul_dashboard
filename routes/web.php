@@ -9,6 +9,7 @@ use App\Http\Controllers\UserRequestController;
 use App\Http\Controllers\BonusController;
 use App\Http\Controllers\MtHululController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\RealAccountsController;
 use App\Models\UserAccounts;
 use Illuminate\Support\Facades\Route;
 
@@ -42,4 +43,6 @@ Route::resource('/bonus', BonusController::class)->middleware('auth');
 Route::post('/ManagerEmails/send/{id}', [ManagerEmailController::class, 'sendEmail'])->middleware('auth')->name('sendEmail');
 Route::resource('/news', NewsController::class)->middleware('auth');
 
+Route::get('Real-account-request',[RealAccountsController::class,'showAllRequest'])->middleware('auth')->name('showAllRequest');
+Route::get('accept-Real-account',[RealAccountsController::class,'accept'])->middleware('auth')->name('accept');
 // Route::get('/UsersRequests/filter', [UserAccountsController::class,'DepositWithdrawFilter'])->name('DepositWithdrawFilter');

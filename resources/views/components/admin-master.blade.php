@@ -191,6 +191,23 @@
                   <div data-i18n="usersDocuments">usersDocuments</div>
                 </a>
               </li>
+              <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <div data-i18n="Real Accounts">Real Accounts</div>
+                </a>
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <a href="{{route('showAllRequest')}}" class="menu-link">
+                      <div data-i18n="View All Request">View All Request</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="app-user-view-security.html" class="menu-link">
+                      <div data-i18n="Security">Security</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
             </ul>
           </li>
           <li class="menu-item">
@@ -675,11 +692,11 @@
                       <span class="align-middle">Settings</span>
                     </a>
                   </li>
-              
-                 
-              
-              
-               
+
+
+
+
+
                   <li>
                     <div class="dropdown-divider"></div>
                   </li>
