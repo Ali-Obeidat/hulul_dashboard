@@ -45,4 +45,7 @@ Route::resource('/news', NewsController::class)->middleware('auth');
 
 Route::get('Real-account-request',[RealAccountsController::class,'showAllRequest'])->middleware('auth')->name('showAllRequest');
 Route::put('/accept-Real-account/{id}',[RealAccountsController::class,'accept'])->middleware('auth')->name('accept');
+Route::put('/reject-Real-account/{id}',[RealAccountsController::class,'reject'])->middleware('auth')->name('reject');
+Route::get('/edit-Real-account-Leverage/{id}',[RealAccountsController::class,'edit'])->middleware('auth')->name('changeLeveragePage');
+Route::put('/edit-Real-account-Leverage/{id}',[RealAccountsController::class,'ChangeLeverage'])->middleware('auth')->name('ChangeLeverage');
 // Route::get('/UsersRequests/filter', [UserAccountsController::class,'DepositWithdrawFilter'])->name('DepositWithdrawFilter');

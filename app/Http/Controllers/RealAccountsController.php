@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AcceptRealAccount;
+use App\Mail\RejectRealAccount;
 use App\Models\MtHulul;
 use App\Models\PendingRealAccount;
 use Illuminate\Http\Request;
@@ -12,19 +13,17 @@ use Tarikhagustia\LaravelMt5\LaravelMt5;
 use Tarikh\PhpMeta\Entities\User;
 use App\Models\User as LoginUser;
 use Illuminate\Support\Facades\Mail;
+use Laravel\Ui\Presets\React;
 
 class RealAccountsController extends Controller
 {
     public function showAllRequest()
     {
-        $pendingRealAccounts= PendingRealAccount::where('account_status','pending')->get();
+        $pendingRealAccounts = PendingRealAccount::where('account_status', 'pending')->get();
         // return $pendingRealAccounts;
-            return view('admin.realAccount.allRequest',compact('pendingRealAccounts'));
-
-
-
+        return view('admin.realAccount.allRequest', compact('pendingRealAccounts'));
     }
-    public function accept(Request $request,$id)
+    public function accept(Request $request, $id)
     {
         $loginUser = LoginUser::find($request['user_id']);
         $realAccount = PendingRealAccount::find($id);
@@ -49,8 +48,8 @@ class RealAccountsController extends Controller
         // dd($user);
         $result = $api->createUser($user);
 
-        $realAccount -> account_status= 'accepted';
-        $realAccount -> login= $result->getLogin();
+        $realAccount->account_status = 'accepted';
+        $realAccount->login = $result->getLogin();
         $realAccount->save();
 
 
@@ -64,13 +63,13 @@ class RealAccountsController extends Controller
         $userData->currency = $realAccount->currency;
         $userData->phone = $realAccount->phone;
         $userData->address = $realAccount->address;
-        $userData->city =$realAccount->city;
+        $userData->city = $realAccount->city;
         $userData->state = $realAccount->state;
         $userData->country = $realAccount->country;
         $userData->zipcode = $realAccount->zipcode;
         $userData->password = $realAccount->password;
         $userData->invest_password = $realAccount->password;
-        $userData->phone_password =$realAccount->password;
+        $userData->phone_password = $realAccount->password;
         // $userData->account_status = "pending";
         $userData->user_id = ($request['user_id']);
         $userData->save();
@@ -78,10 +77,40 @@ class RealAccountsController extends Controller
 
         // try {
 
-            Mail::to($loginUser->email)->send(new AcceptRealAccount($userData));
+        Mail::to($loginUser->email)->send(new AcceptRealAccount($userData));
         // } catch (\Throwable $th) {
         //     //throw $th;
         // }
-        return back();
+        return back()->with('success', 'you accepted the real account');
+    }
+
+    public function reject(Request $request, $id)
+    {
+        // return  $request;
+        $loginUser = LoginUser::find($request['user_id']);
+        $realAccount = PendingRealAccount::find($id);
+        $realAccount->account_status = 'rejected';
+        $realAccount->save();
+        Mail::to($loginUser->email)->send(new RejectRealAccount($loginUser));
+        return back()->with('error', 'you rejected the real account');
+
+
+    }
+
+    public function edit($id)
+    {
+        $account = PendingRealAccount::find($id);
+        // return $account;
+        return view('admin.realAccount.changeLeverage', compact('account'));
+    }
+    public function ChangeLeverage(Request $request, $id)
+    {
+        // return $request;
+        $account = PendingRealAccount::find($id);
+        $account->leverage = $request['leverage'];
+        $account->save();
+
+        Alert::success('Real Account leverage', 'leverage was change successfully');
+        return redirect(route('showAllRequest'));
     }
 }

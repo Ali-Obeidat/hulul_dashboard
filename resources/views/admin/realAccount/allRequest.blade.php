@@ -68,7 +68,7 @@
                             <td>{{$value->account_status}}</td>
                             <td>{{$value->created_at}}</td>
                             <td>
-                            <a href="">
+                            <a href="{{route('changeLeveragePage',$value->id)}}">
                                     <button type="button" class="btn rounded-pill btn-label-dark">Edit</button>
                                 </a>
                             </td>
@@ -82,10 +82,10 @@
                                 </form>
                             </td>
                             <td>
-                                <form method="post" action="">
+                                <form method="post" action="{{route('reject',$value->id)}}">
                                     @csrf
                                     @method('PUT')
-                                    <input hidden type="text" name="agreed" value="Rejected">
+                                    <input hidden type="text" name="user_id"  value="{{$value->user_id}}">
                                     <button @if($value->agreed !== null && $value->agreed == 'Rejected' ) disabled @endif class="btn btn-danger">Reject</button>
                                 </form>
                             </td>
@@ -121,6 +121,8 @@
 
         @endsection
         @section('script')
+    @include('sweetalert::alert')
+
         <script>
             $(document).ready(function() {
                 $('#example').DataTable();
