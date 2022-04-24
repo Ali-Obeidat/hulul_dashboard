@@ -20,9 +20,9 @@ class RealAccountsController extends Controller
         $pendingRealAccounts= PendingRealAccount::where('account_status','pending')->get();
         // return $pendingRealAccounts;
             return view('admin.realAccount.allRequest',compact('pendingRealAccounts'));
-        
-        
-        
+
+
+
     }
     public function accept(Request $request,$id)
     {
@@ -75,9 +75,9 @@ class RealAccountsController extends Controller
         $userData->user_id = ($request['user_id']);
         $userData->save();
 
-        
+
         // try {
-            
+
             Mail::to($loginUser->email)->send(new AcceptRealAccount($userData));
         // } catch (\Throwable $th) {
         //     //throw $th;
