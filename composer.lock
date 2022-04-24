@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46c9477b09dbd8c3030aba716df4d341",
+    "content-hash": "8daa55d6dd982a39f309346e395857c0",
     "packages": [
         {
             "name": "brick/math",
@@ -4965,6 +4965,90 @@
                 }
             ],
             "time": "2022-03-02T12:58:14+00:00"
+        },
+        {
+            "name": "tarikh/php-mt5",
+            "version": "1.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tarikhagustia/php-mt5.git",
+                "reference": "b854373aef7a99be853315984459da89615b473b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tarikhagustia/php-mt5/zipball/b854373aef7a99be853315984459da89615b473b",
+                "reference": "b854373aef7a99be853315984459da89615b473b",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tarikh\\PhpMeta\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tarikh Agustia Ijudin",
+                    "email": "agustia.tarikh150@gmail.com"
+                }
+            ],
+            "description": "A Metatrader 5 Web API Wrapper for Laravel",
+            "support": {
+                "issues": "https://github.com/tarikhagustia/php-mt5/issues",
+                "source": "https://github.com/tarikhagustia/php-mt5/tree/1.6.3"
+            },
+            "time": "2021-08-17T09:11:40+00:00"
+        },
+        {
+            "name": "tarikhagustia/laravel-mt5",
+            "version": "1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tarikhagustia/laravel-mt5.git",
+                "reference": "85b09fd2232f977495ce9748a4ad73aff63c5c75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tarikhagustia/laravel-mt5/zipball/85b09fd2232f977495ce9748a4ad73aff63c5c75",
+                "reference": "85b09fd2232f977495ce9748a4ad73aff63c5c75",
+                "shasum": ""
+            },
+            "require": {
+                "tarikh/php-mt5": "^1.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Tarikhagustia\\LaravelMt5\\LaravelMt5Provider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tarikhagustia\\LaravelMt5\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tarikh Agustia Ijudin",
+                    "email": "agustia.tarikh150@gmail.com"
+                }
+            ],
+            "description": "Metatrader 5 Web API Wrapper for Laravel",
+            "support": {
+                "issues": "https://github.com/tarikhagustia/laravel-mt5/issues",
+                "source": "https://github.com/tarikhagustia/laravel-mt5/tree/1.4.1"
+            },
+            "time": "2021-08-13T08:28:15+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
