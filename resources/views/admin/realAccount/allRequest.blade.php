@@ -77,7 +77,7 @@
                                 <form method="post" action="{{route('accept',$value->id)}}">
                                     @csrf
                                     @method('PUT')
-                                    <!-- <input hidden type="text" name="agreed" value="Accepted"> -->
+                                    <input hidden type="text" name="user_id"  value="{{$value->user_id}}">
                                     <button @if($value->agreed !== null && $value->agreed == 'Accepted' ) disabled @endif class="btn btn-primary">Accept</button>
                                 </form>
                             </td>

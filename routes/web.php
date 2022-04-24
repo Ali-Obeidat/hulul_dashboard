@@ -44,5 +44,5 @@ Route::post('/ManagerEmails/send/{id}', [ManagerEmailController::class, 'sendEma
 Route::resource('/news', NewsController::class)->middleware('auth');
 
 Route::get('Real-account-request',[RealAccountsController::class,'showAllRequest'])->middleware('auth')->name('showAllRequest');
-Route::get('accept-Real-account',[RealAccountsController::class,'accept'])->middleware('auth')->name('accept');
+Route::put('/accept-Real-account/{id}',[RealAccountsController::class,'accept'])->middleware('auth')->name('accept');
 // Route::get('/UsersRequests/filter', [UserAccountsController::class,'DepositWithdrawFilter'])->name('DepositWithdrawFilter');
