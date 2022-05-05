@@ -11,7 +11,7 @@
             <h4 class="fw-bold py-3 mb-4">
                 <span class="text-muted fw-light">Managers Emails /</span> View All Emails
             </h4>
-            <a href="{{route('ManagerEmails.create')}}"> <button class="btn rounded-pill btn-dark">Send New Email</button> </a>
+            <a href="{{route('ManagerEmails.create')}}"> <button class="btn rounded-pill ">Send New Email</button> </a>
         </div>
         <!-- Ajax Sourced Server-side -->
         <div class="card">
@@ -37,7 +37,7 @@
                                 <form action="{{route('sendEmail',$email->id)}}" method="post">
                                     @csrf
                                     <input hidden type="text" value="{{$email->body}}" name="body">
-                                    <button type="submit" class="btn rounded-pill btn-dark">Send</button>
+                                    <button type="submit" class="btn rounded-pill ">Send</button>
                                 </form>
                             </td>
                         </tr>

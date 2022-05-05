@@ -9,7 +9,7 @@
 
 
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Manage Users /</span> View All Users
+            <span class="text-muted fw-light">Manage Requests /</span> Deposit & Withdraw Requests
         </h4>
 
         <!-- Ajax Sourced Server-side -->
@@ -70,7 +70,7 @@
                                     @csrf
                                     @method('PUT')
                                     <input hidden type="text" name="agreed" value="Accepted">
-                                    <button @if($value->agreed !== null && $value->agreed == 'Accepted' ) disabled @endif class="btn btn-primary">Accept</button>
+                                    <button @if($value->agreed !== null && $value->agreed == 'Accepted' ) disabled @endif class="btn ">Accept</button>
                                 </form>
                             </td>
                             <td>

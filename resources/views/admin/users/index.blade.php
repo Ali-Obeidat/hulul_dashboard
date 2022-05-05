@@ -135,19 +135,19 @@
 
                             <td>
                                 <a href="{{route('UsersAccounts.show',$user->id)}}">
-                                    <button type="button" class="btn rounded-pill btn-label-dark">Show</button>
+                                    <button type="button" class="btn rounded-pill ">Show</button>
                                 </a>
                             </td>
                             <td>
                                 <a href="{{route('users.edit',$user->id)}}">
-                                    <button type="button" class="btn rounded-pill btn-label-info">Edit</button>
+                                    <button type="button" class="btn rounded-pill ">Edit</button>
                                 </a>
                             </td>
                             <td>
                                 <form action="{{route('users.destroy',$user->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn rounded-pill btn-label-danger">Delete</button>
+                                    <button type="submit" class="btn rounded-pill ">Delete</button>
                                 </form>
                             </td>
                         </tr>
@@ -159,13 +159,14 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>#id</th>
+                        <th>#id</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
                             <th>type</th>
                             <th>country</th>
                             <th>Created at</th>
+                            <th>Accounts</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>

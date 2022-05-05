@@ -21,7 +21,6 @@
                 <table id="example" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th>#id</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>login</th>
@@ -36,7 +35,6 @@
                     <tbody>
                         @foreach($mtHulul as $value)
                         <tr>
-                            <td>{{$value->id}}</td>
                             <td>{{$value->name}}</td>
                             <td>{{$value->email}}</td>
                             <td>{{$value->login}}</td>
@@ -47,26 +45,21 @@
 
                             <td>
                                 <a href="">
-                                    <button type="button" class="btn rounded-pill btn-label-info">Change Balance</button>
+                                    <button type="button" class="btn rounded-pill">Change Balance</button>
                                 </a>
                             </td>
                             <td>
                                 <form action="{{route('UsersAccounts.destroy',$value->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn rounded-pill btn-label-danger">Delete</button>
+                                    <button type="submit" class="btn rounded-pill ">Delete</button>
                                 </form>
                             </td>
                         </tr>
                         @endforeach
-
-
-
-
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>#id</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>login</th>

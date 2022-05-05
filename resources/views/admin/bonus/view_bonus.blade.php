@@ -11,7 +11,7 @@
                 <h4 class="fw-bold py-3 mb-4">
                     <span class="text-muted fw-light">Bonuses /</span> View All
                 </h4>
-                <a href="{{route('bonus.create')}}"> <button class="btn rounded-pill btn-dark mb-2">Create New Bonus</button> </a>
+                <a href="{{route('bonus.create')}}"> <button class="btn rounded-pill  mb-2">Create New Bonus</button> </a>
             </div>
             <!-- Ajax Sourced Server-side -->
             <div class="card">
@@ -40,14 +40,14 @@
                                 <td>{{$bonus->to}}</td>
                                 <td>
                                     <a href="{{route('bonus.edit',$bonus->id)}}">
-                                        <button type="button" class="btn rounded-pill btn-label-info">Edit</button>
+                                        <button type="button" class="btn rounded-pill ">Edit</button>
                                     </a>
                                 </td>
                                 <td>
                                     <form action="{{route('bonus.destroy',$bonus->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn rounded-pill btn-label-danger">Delete</button>
+                                        <button type="submit" class="btn rounded-pill r">Delete</button>
                                     </form>
                                 </td>
                             </tr>

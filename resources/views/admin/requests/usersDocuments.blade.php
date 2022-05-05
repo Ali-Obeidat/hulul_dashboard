@@ -9,12 +9,12 @@
 
 
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Manage Users /</span> View All Users
+            <span class="text-muted fw-light">Manage Requests /</span> Documents
         </h4>
 
         <!-- Ajax Sourced Server-side -->
         <div class="card">
-            <h5 class="card-header">Deposit & Withdraw Requests Table</h5>
+            <h5 class="card-header">Documents Table</h5>
             <form action="/api/UsersRequests/filter" method="get">
 
                 <div class="mb-3" hidden>
@@ -47,48 +47,48 @@
                         <tr>
                             <th>#</th>
                             <th>User Name</th>
-                    <th>User Email</th>
-                    <th>Document</th>
-                    <th>Document status</th>
-                    <th>Created At</th>
-                    <th>Agree</th>
-                    <th>Reject</th>
+                            <th>User Email</th>
+                            <th>Document</th>
+                            <th>Document status</th>
+                            <th>Created At</th>
+                            <th>Agree</th>
+                            <th>Reject</th>
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($usersDocuments as $doc)
-                <tr>
-                    <td>{{$doc->id}}</td>
-                    <td>{{$doc->user->name}}</td>
-                    <td>{{$doc->user->email}}</td>
-                    <td> <a download href="{{$doc->path}}"> {{$doc->name}}</a> </td>
-                    <td>{{$doc->document_status}}</td>
-                    <td>{{$doc->created_at}}</td>
-                    <td>
-                        <form method="post" action="{{route('usersDocuments.update',$doc->id)}}">
-                            @csrf
-                            @method('PUT')
-                            <input hidden type="text" name="document_status" value="accepted">
-                            <button @if( $doc->document_status == 'accepted' ) disabled @endif class="btn btn-primary">Accept</button>
-                        </form>
-                    </td>
-                    <td>
-                        <form method="post" action="{{route('usersDocuments.update',$doc->id)}}">
-                            @csrf
-                            @method('PUT')
-                            <input hidden type="text" name="document_status" value="rejected">
-                            <button @if( $doc->document_status == 'rejected' ) disabled @endif class="btn btn-danger">Reject</button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
+                        @foreach($usersDocuments as $doc)
+                        <tr>
+                            <td>{{$doc->id}}</td>
+                            <td>{{$doc->user->name}}</td>
+                            <td>{{$doc->user->email}}</td>
+                            <td> <a download href="{{$doc->path}}"> {{$doc->name}}</a> </td>
+                            <td>{{$doc->document_status}}</td>
+                            <td>{{$doc->created_at}}</td>
+                            <td>
+                                <form method="post" action="{{route('usersDocuments.update',$doc->id)}}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input hidden type="text" name="document_status" value="accepted">
+                                    <button @if( $doc->document_status == 'accepted' ) disabled @endif class="btn ">Accept</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" action="{{route('usersDocuments.update',$doc->id)}}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input hidden type="text" name="document_status" value="rejected">
+                                    <button @if( $doc->document_status == 'rejected' ) disabled @endif class="btn btn-danger">Reject</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
 
 
 
                     </tbody>
                     <tfoot>
                         <tr>
-                        <th>#</th>
+                            <th>#</th>
 
                             <th>User Name</th>
                             <th>User Email</th>

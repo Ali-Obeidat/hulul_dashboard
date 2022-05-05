@@ -11,7 +11,7 @@
 
                         </div>
                         <div>
-                            <canvas id="myChart" width=""></canvas>
+                            <canvas id="myChart" height="195px"></canvas>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
 
                         </div>
                         <div class="card-body">
-                            <canvas id="TotalWithdrawals" width="500px"></canvas>
+                            <canvas id="TotalWithdrawals" width="500px" height="272px"></canvas>
                         </div>
                     </div>
                 </div>
@@ -114,92 +114,7 @@
             </div>
         </div>
 
-        <!-- <div class="row ">
-            <div class="col-lg-6 col-md-12 col-ms-12 " ">
-                <div class=" card-header header-elements">
-                <h5 class="card-title mb-0">Number of users last two weeks</h5>
 
-            </div>
-            <div>
-                <canvas id="myChart" width=""></canvas>
-            </div>
-
-
-        </div>
-            <div class="col-lg-6 col-md-12 col-ms-12 ml-3">
-                <div class="card">
-                    <div class="card-header header-elements">
-                        <h5 class="card-title mb-0">Withdrawals in last two weeks</h5>
-
-                    </div>
-                    <div class="card-body">
-                        <canvas id="barChart" class="chartjs" height="340px"></canvas>
-                    </div>
-                </div>
-
-            </div>
-
-        </div> -->
-        <!-- <div class="row">
-            <div class="col-lg-6 col-md-12 col-ms-12">
-                <div>
-                    <h5 class="card-title mb-0">Affiliates</h5>
-                    <small class="text-muted">Number of affiliates users last two weeks</small>
-                </div>
-                <div class="card-body">
-                    <div id="lineChart"></div>
-                </div>
-
-
-            </div>
-            <div class="col-lg-6 col-md-12 col-ms-12 ml-3">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <div>
-                            <small class="text-muted">Last Visitors</small>
-                        </div>
-
-                    </div>
-                    <div class="card-body">
-                        <div id="lineAreaChart"></div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div> -->
-
-
-        <!-- <div class="row">
-            <div class="col-lg-6 col-md-12 col-ms-12">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-md-center align-items-start">
-                        <h5 class="card-title mb-0">Deposits</h5>
-
-                    </div>
-                    <div>
-                        <canvas id="BarChart" width="500px"></canvas>
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="col-lg-6 col-md-12 col-ms-12 ml-3">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <div>
-                            <small class="text-muted">Total withdrawals</small>
-                        </div>
-
-                    </div>
-                    <div class="card-body">
-                        <canvas id="TotalWithdrawals" width="500px"></canvas>
-                    </div>
-                </div>
-
-            </div>
-
-        </div> -->
 
         <div class="row">
             <div class="col-lg-12 col-md-12 col-ms-12">
