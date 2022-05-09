@@ -28,9 +28,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+// Auth::routes();
+Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('showLoginForm');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+
 Route::resource('/users', UserController::class)->middleware('auth');
 Route::get('/showCompanyUsers', [UserController::class, 'showCompanyUsers'])->middleware('auth')->name('CompanyUsers');
 Route::resource('/Managers', ManagerController::class)->middleware('auth');

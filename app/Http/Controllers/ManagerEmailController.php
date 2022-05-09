@@ -22,6 +22,7 @@ class ManagerEmailController extends Controller
         $emails = ManagerEmail::all();
         return view('admin.managers.ManagerEmail', compact('emails'));
     }
+    
     public function sendEmail(Request $request, $id)
     {
         $body= $request['body'];

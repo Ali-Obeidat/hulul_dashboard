@@ -54,7 +54,7 @@
                                 </label>
                             </div>
                         </div>
-                        <button class="btn btn-primary d-grid w-100">
+                        <button class="btn  d-grid w-100" style="    background: linear-gradient(to left, #6149cd, #a654ac, #ea5f8b)">
                             Sign in
                         </button>
                     </form>

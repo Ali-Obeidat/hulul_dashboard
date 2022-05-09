@@ -61,14 +61,14 @@
 
                             <td>
                                 <a href="{{route('Managers.edit',$manager->id)}}">
-                                    <button type="button" class="btn rounded-pill btn-label-info">Edit</button>
+                                    <button type="button" class="btn rounded-pill ">Edit</button>
                                 </a>
                             </td>
                             <td>
                                 <form action="{{route('Managers.destroy',$manager->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn rounded-pill btn-label-danger">Delete</button>
+                                    <button type="submit" class="btn rounded-pill">Delete</button>
                                 </form>
                             </td>
                         </tr>
