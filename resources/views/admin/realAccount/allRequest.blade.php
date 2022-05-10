@@ -69,7 +69,7 @@
                             <td>{{$value->created_at}}</td>
                             <td>
                             <a href="{{route('changeLeveragePage',$value->id)}}">
-                                    <button type="button" class="btn rounded-pill btn-label-dark">Edit</button>
+                                    <button type="button" class="btn rounded-pill">Edit</button>
                                 </a>
                             </td>
                             <td>
@@ -77,7 +77,7 @@
                                 <form method="post" action="{{route('accept',$value->id)}}">
                                     @csrf
                                     @method('PUT')
-                                    <input hidden type="text" name="user_id"  value="{{$value->user_id}}">
+                                    <!-- <input hidden type="text" name="user_id"  value="{{$value->user_id}}"> -->
                                     <button @if($value->agreed !== null && $value->agreed == 'Accepted' ) disabled @endif class="btn btn-primary">Accept</button>
                                 </form>
                             </td>
@@ -85,7 +85,7 @@
                                 <form method="post" action="{{route('reject',$value->id)}}">
                                     @csrf
                                     @method('PUT')
-                                    <input hidden type="text" name="user_id"  value="{{$value->user_id}}">
+                                    <!-- <input hidden type="text" name="user_id"  value="{{$value->user_id}}"> -->
                                     <button @if($value->agreed !== null && $value->agreed == 'Rejected' ) disabled @endif class="btn btn-danger">Reject</button>
                                 </form>
                             </td>

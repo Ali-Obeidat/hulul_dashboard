@@ -24,7 +24,7 @@
                 </div>
                 <div class="card-body pb-0">
                     <label for="html5-datetime-local-input" class="col-md-2 col-form-label">from</label>
-                    <input class="form-control" type="datetime-local" value="2021-06-18T12:30:00" id="html5-datetime-local-input" name="from" min={{$time}} />
+                    <input class="form-control" type="datetime-local" value="2021-06-18T12:30:00" id="html5-datetime-local-input" name="from"  />
                 </div>
                 <div class="card-body">
                     <label for="html5-datetime-local-input" class="col-md-2 col-form-label">to</label>

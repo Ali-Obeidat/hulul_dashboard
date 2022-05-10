@@ -18,9 +18,9 @@ class DocumentController extends Controller
     public function index()
     {
         // $usersDocuments = Document::with('user')-> where('document_status','processing')->orderBy('created_at','desc')->get();
-        $usersDocuments = Document::with('user')->orderBy('created_at','desc')->get();
+        $usersDocuments = Document::with('user')->orderBy('created_at', 'desc')->get();
         // return $usersDocuments[0]->user->name;
-        return view('admin.requests.usersDocuments',compact('usersDocuments'));
+        return view('admin.requests.usersDocuments', compact('usersDocuments'));
     }
 
     /**
@@ -75,29 +75,34 @@ class DocumentController extends Controller
      */
     public function update(Request $request,  $id)
     {
-        
+
         $document = Document::find($id);
         // return $document->user->email;
-        if ($request->document_status === 'accepted' ) {
+        if ($request->document_status === 'accepted') {
+            if ($document->document_status == $request->document_status) {
+                return  'The Document already ' . $request->document_status;
+            }
             $document->document_status = $request->document_status;
             $document->save();
-        Alert::success('Document Status', 'The Document was '.$request->document_status );
+            Alert::success('Document Status', 'The Document was ' . $request->document_status);
 
             // return $document;
-        }elseif ($request->document_status === 'rejected') {
+        } elseif ($request->document_status === 'rejected') {
+            if ($document->document_status == $request->document_status) {
+                return  'The Document already ' . $request->document_status;
+            }
             $document->document_status = $request->document_status;
             $document->save();
-        Alert::error('Document Status', 'The Document was '.$request->document_status );
-
+            Alert::error('Document Status', 'The Document was ' . $request->document_status);
         }
-        
+
         try {
             Mail::to($document->user->email)->send(new DocumentStatus($request->document_status));
         } catch (\Throwable $th) {
             //throw $th;
         }
-        
-        
+
+
         return back();
     }
 

@@ -6,6 +6,7 @@ use App\Models\MtHulul;
 use Tarikhagustia\LaravelMt5\LaravelMt5;
 
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MtHululController extends Controller
 {
@@ -37,14 +38,9 @@ class MtHululController extends Controller
                 $accountInformations['leverage'] = $demo->leverage;
                 $accountInformations['group'] = $demo->group;
                 $accountInformations['created_at'] = date('d/m/Y', strtotime($demo->created_at));
-
                 array_push($accountsInformations, $accountInformations);
-
-
-
         }
-     
-
+    
         try {
             $mtHulul = MtHulul::all();
         } catch (\Throwable $th) {
@@ -151,8 +147,16 @@ class MtHululController extends Controller
      * @param  \App\Models\MtHulul  $mtHulul
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MtHulul $mtHulul)
+    public function destroy( $id)
     {
-        //
+        $mt = MtHulul::find($id);
+        // return $mt->login;
+        // $api = new LaravelMt5();
+        // $api->deleteUser($mt->login);
+        $mt->delete();
+        
+        session()->flash('account_deleted');
+        // return session()->get('account_deleted') ;
+        return back();
     }
 }

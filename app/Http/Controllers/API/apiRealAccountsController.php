@@ -1,36 +1,36 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Mail\AcceptRealAccount;
 use App\Mail\RejectRealAccount;
 use App\Models\MtHulul;
 use App\Models\PendingRealAccount;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use RealRashid\SweetAlert\Facades\Alert;
 use Tarikhagustia\LaravelMt5\LaravelMt5;
 use Tarikh\PhpMeta\Entities\User;
 use App\Models\User as LoginUser;
 use Illuminate\Support\Facades\Mail;
-use Laravel\Ui\Presets\React;
-use Tarikh\PhpMeta\MetaTraderClient;
 
-
-class RealAccountsController extends Controller
+class apiRealAccountsController extends Controller
 {
-    public function showAllRequest()
+    public function getAllRequest()
     {
+
         $pendingRealAccounts = PendingRealAccount::where('account_status', 'pending')->get();
         // return $pendingRealAccounts;
-        return view('admin.realAccount.allRequest', compact('pendingRealAccounts'));
+        return ['real accounts requests' => $pendingRealAccounts];
     }
+
     public function accept( $id)
     {
         $realAccount = PendingRealAccount::find($id);
         $loginUser = LoginUser::find($realAccount->user_id);
         // return $realAccount->address;
-
+        if ($realAccount->account_status == 'accepted') {
+            return 'this account already accepted';
+        }
         $api = new LaravelMt5();
         $user = new User();
         $user->setName($realAccount->name);
@@ -75,73 +75,40 @@ class RealAccountsController extends Controller
         // $userData->account_status = "pending";
         $userData->user_id = ($realAccount->user_id);
         $userData->save();
-
-
-        // try {
-
-        Mail::to($loginUser->email)->send(new AcceptRealAccount($userData));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
-        return back()->with('success', 'you accepted the real account');
+        try {
+            Mail::to($loginUser->email)->send(new AcceptRealAccount($userData));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        return  'you accepted the real account';
     }
 
     public function reject( $id)
     {
+        
         // return  $request;
         $realAccount = PendingRealAccount::find($id);
         $loginUser = LoginUser::find($realAccount->user_id);
+        if ($realAccount->account_status == 'rejected') {
+            return 'this account already rejected';
+        }
         $realAccount->account_status = 'rejected';
         $realAccount->save();
         Mail::to($loginUser->email)->send(new RejectRealAccount($loginUser));
-        return back()->with('error', 'you rejected the real account');
-
-
+        return  'you rejected the real account';
     }
 
-    public function edit($id)
-    {
-        $account = PendingRealAccount::find($id);
-        // return $account;
-        return view('admin.realAccount.changeLeverage', compact('account'));
-    }
     public function ChangeLeverage(Request $request, $id)
     {
-        // return $request;
+       
 
         $account = PendingRealAccount::find($id);
-        // $api = new LaravelMt5();
-        //  $api2 = new  MetaTraderClient('198.244.148.208', '443', '1005', 'abcd1234');
-        //  $user = new User();
-        //  $user->Login = $account->login;
-        //  $user->Email = $account->email;
-        //  $user->Group = 'preliminary';
-        //  $user->Leverage = $request['leverage'];
-        //  $user->Name = $account->name;
-        //  $user->Company = null;
-        //  $user->Language = null;
-        //  $user->Country = $account->country;
-        //  $user->City = $account->city;
-        //  $user->State = $account->state;
-        //  $user->ZipCode = $account->zipcode;
-        //  $user->Address = $account->address;
-        //  $user->ID = null;
-        //  $user->Phone = $account->phone;
-        //  $user->Status = null;
-        //  $user->Comment = null;
-        //  $user->Color = null;
-        //  $user->PhonePassword = $account->password;
-        //  $user->Agent = null;
-        //  $user->Rights=null;
-        //  $user->MainPassword = ($account->password);
-        //  $user->InvestorPassword = ($account->password);
-        //  $api2->updateUser($user);
+       
 
         $account->leverage = $request['leverage'];
         $account->save();
 
 
-        Alert::success('Real Account leverage', 'leverage was change successfully');
-        return redirect(route('showAllRequest'));
+       return 'leverage was change successfully';
     }
 }

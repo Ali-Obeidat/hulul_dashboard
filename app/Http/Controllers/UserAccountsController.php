@@ -38,49 +38,9 @@ class UserAccountsController extends Controller
         return view('admin.requests.DepositWithdraw', compact('Deposit_Withdraw', 'requestStatus'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\UserAccounts  $userAccounts
-     * @return \Illuminate\Http\Response
-     */
-    public function show(UserAccounts $userAccounts)
-    {
-        //
-    }
    
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\UserAccounts  $userAccounts
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserAccounts $userAccounts)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -94,6 +54,9 @@ class UserAccountsController extends Controller
         // $requestStatus = $request['agreed'];
 
         $userAccount = UserAccounts::find($id);
+        if ($userAccount->agreed == $request['agreed'] ) {
+            return "The ". $userAccount->type ." request already ". $request['agreed'];
+        }
         $userAccount->agreed = $request['agreed'];
         $userAccount->save();
         // return $userAccount['user_login'];

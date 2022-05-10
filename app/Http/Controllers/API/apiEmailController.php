@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Mail;
 
 class apiEmailController extends Controller
 {
+    public function getAllEmails()
+    {
+        $emails = ManagerEmail::all();
+        return ['all emails'=>$emails];
+    }
     public function create(Request $request)
     {
         $input = $request->validate([

@@ -13,9 +13,24 @@
         </h4>
 
         <!-- Ajax Sourced Server-side -->
+        {{Session('account_deleted')}}
         <div class="card">
             <h5 class="card-header">Accounts Table</h5>
+            @if(Session('account_deleted'))
+            <div class="alert alert-danger alert-dismissible col-6" role="alert">
+                <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">Account Deleted!!</h6>
+                <p class="mb-0">Aww yeah, you successfully Deleted the account.</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                </button>
 
+            </div>
+            <div class="alert alert-primary alert-dismissible" role="alert">
+                <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">Edit User</h6>
+                <p class="mb-0">You successfully Edited the user.</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                </button>
+            </div>
+            @endif
 
             <div class="card-datatable text-nowrap">
                 <table id="example" class="table table-striped" style="width:100%">
@@ -85,6 +100,7 @@
 
         </div>
 
+        @include('sweetalert::alert')
         @endsection
         @section('script')
         <script>
