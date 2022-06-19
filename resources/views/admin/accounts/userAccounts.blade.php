@@ -13,7 +13,7 @@
         </h4>
 
         <!-- Ajax Sourced Server-side -->
-        <div class="card">
+        <div class="card" style="padding: 10px;overflow-x: scroll;">
             <h5 class="card-header">Accounts Table</h5>
 
 
