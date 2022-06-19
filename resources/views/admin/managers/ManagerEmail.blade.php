@@ -9,12 +9,12 @@
 
         <div style="">
             <h4 class="fw-bold py-3 mb-4">
-                <span class="text-muted fw-light">Managers Emails /</span> View All Emails
+                <span class="fw-light">Managers Emails /</span> View All Emails
             </h4>
             <a href="{{route('ManagerEmails.create')}}"> <button class="btn rounded-pill ">Send New Email</button> </a>
         </div>
         <!-- Ajax Sourced Server-side -->
-        <div class="card">
+        <div class="card" style="padding: 15px;margin-top: 10px;">
             <h5 class="card-header">Managers Emails Table</h5>
 
             <div class="card-datatable text-nowrap">

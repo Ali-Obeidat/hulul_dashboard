@@ -9,11 +9,11 @@
 
 
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Manage Requests /</span> Documents
+            <span class="fw-light">Manage Requests /</span> Documents
         </h4>
 
         <!-- Ajax Sourced Server-side -->
-        <div class="card">
+        <div class="card" style="padding: 15px;">
             <h5 class="card-header">Documents Table</h5>
             <form action="/api/UsersRequests/filter" method="get">
 

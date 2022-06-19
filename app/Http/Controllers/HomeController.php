@@ -394,7 +394,7 @@ class HomeController extends Controller
         }
         arsort($affCount);
         $finalTen = User::whereIn('id', $topTen)->get()->take(10);
-
+        // ----------------------------------------------------------------------------
         $usersCountry = User::select('country')->get()->toArray();
         $Countries = [];
         foreach ($usersCountry as $item) {
@@ -414,14 +414,14 @@ class HomeController extends Controller
             $CountriesNum[] = (int)($value);
             $FiveCountries[] = (string)(explode(',', $key)[0]);
         }
-        // return $finalFiveCountries; 
+        // return $FiveCountries; 
+        $finalFiveCountries = [];
         try {
-            $finalCountriesNum =array_slice($CountriesNum, 0, 5);
+            $finalCountriesNum = array_slice($CountriesNum, 0, 5);
             $finalFiveCountries = array_slice($FiveCountries, 0, 5);
         } catch (\Throwable $th) {
-            //throw $th;
         }
-        // return $CountriesNum;
+        // return $finalCountriesNum;
         // $finalTen = User::whereIn('id', $topTen)->get()->take(5);
         // return  $finalTen;
 

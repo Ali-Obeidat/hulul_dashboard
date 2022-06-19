@@ -88,7 +88,7 @@
         </div>
 
         <!-- Ajax Sourced Server-side -->
-        <div class="card">
+        <div class="card" style="padding: 10px;overflow-x: scroll;">
             <h5 class="card-header">Users Table</h5>
             @if(Session('user_deleted'))
             <div class="alert alert-danger alert-dismissible col-6" role="alert">
@@ -107,7 +107,7 @@
             </div>
             @endif
             <div class="card-datatable text-nowrap">
-                <table id="example" class="table table-striped" style="width:100%">
+                <table id="example" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
                             <th>#id</th>
@@ -159,7 +159,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                        <th>#id</th>
+                            <th>#id</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>

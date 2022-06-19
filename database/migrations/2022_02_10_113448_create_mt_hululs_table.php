@@ -18,7 +18,7 @@ class CreateMtHululsTable extends Migration
             $table->string('name');
             $table->string('login');
             $table->string('email');
-            $table->string('account_type');
+            $table->foreignId('account_type')->references('id')->on('account_types')->onDelete('cascade')->unique();
             $table->string('currency');
             $table->string('group');
             $table->string('leverage');
@@ -32,6 +32,7 @@ class CreateMtHululsTable extends Migration
             $table->string('invest_password');
             $table->string('phone_password')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('color')->nullable();
             $table->timestamps();
         });
     }

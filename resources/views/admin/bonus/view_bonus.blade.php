@@ -9,7 +9,7 @@
 
             <div style="">
                 <h4 class="fw-bold py-3 mb-4">
-                    <span class="text-muted fw-light">Bonuses /</span> View All
+                    <span class="fw-light">Bonuses /</span> View All
                 </h4>
                 <a href="{{route('bonus.create')}}"> <button class="btn rounded-pill  mb-2">Create New Bonus</button> </a>
             </div>
@@ -35,7 +35,7 @@
                             <tr>
                                 <td>{{$bonus->id}}</td>
                                 <td>{{$bonus->code}}</td>
-                                <td>{{$bonus->quntity}}</td>
+                                <td>{{$bonus->quantity}}</td>
                                 <td>{{$bonus->from}}</td>
                                 <td>{{$bonus->to}}</td>
                                 <td>
@@ -52,10 +52,6 @@
                                 </td>
                             </tr>
                         @endforeach
-
-
-
-
                         </tbody>
                         <tfoot>
                         <tr>
@@ -71,11 +67,6 @@
                     </table>
                     </table>
                 </div>
-
-
-
-
-
             </div>
             @include('sweetalert::alert')
 

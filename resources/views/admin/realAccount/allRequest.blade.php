@@ -9,23 +9,23 @@
 
 
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Manage Users /</span> View All Users
+            <span class="fw-light">Manage Users /</span> View All Users
         </h4>
 
         <!-- Ajax Sourced Server-side -->
-        <div class="card">
+        <div class="card" style="padding: 15px;">
             <h5 class="card-header">Deposit & Withdraw Requests Table</h5>
             <form action="/api/UsersRequests/filter" method="get">
-                
-            <div class="mb-3" hidden>
-          <label for="exampleFormControlSelect1" class="form-label">Deposit & Withdraw Filter</label>
-          <select name="agreed" onchange="this.form.submit()" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-            <option @if(!empty($requestStatus)) @if($requestStatus == 'all') selected @endif @endif value="all" >all</option>
-            <option @if(!empty($requestStatus)) @if($requestStatus == 'Accept') selected @endif  @endif value="Accept">Accepted</option>
-            <option @if(!empty($requestStatus)) @if($requestStatus == 'Reject') selected @endif  @endif value="Reject">Rejected</option>
-          </select>
-        </div>
-        </form>
+
+                <div class="mb-3" hidden>
+                    <label for="exampleFormControlSelect1" class="form-label">Deposit & Withdraw Filter</label>
+                    <select name="agreed" onchange="this.form.submit()" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
+                        <option @if(!empty($requestStatus)) @if($requestStatus=='all' ) selected @endif @endif value="all">all</option>
+                        <option @if(!empty($requestStatus)) @if($requestStatus=='Accept' ) selected @endif @endif value="Accept">Accepted</option>
+                        <option @if(!empty($requestStatus)) @if($requestStatus=='Reject' ) selected @endif @endif value="Reject">Rejected</option>
+                    </select>
+                </div>
+            </form>
             @if(Session('user_deleted'))
             <div class="alert alert-danger alert-dismissible col-6" role="alert">
                 <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">User Deleted!!</h6>
@@ -68,7 +68,7 @@
                             <td>{{$value->account_status}}</td>
                             <td>{{$value->created_at}}</td>
                             <td>
-                            <a href="{{route('changeLeveragePage',$value->id)}}">
+                                <a href="{{route('changeLeveragePage',$value->id)}}">
                                     <button type="button" class="btn rounded-pill">Edit</button>
                                 </a>
                             </td>
@@ -97,7 +97,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                        <th>#</th>
+                            <th>#</th>
                             <th>Name</th>
                             <th>email</th>
                             <th>group</th>
@@ -121,7 +121,7 @@
 
         @endsection
         @section('script')
-    @include('sweetalert::alert')
+        @include('sweetalert::alert')
 
         <script>
             $(document).ready(function() {

@@ -13,7 +13,7 @@
         </h4>
 
         <!-- Ajax Sourced Server-side -->
-        <div class="card">
+        <div class="card" style="padding: 15px;">
             <h5 class="card-header">Managers Table</h5>
             @if(Session('manager_deleted'))
             <div class="alert alert-danger alert-dismissible col-6" role="alert">
@@ -31,11 +31,11 @@
             </div>
             @elseif(Session('manager_created'))
             <div class="alert alert-success alert-dismissible" role="alert">
-          <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">Well done :)</h6>
-          <p class="mb-0">You successfully Create manager.</p>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-          </button>
-        </div>
+                <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">Well done :)</h6>
+                <p class="mb-0">You successfully Create manager.</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                </button>
+            </div>
             @endif
             <div class="card-datatable text-nowrap">
                 <table id="example" class="table table-striped" style="width:100%">
@@ -80,7 +80,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                        <th>#id</th>
+                            <th>#id</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Role</th>

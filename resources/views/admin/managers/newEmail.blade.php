@@ -7,7 +7,7 @@
 
 
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Managers /</span> Send Email
+            <span class="fw-light">Managers /</span> Send Email
         </h4>
         @if(Session('user_updated'))
         <div class="alert alert-primary alert-dismissible col-6" role="alert">

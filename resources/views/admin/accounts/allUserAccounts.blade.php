@@ -9,12 +9,12 @@
 
 
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Accounts /</span> View All Accounts
+            <span class="fw-light">Accounts /</span> View All Accounts
         </h4>
 
         <!-- Ajax Sourced Server-side -->
         {{Session('account_deleted')}}
-        <div class="card">
+        <div class="card" style="padding: 15px;">
             <h5 class="card-header">Accounts Table</h5>
             @if(Session('account_deleted'))
             <div class="alert alert-danger alert-dismissible col-6" role="alert">

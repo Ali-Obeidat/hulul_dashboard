@@ -3,9 +3,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
 
         <div class="row mb-4" id="sortable-cards">
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-12" style="height: 525px;">
                 <div class="card drag-item cursor-move mb-lg-0 mb-4">
-                    <div class="card-body text-center">
+                    <div class="card-body text-center" style="height: 525px;">
                         <div class=" card-header header-elements">
                             <h5 class="card-title mb-0">Number of users last two weeks</h5>
 
@@ -16,9 +16,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom: 10px;">
                 <div class="card drag-item cursor-move mb-lg-0 mb-4">
-                    <div class="card-body text-center">
+                    <div class="card-body text-center" style="height: 525px;">
                         <div class="card-header header-elements">
                             <h5 class="card-title mb-0">Withdrawals in last two weeks</h5>
 
@@ -29,12 +29,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom: 10px;">
                 <div class="card drag-item cursor-move mb-lg-0 mb-4">
-                    <div class="card-body text-center">
+                    <div class="card-body text-center" style="height: 530px;">
                         <div>
                             <h5 class="card-title mb-0">Affiliates</h5>
-                            <small class="text-muted">Number of affiliates users last two weeks</small>
+                            <small class="">Number of affiliates users last two weeks</small>
                         </div>
                         <div class="card-body">
                             <div id="lineChart"></div>
@@ -42,12 +42,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom: 10px;">
                 <div class="card drag-item cursor-move mb-lg-0 mb-4">
-                    <div class="card-body text-center">
+                    <div class="card-body text-center" style="height: 530px;">
                         <div class="card-header d-flex justify-content-between">
                             <div>
-                                <small class="text-muted">Last Visitors</small>
+                                <small class="">Last Visitors</small>
                             </div>
 
                         </div>
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
-                <div class="card drag-item cursor-move mb-lg-0 mb-4">
+                <div class="card drag-item cursor-move mb-lg-0 mb-4" style="height: 425px;">
                     <div class="card-header d-flex justify-content-between align-items-md-center align-items-start">
                         <h5 class="card-title mb-0">Deposits</h5>
 
@@ -68,9 +68,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom: 10px;">
                 <div class="card drag-item cursor-move mb-lg-0 mb-4">
-                    <div class="card-body text-center">
+                    <div class="card-body text-center " style="height: 425px;">
                         <div class="card-header d-flex justify-content-between">
                             <div>
                                 <small class="text-muted">Total withdrawals</small>
@@ -85,20 +85,20 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="card drag-item cursor-move mb-lg-0 mb-4">
-                    <div class="card-body text-center">
+                    <div class="card-body text-center" style="height: 465px;">
                         <div class="card-header d-flex justify-content-between align-items-md-center align-items-start">
                             <h5 class="card-title mb-0">Companies</h5>
 
                         </div>
                         <div>
-                            <canvas id="companyChart"></canvas>
+                            <canvas id="companyChart" width="500px" height="272px"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="card drag-item cursor-move mb-lg-0 mb-4">
-                    <div class="card-body text-center">
+                    <div class="card-body text-center" style="height: 465px;">
                         <div class="card-header d-flex justify-content-between">
                             <div>
                                 <h5 class="text-muted">Top Five Countries</h5>
