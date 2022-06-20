@@ -9,7 +9,7 @@
 
 
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Accounts /</span> View All Accounts
+            <span class="fw-light">Accounts /</span> View All Accounts
         </h4>
 
         <!-- Ajax Sourced Server-side -->
