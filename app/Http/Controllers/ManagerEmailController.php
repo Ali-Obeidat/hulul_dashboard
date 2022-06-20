@@ -28,18 +28,23 @@ class ManagerEmailController extends Controller
     {
         $body = $request['body'];
         $emails = ManagerEmail::all();
-
-        $users = User::all()->first();
+        $userEmails = Email::all();
+        $users = User::all();
         $email = ManagerEmail::find($id);
-        return $users;
-        Mail::to($users->email)->send(new UserEmail($users, $body));
-        // foreach ($users as $key => $user) {
-        //     try {
-        //     } catch (\Throwable $th) {
-        //         //throw $th;
-        //     }
-        // }
-
+        foreach ($users as $key => $user) {
+            try {
+                Mail::to($user->email)->send(new UserEmail($user, $body));
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
+        foreach ($userEmails as $key => $email) {
+            try {
+                Mail::to($email->email)->send(new UserEmail($email, $body));
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
         Alert::success('Send Email', 'Send email successfully');
         return redirect(route('ManagerEmails.index'))->with(['emails' => $emails]);
     }
@@ -73,15 +78,15 @@ class ManagerEmailController extends Controller
         // return $users;
         ManagerEmail::create($input);
         foreach ($users as $key => $user) {
-            Mail::to($users->email)->send(new UserEmail($users, $body));
             try {
+                Mail::to($user->email)->send(new UserEmail($user, $body));
             } catch (\Throwable $th) {
                 //throw $th;
             }
         }
         foreach ($emails as $key => $email) {
-            Mail::to($email->email)->send(new UserEmail($email, $body));
             try {
+                Mail::to($email->email)->send(new UserEmail($email, $body));
             } catch (\Throwable $th) {
                 //throw $th;
             }
