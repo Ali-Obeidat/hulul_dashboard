@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\UserEmail;
+use App\Models\Email;
 use App\Models\ManagerEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,25 +23,25 @@ class ManagerEmailController extends Controller
         $emails = ManagerEmail::all();
         return view('admin.managers.ManagerEmail', compact('emails'));
     }
-    
+
     public function sendEmail(Request $request, $id)
     {
-        $body= $request['body'];
+        $body = $request['body'];
         $emails = ManagerEmail::all();
 
-        $users = User::all();
+        $users = User::all()->first();
         $email = ManagerEmail::find($id);
-        // return $email;
-        foreach ($users as $key => $user) {
-            try {
-                Mail::to($user->email)->send(new UserEmail($user, $body));
-            } catch (\Throwable $th) {
-                //throw $th;
-            }
-        }
+        return $users;
+        Mail::to($users->email)->send(new UserEmail($users, $body));
+        // foreach ($users as $key => $user) {
+        //     try {
+        //     } catch (\Throwable $th) {
+        //         //throw $th;
+        //     }
+        // }
 
         Alert::success('Send Email', 'Send email successfully');
-        return redirect(route('ManagerEmails.index'))->with(['emails'=>$emails]);
+        return redirect(route('ManagerEmails.index'))->with(['emails' => $emails]);
     }
 
     /**
@@ -68,11 +69,19 @@ class ManagerEmailController extends Controller
         $body = $request['body'];
 
         $users = User::all();
+        $emails = Email::all();
         // return $users;
         ManagerEmail::create($input);
         foreach ($users as $key => $user) {
+            Mail::to($users->email)->send(new UserEmail($users, $body));
             try {
-                Mail::to($user->email)->send(new UserEmail($user, $body));
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
+        foreach ($emails as $key => $email) {
+            Mail::to($email->email)->send(new UserEmail($email, $body));
+            try {
             } catch (\Throwable $th) {
                 //throw $th;
             }
@@ -82,6 +91,8 @@ class ManagerEmailController extends Controller
 
         return back();
     }
+
+
 
     /**
      * Display the specified resource.

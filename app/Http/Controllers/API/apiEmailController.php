@@ -4,17 +4,19 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Mail\UserEmail;
+use App\Models\Email;
 use App\Models\ManagerEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class apiEmailController extends Controller
 {
     public function getAllEmails()
     {
         $emails = ManagerEmail::all();
-        return ['all emails'=>$emails];
+        return ['all emails' => $emails];
     }
     public function create(Request $request)
     {
@@ -39,7 +41,7 @@ class apiEmailController extends Controller
         return 'Send email successfully';
     }
 
-    public function sendEmail( $id)
+    public function sendEmail($id)
     {
         $users = User::all();
         $email = ManagerEmail::find($id);
@@ -52,5 +54,22 @@ class apiEmailController extends Controller
         }
 
         return "email sent";
+    }
+
+    public function storeEmail(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:emails'],
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 401);
+        }
+        $email = Email::create([
+            'email' => $request['email']
+        ]);
+
+        return response()->json(['massage' => 'Email created stored']);
     }
 }
