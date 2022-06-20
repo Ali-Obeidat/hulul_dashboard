@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Mail\RegisteredEmail;
 use App\Mail\UserEmail;
 use App\Models\Email;
 use App\Models\ManagerEmail;
@@ -69,7 +70,11 @@ class apiEmailController extends Controller
         $email = Email::create([
             'email' => $request['email']
         ]);
-
+        Mail::to($request['email'])->send(new RegisteredEmail());
+        try {
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         return response()->json(['massage' => 'Email created stored']);
     }
 }
