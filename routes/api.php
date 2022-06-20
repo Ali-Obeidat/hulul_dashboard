@@ -33,8 +33,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::resource('/UsersRequests', UserAccountsController::class);
 
 // Route for login and logout
-Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
-Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+// Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+// Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 /////////////////////////////////////////////////////////////////////////////////////
 
 // api to get all charts data

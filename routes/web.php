@@ -11,6 +11,7 @@ use App\Http\Controllers\MtHululController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RealAccountsController;
 use App\Models\UserAccounts;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,8 +29,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Auth::routes();
-Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('showLoginForm');
+Auth::routes();
+// Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('showLoginForm');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
