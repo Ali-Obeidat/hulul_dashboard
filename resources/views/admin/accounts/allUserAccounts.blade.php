@@ -48,15 +48,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($mtHulul as $value)
+                        @foreach($demos as $value)
                         <tr>
-                            <td>{{$value->name}}</td>
-                            <td>{{$value->email}}</td>
-                            <td>{{$value->login}}</td>
-                            <td>{{$value->balance}}</td>
-                            <td>{{$value->leverage}}</td>
-                            <td>{{$value->group}}</td>
-                            <td>{{$value->created_at}}</td>
+                            <td>{{$value['name']}}</td>
+                            <td>{{$value['email']}}</td>
+                            <td>{{$value['login']}}</td>
+                            <td>{{$value['balance']}}</td>
+                            <td>{{$value['leverage']}}</td>
+                            <td>{{$value['group']}}</td>
+                            <td>{{$value['created_at']}}</td>
 
                             <td>
                                 <a href="">
@@ -64,7 +64,7 @@
                                 </a>
                             </td>
                             <td>
-                                <form action="{{route('UsersAccounts.destroy',$value->id)}}" method="post">
+                                <form action="{{route('UsersAccounts.destroy',$value['id'])}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn rounded-pill ">Delete</button>

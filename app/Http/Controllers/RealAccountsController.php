@@ -25,7 +25,7 @@ class RealAccountsController extends Controller
         // return $pendingRealAccounts;
         return view('admin.realAccount.allRequest', compact('pendingRealAccounts'));
     }
-    public function accept( $id)
+    public function accept($id)
     {
         $realAccount = PendingRealAccount::find($id);
         $loginUser = LoginUser::find($realAccount->user_id);
@@ -86,7 +86,7 @@ class RealAccountsController extends Controller
         return back()->with('success', 'you accepted the real account');
     }
 
-    public function reject( $id)
+    public function reject($id)
     {
         // return  $request;
         $realAccount = PendingRealAccount::find($id);
@@ -95,8 +95,6 @@ class RealAccountsController extends Controller
         $realAccount->save();
         Mail::to($loginUser->email)->send(new RejectRealAccount($loginUser));
         return back()->with('error', 'you rejected the real account');
-
-
     }
 
     public function edit($id)
@@ -111,31 +109,31 @@ class RealAccountsController extends Controller
 
         $account = PendingRealAccount::find($id);
         // $api = new LaravelMt5();
-        //  $api2 = new  MetaTraderClient('198.244.148.208', '443', '1005', 'abcd1234');
-        //  $user = new User();
-        //  $user->Login = $account->login;
-        //  $user->Email = $account->email;
-        //  $user->Group = 'preliminary';
-        //  $user->Leverage = $request['leverage'];
-        //  $user->Name = $account->name;
-        //  $user->Company = null;
-        //  $user->Language = null;
-        //  $user->Country = $account->country;
-        //  $user->City = $account->city;
-        //  $user->State = $account->state;
-        //  $user->ZipCode = $account->zipcode;
-        //  $user->Address = $account->address;
-        //  $user->ID = null;
-        //  $user->Phone = $account->phone;
-        //  $user->Status = null;
-        //  $user->Comment = null;
-        //  $user->Color = null;
-        //  $user->PhonePassword = $account->password;
-        //  $user->Agent = null;
-        //  $user->Rights=null;
-        //  $user->MainPassword = ($account->password);
-        //  $user->InvestorPassword = ($account->password);
-        //  $api2->updateUser($user);
+        // $api2 = new  MetaTraderClient('198.244.148.208', '443', '1005', 'kopiuy21sa');
+        // $user = new User();
+        // $user->Login = $account->login;
+        // $user->Email = $account->email;
+        // $user->Group = 'preliminary';
+        // $user->Leverage = $request['leverage'];
+        // $user->Name = $account->name;
+        // $user->Company = null;
+        // $user->Language = null;
+        // $user->Country = $account->country;
+        // $user->City = $account->city;
+        // $user->State = $account->state;
+        // $user->ZipCode = $account->zipcode;
+        // $user->Address = $account->address;
+        // $user->ID = null;
+        // $user->Phone = $account->phone;
+        // $user->Status = null;
+        // $user->Comment = null;
+        // $user->Color = null;
+        // $user->PhonePassword = $account->password;
+        // $user->Agent = null;
+        // $user->Rights = null;
+        // $user->MainPassword = ($account->password);
+        // $user->InvestorPassword = ($account->password);
+        // $api2->updateUser($user);
 
         $account->leverage = $request['leverage'];
         $account->save();

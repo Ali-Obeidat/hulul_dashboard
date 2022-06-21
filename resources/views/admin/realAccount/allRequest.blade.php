@@ -13,7 +13,7 @@
         </h4>
 
         <!-- Ajax Sourced Server-side -->
-        <div class="card" style="padding: 15px;">
+        <div class="card" style="padding: 10px;overflow-x: scroll;">
             <h5 class="card-header">Deposit & Withdraw Requests Table</h5>
             <form action="/api/UsersRequests/filter" method="get">
 

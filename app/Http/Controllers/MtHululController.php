@@ -24,23 +24,24 @@ class MtHululController extends Controller
         $api = new LaravelMt5();
         foreach ($userAccounts as $demo) {
 
-                $user = $api->getTradingAccounts($demo->login);
-                // $balance = $user->Balance;
-                // $equity = $user->Equity;
-                // $freeMargin = $user->MarginFree;
+            $user = $api->getTradingAccounts($demo->login);
+            // $balance = $user->Balance;
+            // $equity = $user->Equity;
+            // $freeMargin = $user->MarginFree;
 
-                $accountInformations['balance'] = $user->Balance;
-                $accountInformations['equity'] = $user->Equity;
-                $accountInformations['freeMargin'] = $user->MarginFree;
-                $accountInformations['login'] = $user->Login;
-                $accountInformations['name'] = $demo->name;
-                $accountInformations['id'] = $demo->id;
-                $accountInformations['leverage'] = $demo->leverage;
-                $accountInformations['group'] = $demo->group;
-                $accountInformations['created_at'] = date('d/m/Y', strtotime($demo->created_at));
-                array_push($accountsInformations, $accountInformations);
+            $accountInformations['balance'] = $user->Balance;
+            $accountInformations['equity'] = $user->Equity;
+            $accountInformations['freeMargin'] = $user->MarginFree;
+            $accountInformations['login'] = $user->Login;
+            $accountInformations['name'] = $demo->name;
+            $accountInformations['id'] = $demo->id;
+            $accountInformations['email'] = $demo->email;
+            $accountInformations['leverage'] = $demo->leverage;
+            $accountInformations['group'] = $demo->group;
+            $accountInformations['created_at'] = date('d/m/Y', strtotime($demo->created_at));
+            array_push($accountsInformations, $accountInformations);
         }
-    
+
         try {
             $mtHulul = MtHulul::all();
         } catch (\Throwable $th) {
@@ -87,35 +88,33 @@ class MtHululController extends Controller
         $api = new LaravelMt5();
         foreach ($userAccounts as $demo) {
 
-                $user = $api->getTradingAccounts($demo->login);
-                // $balance = $user->Balance;
-                // $equity = $user->Equity;
-                // $freeMargin = $user->MarginFree;
+            $user = $api->getTradingAccounts($demo->login);
+            // $balance = $user->Balance;
+            // $equity = $user->Equity;
+            // $freeMargin = $user->MarginFree;
 
-                $accountInformations['balance'] = $user->Balance;
-                $accountInformations['equity'] = $user->Equity;
-                $accountInformations['freeMargin'] = $user->MarginFree;
-                $accountInformations['login'] = $user->Login;
-                $accountInformations['name'] = $demo->name;
-                $accountInformations['id'] = $demo->id;
-                $accountInformations['leverage'] = $demo->leverage;
-                $accountInformations['group'] = $demo->group;
-                $accountInformations['created_at'] = date('d/m/Y', strtotime($demo->created_at));
+            $accountInformations['balance'] = $user->Balance;
+            $accountInformations['equity'] = $user->Equity;
+            $accountInformations['freeMargin'] = $user->MarginFree;
+            $accountInformations['login'] = $user->Login;
+            $accountInformations['name'] = $demo->name;
+            $accountInformations['email'] = $demo->email;
+            $accountInformations['id'] = $demo->id;
+            $accountInformations['leverage'] = $demo->leverage;
+            $accountInformations['group'] = $demo->group;
+            $accountInformations['created_at'] = date('d/m/Y', strtotime($demo->created_at));
 
-                array_push($accountsInformations, $accountInformations);
-
-
-
+            array_push($accountsInformations, $accountInformations);
         }
-     
+
         try {
             $mtHulul = MtHulul::Where('user_id', $id)->get();
         } catch (\Throwable $th) {
             $mtHulul = '';
         }
-        
+        // return $accountsInformations[0]['name'];
 
-        return view('admin.accounts.UserAccounts', ['mtHulul' => $mtHulul,'accountsInformations'=>$accountsInformations]);
+        return view('admin.accounts.UserAccounts', ['mtHulul' => $mtHulul, 'accountsInformations' => $accountsInformations]);
     }
 
     /**
@@ -147,14 +146,14 @@ class MtHululController extends Controller
      * @param  \App\Models\MtHulul  $mtHulul
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         $mt = MtHulul::find($id);
         // return $mt->login;
         // $api = new LaravelMt5();
         // $api->deleteUser($mt->login);
         $mt->delete();
-        
+
         session()->flash('account_deleted');
         // return session()->get('account_deleted') ;
         return back();

@@ -13,7 +13,7 @@
         </h4>
 
         <!-- Ajax Sourced Server-side -->
-        <div class="card" style="padding: 15px;">
+        <div class="card" style="padding: 10px;overflow-x: scroll;">
             <h5 class="card-header">Documents Table</h5>
             <form action="/api/UsersRequests/filter" method="get">
 
@@ -45,10 +45,11 @@
                 <table id="example" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>User Name</th>
-                            <th>User Email</th>
-                            <th>Document</th>
+                            <th>Type</th>
+                            <th>Document type</th>
+                            <th>1st Document</th>
+                            <th>2nd Document</th>
                             <th>Document status</th>
                             <th>Created At</th>
                             <th>Agree</th>
@@ -58,10 +59,11 @@
                     <tbody>
                         @foreach($usersDocuments as $doc)
                         <tr>
-                            <td>{{$doc->id}}</td>
                             <td>{{$doc->user->name}}</td>
-                            <td>{{$doc->user->email}}</td>
-                            <td> <a download href="{{$doc->path}}"> {{$doc->name}}</a> </td>
+                            <td>{{$doc->type}}</td>
+                            <td>{{$doc->document_type}}</td>
+                            <td> <a download href="https://www.hululmfx.com//files/{{$doc->first_document}}"> {{$doc->first_document}}</a> </td>
+                            <td> <a download href="https://www.hululmfx.com//files/{{$doc->second_document}}"> {{$doc->second_document}}</a> </td>
                             <td>{{$doc->document_status}}</td>
                             <td>{{$doc->created_at}}</td>
                             <td>
@@ -88,10 +90,9 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>#</th>
-
                             <th>User Name</th>
-                            <th>User Email</th>
+                            <th>Type</th>
+                            <th>Document type</th>
                             <th>Document</th>
                             <th>Document status</th>
                             <th>Created At</th>

@@ -6,7 +6,7 @@
         @csrf
         @method('PUT')
         <div class="col-md-6 m-auto mt-5 ">
-            <div class="card mb-4">
+            <div class="card mb-4 p-3">
                 <h5 class="card-header">Change Account leverage</h5>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Real Account</label>
