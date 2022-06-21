@@ -3,7 +3,7 @@
 
     @endsection
     @section('content')
-    <div class="container-xxl flex-grow-1 container-p-y" style="padding-left: 85px; padding-right: 85px;">
+    <div class="container-xxl flex-grow-1 container-p-y" style="">
 
 
         <h4 class="fw-bold py-3 mb-4">
@@ -22,7 +22,7 @@
 
             <!-- Bootstrap Validation -->
             <div class="col-md">
-                <div class="card">
+                <div class="card col-md-10 col-lg-10  m-auto ">
                     <h5 class="card-header">Create News</h5>
                     <div class="card-body">
                         <form class="" action="{{route('news.store')}}" method="post" enctype="multipart/form-data" novalidate>
@@ -39,12 +39,12 @@
                                 <label for="exampleFormControlTextarea1" class="form-label">News body</label>
                                 <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                             </div>
-                            @error('body') 
+                            @error('body')
                             <span class="" style="color:red" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
-                            
+
 
                             <div class="row mt-5">
                                 <div class="col-12">

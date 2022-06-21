@@ -14,10 +14,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-start justify-content-between">
                             <div class="content-left">
-                                <span>Session</span>
+                                <span>Total Users</span>
                                 <div class="d-flex align-items-end mt-2">
                                     <h4 class="mb-0 me-2">{{$userCount}}</h4>
-                                    <small class="text-success">(+29%)</small>
                                 </div>
                                 <small>Total Users</small>
                             </div>

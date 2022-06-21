@@ -3,7 +3,7 @@
 
     @endsection
     @section('content')
-    <div class="container-xxl flex-grow-1 container-p-y" style="padding-left: 85px; padding-right: 85px;">
+    <div class="container-xxl flex-grow-1 container-p-y">
 
 
         <h4 class="fw-bold py-3 mb-4">
@@ -21,8 +21,8 @@
 
 
             <!-- Bootstrap Validation -->
-            <div class="col-md">
-                <div class="card">
+            <div class="col-md-6 col-lg-10 mx-auto">
+                <div class="card card col-md-6  col-lg-10 m-auto">
                     <h5 class="card-header">Send New Email</h5>
                     <div class="card-body">
                         <form class="" action="{{route('ManagerEmails.store')}}" method="post" novalidate>

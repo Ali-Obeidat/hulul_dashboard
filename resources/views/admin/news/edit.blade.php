@@ -22,7 +22,7 @@
 
             <!-- Bootstrap Validation -->
             <div class="col-md">
-                <div class="card">
+                <div class="card col-md-10 col-lg-10  m-auto ">
                     @if(Session('news_updated'))
                     <div class="alert alert-primary alert-dismissible col-6" role="alert">
                         <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">Edit News</h6>

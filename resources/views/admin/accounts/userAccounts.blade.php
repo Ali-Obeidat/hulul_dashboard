@@ -38,7 +38,7 @@
                             <td>{{$value->name}}</td>
                             <td>{{$value->email}}</td>
                             <td>{{$value->login}}</td>
-                            <td>balance</td>
+                            <td>{{$value->balance}}</td>
                             <td>{{$value->leverage}}</td>
                             <td>{{$value->group}}</td>
                             <td>{{$value->created_at}}</td>

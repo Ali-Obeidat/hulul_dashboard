@@ -14,7 +14,7 @@
 
         <!-- Ajax Sourced Server-side -->
         {{Session('account_deleted')}}
-        <div class="card" style="padding: 15px;">
+        <div class="card" style="padding: 10px;overflow-x: scroll;">
             <h5 class="card-header">Accounts Table</h5>
             @if(Session('account_deleted'))
             <div class="alert alert-danger alert-dismissible col-6" role="alert">
@@ -53,7 +53,7 @@
                             <td>{{$value->name}}</td>
                             <td>{{$value->email}}</td>
                             <td>{{$value->login}}</td>
-                            <td>balance</td>
+                            <td>{{$value->balance}}</td>
                             <td>{{$value->leverage}}</td>
                             <td>{{$value->group}}</td>
                             <td>{{$value->created_at}}</td>
