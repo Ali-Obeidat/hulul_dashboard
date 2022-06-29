@@ -52,4 +52,9 @@ Route::put('/accept-Real-account/{id}',[RealAccountsController::class,'accept'])
 Route::put('/reject-Real-account/{id}',[RealAccountsController::class,'reject'])->middleware('auth')->name('reject');
 Route::get('/edit-Real-account-Leverage/{id}',[RealAccountsController::class,'edit'])->middleware('auth')->name('changeLeveragePage');
 Route::put('/edit-Real-account-Leverage/{id}',[RealAccountsController::class,'ChangeLeverage'])->middleware('auth')->name('ChangeLeverage');
+
+//sitting Request
+Route::get('/Real-account-sitting-request',[RealAccountsController::class,'sittingRequestPage'])->middleware('auth')->name('sittingRequestPage');
+Route::put('/Change-sitting-request-status/{id}',[RealAccountsController::class,'ChangeSittingRequest'])->middleware('auth')->name('ChangeSittingRequest');
+
 // Route::get('/UsersRequests/filter', [UserAccountsController::class,'DepositWithdrawFilter'])->name('DepositWithdrawFilter');

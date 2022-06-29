@@ -6,12 +6,14 @@ use App\Mail\AcceptRealAccount;
 use App\Mail\RejectRealAccount;
 use App\Models\MtHulul;
 use App\Models\PendingRealAccount;
+use App\Models\RealAccountRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Tarikhagustia\LaravelMt5\LaravelMt5;
 use Tarikh\PhpMeta\Entities\User;
 use App\Models\User as LoginUser;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Ui\Presets\React;
 use Tarikh\PhpMeta\MetaTraderClient;
@@ -103,6 +105,85 @@ class RealAccountsController extends Controller
         // return $account;
         return view('admin.realAccount.changeLeverage', compact('account'));
     }
+
+    public function sittingRequestPage()
+    {
+
+        // $requests = RealAccountRequest::all();
+        $requests = DB::table('real_account_requests')
+            ->join('users', 'real_account_requests.user_id', '=', 'users.id')
+            ->join('mt_hululs', 'real_account_requests.account_id', '=', 'mt_hululs.id')
+            ->select(
+                'real_account_requests.id',
+                'real_account_requests.user_id',
+                'real_account_requests.account_id',
+                'real_account_requests.Request_type',
+                'real_account_requests.old_value',
+                'real_account_requests.new_value',
+                'real_account_requests.request_status',
+                'users.name',
+                'mt_hululs.login'
+            )
+            ->get();
+        // return $requests[0]->request_status;
+        return view('admin.realAccount.SittingRequest.AllSittingRequest', compact('requests'));
+    }
+
+    public function ChangeSittingRequest(Request $request, $id)
+    {
+        //    return $request;
+
+        $sittingRequest = RealAccountRequest::find($id);
+        $accountInfo = MtHulul::find($sittingRequest['account_id']);
+
+        if ($sittingRequest->request_status == 'Accepted' && $request['request_status'] == 'Accepted') {
+            abort(404, 'Go back');
+        }
+        if ($sittingRequest->request_status == 'Rejected' && $request['request_status'] == 'Rejected') {
+            abort(404, 'Go back');
+        }
+        if ($request['request_status'] == 'Accepted') {
+            $api = new LaravelMt5();
+            $api2 = new  MetaTraderClient('198.244.148.208', '443', '1005', 'kopiuy21sa');
+            $user = new User();
+            $user->Login = $accountInfo->login;
+            $user->Email = $accountInfo->email;
+            $user->Group = 'preliminary';
+            $user->Leverage = $request['new_value'];
+            $user->Name = $accountInfo->name;
+            $user->Company = null;
+            $user->Language = null;
+            $user->Country = $accountInfo->country;
+            $user->City = $accountInfo->city;
+            $user->State = $accountInfo->state;
+            $user->ZipCode = $accountInfo->zipcode;
+            $user->Address = $accountInfo->address;
+            $user->ID = null;
+            $user->Phone = $accountInfo->phone;
+            $user->Status = null;
+            $user->Comment = null;
+            $user->Color = $accountInfo->color;
+            $user->PhonePassword = ($accountInfo->password);
+            $user->Agent = null;
+            $user->Rights = null;
+            $user->MainPassword = ($accountInfo->password);
+            $user->InvestorPassword = ($accountInfo->password);
+            $api2->updateUser($user);
+
+            // change account leverage in database (mt_hulul table)
+            $accountInfo->leverage = $request['new_value'];
+            $accountInfo->save();
+            $sittingRequest->request_status = $request['request_status'];
+            $sittingRequest->save();
+            return back()->with('success', 'you accepted the Change in real account sitting');
+        } elseif ($request['request_status'] == 'Rejected') {
+            $sittingRequest->request_status = $request['request_status'];
+            $sittingRequest->save();
+
+            return back()->with('error', 'you rejected the the Change in real account sitting');
+        }
+    }
+    // ----------------------------------------------------------------------------------------------
     public function ChangeLeverage(Request $request, $id)
     {
         // return $request;

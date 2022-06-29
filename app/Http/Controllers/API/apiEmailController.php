@@ -70,8 +70,8 @@ class apiEmailController extends Controller
         $email = Email::create([
             'email' => $request['email']
         ]);
-        Mail::to($request['email'])->send(new RegisteredEmail());
         try {
+            Mail::to($request['email'])->send(new RegisteredEmail());
         } catch (\Throwable $th) {
             //throw $th;
         }

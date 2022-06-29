@@ -198,12 +198,12 @@
                 <ul class="menu-sub">
                   <li class="menu-item">
                     <a href="{{route('showAllRequest')}}" class="menu-link">
-                      <div data-i18n="View All Request">View All Request</div>
+                      <div data-i18n="Create Account Request">Create Account Request</div>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="app-user-view-security.html" class="menu-link">
-                      <div data-i18n="Security">Security</div>
+                    <a href="{{route('sittingRequestPage')}}" class="menu-link">
+                      <div data-i18n="Edit Sitting Request">Edit Sitting Request</div>
                     </a>
                   </li>
                 </ul>
@@ -759,7 +759,7 @@
                 </script>
                 , made with ❤️ by <a href="https://themeselection.com/" target="_blank" class="footer-link fw-bolder">Hulul Fx</a>
               </div>
-         
+
             </div>
           </footer>
           <!-- / Footer -->
