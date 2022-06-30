@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Ui\Presets\React;
 use Tarikh\PhpMeta\MetaTraderClient;
+use Tarikh\PhpMeta\Lib\MTUserProtocol;
+use Tarikhagustia\LaravelMt5\Entities\Trade;
 
 
 class RealAccountsController extends Controller
@@ -105,12 +107,13 @@ class RealAccountsController extends Controller
         // return $account;
         return view('admin.realAccount.changeLeverage', compact('account'));
     }
-
-    public function sittingRequestPage()
+    // --------------------------------------------------------------------------------
+    // Change leverage
+    public function changeLeverageRequestPage()
     {
-
         // $requests = RealAccountRequest::all();
         $requests = DB::table('real_account_requests')
+            ->where('Request_type', '=', 'change leverage')
             ->join('users', 'real_account_requests.user_id', '=', 'users.id')
             ->join('mt_hululs', 'real_account_requests.account_id', '=', 'mt_hululs.id')
             ->select(
@@ -126,10 +129,10 @@ class RealAccountsController extends Controller
             )
             ->get();
         // return $requests[0]->request_status;
-        return view('admin.realAccount.SittingRequest.AllSittingRequest', compact('requests'));
+        return view('admin.realAccount.SittingRequest.ChangeleverageRequest', compact('requests'));
     }
 
-    public function ChangeSittingRequest(Request $request, $id)
+    public function ChangeLeverageStatus(Request $request, $id)
     {
         //    return $request;
 
@@ -184,38 +187,71 @@ class RealAccountsController extends Controller
         }
     }
     // ----------------------------------------------------------------------------------------------
-    public function ChangeLeverage(Request $request, $id)
+    // Change Balance
+    public function changeBalanceRequestPage()
+    {
+        // $requests = RealAccountRequest::all();
+        $requests = DB::table('real_account_requests')
+            ->where('Request_type', '=', 'change balance')
+            ->join('users', 'real_account_requests.user_id', '=', 'users.id')
+            ->join('mt_hululs', 'real_account_requests.account_id', '=', 'mt_hululs.id')
+            ->select(
+                'real_account_requests.id',
+                'real_account_requests.user_id',
+                'real_account_requests.account_id',
+                'real_account_requests.Request_type',
+                'real_account_requests.old_value',
+                'real_account_requests.new_value',
+                'real_account_requests.request_status',
+                'users.name',
+                'mt_hululs.login'
+            )
+            ->get();
+        // return $requests[0]->request_status;
+        return view('admin.realAccount.SittingRequest.ChangeBalanceRequest', compact('requests'));
+    }
+
+    public function ChangeBalanceStatus(Request $request, $id)
     {
         // return $request;
 
-        $account = PendingRealAccount::find($id);
-        // $api = new LaravelMt5();
-        // $api2 = new  MetaTraderClient('198.244.148.208', '443', '1005', 'kopiuy21sa');
-        // $user = new User();
-        // $user->Login = $account->login;
-        // $user->Email = $account->email;
-        // $user->Group = 'preliminary';
-        // $user->Leverage = $request['leverage'];
-        // $user->Name = $account->name;
-        // $user->Company = null;
-        // $user->Language = null;
-        // $user->Country = $account->country;
-        // $user->City = $account->city;
-        // $user->State = $account->state;
-        // $user->ZipCode = $account->zipcode;
-        // $user->Address = $account->address;
-        // $user->ID = null;
-        // $user->Phone = $account->phone;
-        // $user->Status = null;
-        // $user->Comment = null;
-        // $user->Color = null;
-        // $user->PhonePassword = $account->password;
-        // $user->Agent = null;
-        // $user->Rights = null;
-        // $user->MainPassword = ($account->password);
-        // $user->InvestorPassword = ($account->password);
-        // $api2->updateUser($user);
+        $sittingRequest = RealAccountRequest::find($id);
+        $accountInfo = MtHulul::find($sittingRequest['account_id']);
 
+        if ($sittingRequest->request_status == 'Accepted' && $request['request_status'] == 'Accepted') {
+            abort(404, 'Go back');
+        }
+        if ($sittingRequest->request_status == 'Rejected' && $request['request_status'] == 'Rejected') {
+            abort(404, 'Go back');
+        }
+        if ($request['request_status'] == 'Accepted') {
+            try {
+                $api = new LaravelMt5();
+                $balance = new  MTUserProtocol($api);
+                $api->conductUserBalance($accountInfo['login'], Trade::DEAL_BALANCE, (int)($request->new_value), 'aaaaaa');
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+
+            // change account leverage in database (mt_hulul table)
+
+            $sittingRequest->request_status = $request['request_status'];
+            $sittingRequest->save();
+            return back()->with('success', 'you accepted the Change in real account sitting');
+        } elseif ($request['request_status'] == 'Rejected') {
+            $sittingRequest->request_status = $request['request_status'];
+            $sittingRequest->save();
+
+            return back()->with('error', 'you rejected the the Change in real account sitting');
+        }
+    }
+
+
+    // -------------------------------------------------------------------------------------
+    public function ChangeLeverage(Request $request, $id)
+    {
+        // return $request;
+        $account = PendingRealAccount::find($id);
         $account->leverage = $request['leverage'];
         $account->save();
 

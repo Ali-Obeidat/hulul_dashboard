@@ -6,17 +6,12 @@
     @endsection
     @section('content')
     <div class="container-xxl flex-grow-1 container-p-y" style="padding-left: 85px; padding-right: 85px;">
-
-
         <h4 class="fw-bold py-3 mb-4">
-            <span class="fw-light">Manage Users /</span> View All Users
+            <span class="fw-light">Manage Real Accounts /</span> View Leverage Request
         </h4>
-
         <!-- Ajax Sourced Server-side -->
         <div class="card" style="padding: 10px;overflow-x: scroll;">
             <h5 class="card-header">Deposit & Withdraw Requests Table</h5>
-
-
             <div class="card-datatable text-nowrap">
                 <table id="example" class="table table-striped" style="width:100%">
                     <thead>
@@ -40,11 +35,8 @@
                             <td>{{$request->old_value}}</td>
                             <td> {{$request->new_value}} </td>
                             <td>{{$request->request_status}}</td>
-
-
                             <td>
-
-                                <form method="post" action="{{route('ChangeSittingRequest',$request->id)}}">
+                                <form method="post" action="{{route('ChangeLeverageStatus',$request->id)}}">
                                     @csrf
                                     @method('PUT')
                                     <input hidden type="text" name="request_status" value="Accepted">
@@ -53,7 +45,7 @@
                                 </form>
                             </td>
                             <td>
-                                <form method="post" action="{{route('ChangeSittingRequest',$request->id)}}">
+                                <form method="post" action="{{route('ChangeLeverageStatus',$request->id)}}">
                                     @csrf
                                     @method('PUT')
                                     <input hidden type="text" name="request_status" value="Rejected">
@@ -62,9 +54,6 @@
                             </td>
                         </tr>
                         @endforeach
-
-
-
                     </tbody>
                     <tfoot>
                         <tr>
@@ -81,17 +70,10 @@
                 </table>
                 </table>
             </div>
-
-
-
-
-
         </div>
-
         @endsection
         @section('script')
         @include('sweetalert::alert')
-
         <script>
             $(document).ready(function() {
                 $('#example').DataTable();

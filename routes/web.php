@@ -47,14 +47,18 @@ Route::resource('/bonus', BonusController::class)->middleware('auth');
 Route::post('/ManagerEmails/send/{id}', [ManagerEmailController::class, 'sendEmail'])->middleware('auth')->name('sendEmail');
 Route::resource('/news', NewsController::class)->middleware('auth');
 
-Route::get('Real-account-request',[RealAccountsController::class,'showAllRequest'])->middleware('auth')->name('showAllRequest');
-Route::put('/accept-Real-account/{id}',[RealAccountsController::class,'accept'])->middleware('auth')->name('accept');
-Route::put('/reject-Real-account/{id}',[RealAccountsController::class,'reject'])->middleware('auth')->name('reject');
-Route::get('/edit-Real-account-Leverage/{id}',[RealAccountsController::class,'edit'])->middleware('auth')->name('changeLeveragePage');
-Route::put('/edit-Real-account-Leverage/{id}',[RealAccountsController::class,'ChangeLeverage'])->middleware('auth')->name('ChangeLeverage');
+Route::get('Real-account-request', [RealAccountsController::class, 'showAllRequest'])->middleware('auth')->name('showAllRequest');
+Route::put('/accept-Real-account/{id}', [RealAccountsController::class, 'accept'])->middleware('auth')->name('accept');
+Route::put('/reject-Real-account/{id}', [RealAccountsController::class, 'reject'])->middleware('auth')->name('reject');
+Route::get('/edit-Real-account-Leverage/{id}', [RealAccountsController::class, 'edit'])->middleware('auth')->name('changeLeveragePage');
+Route::put('/edit-Real-account-Leverage/{id}', [RealAccountsController::class, 'ChangeLeverage'])->middleware('auth')->name('ChangeLeverage');
 
 //sitting Request
-Route::get('/Real-account-sitting-request',[RealAccountsController::class,'sittingRequestPage'])->middleware('auth')->name('sittingRequestPage');
-Route::put('/Change-sitting-request-status/{id}',[RealAccountsController::class,'ChangeSittingRequest'])->middleware('auth')->name('ChangeSittingRequest');
+Route::get('/Real-account-leverage-request', [RealAccountsController::class, 'changeLeverageRequestPage'])->middleware('auth')->name('changeLeverageRequestPage');
+Route::put('/Change-leverage-request-status/{id}', [RealAccountsController::class, 'ChangeLeverageStatus'])->middleware('auth')->name('ChangeLeverageStatus');
+//balance 
+Route::get('/Real-account-balance-request', [RealAccountsController::class, 'changeBalanceRequestPage'])->middleware('auth')->name('changeBalanceRequestPage');
+Route::put('/Change-balance-request-status/{id}', [RealAccountsController::class, 'ChangeBalanceStatus'])->middleware('auth')->name('ChangeBalanceStatus');
+
 
 // Route::get('/UsersRequests/filter', [UserAccountsController::class,'DepositWithdrawFilter'])->name('DepositWithdrawFilter');

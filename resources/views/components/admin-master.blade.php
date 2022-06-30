@@ -202,8 +202,13 @@
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="{{route('sittingRequestPage')}}" class="menu-link">
-                      <div data-i18n="Edit Sitting Request">Edit Sitting Request</div>
+                    <a href="{{route('changeLeverageRequestPage')}}" class="menu-link">
+                      <div data-i18n="Change Leverage Request">Change Leverage Request</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="{{route('changeBalanceRequestPage')}}" class="menu-link">
+                      <div data-i18n="Change Balance Request">Change Balance Request</div>
                     </a>
                   </li>
                 </ul>
