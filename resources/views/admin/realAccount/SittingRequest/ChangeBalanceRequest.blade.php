@@ -14,7 +14,7 @@
 
         <!-- Ajax Sourced Server-side -->
         <div class="card" style="padding: 10px;overflow-x: scroll;">
-            <h5 class="card-header">Deposit & Withdraw Requests Table</h5>
+            <h5 class="card-header">Balance Request Table</h5>
 
 
             <div class="card-datatable text-nowrap">

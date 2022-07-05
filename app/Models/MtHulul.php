@@ -13,6 +13,18 @@ class MtHulul extends Model
     use HasFactory;
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this-> belongsTo(User::class);
+        return $this->belongsTo(User::class);
+    }
+    public function accountType()
+    {
+        return $this->belongsTo(AccountType::class);
+    }
+    public function RealAccountRequest()
+    {
+        return $this->hasMany(RealAccountRequest::class);
+    }
+    public function DepositWithdraw()
+    {
+        return $this->hasMany(DepositWithdraw::class);
     }
 }

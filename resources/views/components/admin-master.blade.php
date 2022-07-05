@@ -211,8 +211,53 @@
                       <div data-i18n="Change Balance Request">Change Balance Request</div>
                     </a>
                   </li>
+                  <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                      <div data-i18n="Deposit Request">Deposit Request</div>
+                    </a>
+                    <ul class="menu-sub">
+                      <li class="menu-item">
+                        <a href="{{route('ShowDepositRequestPage')}}" class="menu-link">
+                          <div data-i18n="All Deposit Request">All Deposit Request</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="{{route('AcceptedDepositRequestPage')}}" class="menu-link">
+                          <div data-i18n="Accepted Deposit Request">Accepted Deposit Request</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="{{route('RejectedDepositRequestPage')}}" class="menu-link">
+                          <div data-i18n="Rejected Deposit Request">Rejected Deposit Request</div>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                      <div data-i18n="Withdraw Request">Withdraw Request</div>
+                    </a>
+                    <ul class="menu-sub">
+                      <li class="menu-item">
+                        <a href="{{route('ShowWithdrawRequestPage')}}" class="menu-link">
+                          <div data-i18n="All Withdraw Request">All Withdraw Request</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="{{route('AcceptedWithdrawRequestPage')}}" class="menu-link">
+                          <div data-i18n="Accepted Withdraw Request">Accepted Withdraw Request</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="{{route('RejectedWithdrawRequestPage')}}" class="menu-link">
+                          <div data-i18n="Rejected Withdraw Request">Rejected Withdraw Request</div>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
                 </ul>
               </li>
+
             </ul>
           </li>
           <li class="menu-item">

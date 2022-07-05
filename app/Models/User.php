@@ -58,6 +58,10 @@ class User extends Authenticatable
         return $this->hasMany(Document::class);
         
     }
+    public function DepositWithdraw()
+    {
+        return $this->hasMany(DepositWithdraw::class);
+    }
     
     public function agreed(){
         if (!empty($this->quc) ) {

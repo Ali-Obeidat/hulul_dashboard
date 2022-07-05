@@ -7,6 +7,7 @@ use App\Http\Controllers\UserAccountsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRequestController;
 use App\Http\Controllers\BonusController;
+use App\Http\Controllers\DepositWithdrawController;
 use App\Http\Controllers\MtHululController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RealAccountsController;
@@ -60,5 +61,12 @@ Route::put('/Change-leverage-request-status/{id}', [RealAccountsController::clas
 Route::get('/Real-account-balance-request', [RealAccountsController::class, 'changeBalanceRequestPage'])->middleware('auth')->name('changeBalanceRequestPage');
 Route::put('/Change-balance-request-status/{id}', [RealAccountsController::class, 'ChangeBalanceStatus'])->middleware('auth')->name('ChangeBalanceStatus');
 
-
-// Route::get('/UsersRequests/filter', [UserAccountsController::class,'DepositWithdrawFilter'])->name('DepositWithdrawFilter');
+// DepositWithdraw request
+Route::get('/Show-Deposit-request', [DepositWithdrawController::class, 'ShowDepositRequestPage'])->middleware('auth')->name('ShowDepositRequestPage');
+Route::get('/Show-Accepted-Deposit-request', [DepositWithdrawController::class, 'AcceptedDepositRequestPage'])->middleware('auth')->name('AcceptedDepositRequestPage');
+Route::get('/Show-Rejected-Deposit-request', [DepositWithdrawController::class, 'RejectedDepositRequestPage'])->middleware('auth')->name('RejectedDepositRequestPage');
+Route::put('/Change-Deposit-request-status/{id}', [DepositWithdrawController::class, 'ChangeDepositStatus'])->middleware('auth')->name('ChangeDepositStatus');
+//
+Route::get('/Show-Withdraw-request', [DepositWithdrawController::class, 'ShowWithdrawRequestPage'])->middleware('auth')->name('ShowWithdrawRequestPage');
+Route::get('/Show-Accepted-Withdraw-request', [DepositWithdrawController::class, 'AcceptedWithdrawRequestPage'])->middleware('auth')->name('AcceptedWithdrawRequestPage');
+Route::get('/Show-Rejected-Withdraw-request', [DepositWithdrawController::class, 'RejectedWithdrawRequestPage'])->middleware('auth')->name('RejectedWithdrawRequestPage');

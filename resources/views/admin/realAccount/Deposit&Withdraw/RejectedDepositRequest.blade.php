@@ -6,12 +6,17 @@
     @endsection
     @section('content')
     <div class="container-xxl flex-grow-1 container-p-y" style="padding-left: 85px; padding-right: 85px;">
+
+
         <h4 class="fw-bold py-3 mb-4">
-            <span class="fw-light">Manage Real Accounts /</span> View Leverage Request
+            <span class="fw-light">Manage Real Accounts /</span> View Deposit Requests
         </h4>
+
         <!-- Ajax Sourced Server-side -->
         <div class="card" style="padding: 10px;overflow-x: scroll;">
-            <h5 class="card-header">Leverage Request Table</h5>
+            <h5 class="card-header">Deposit Requests Table</h5>
+
+
             <div class="card-datatable text-nowrap">
                 <table id="example" class="table table-striped" style="width:100%">
                     <thead>
@@ -19,37 +24,53 @@
                             <th>User Name</th>
                             <th>Account Login</th>
                             <th>Request Type</th>
-                            <th>Old Value</th>
-                            <th>New Value</th>
+                            <th>Bank Name</th>
+                            <th>Recipient Name</th>
+                            <th>Account Number</th>
+                            <th>Remittance Notices</th>
+                            <th>Amount Transferred</th>
                             <th>Request Status</th>
+                            <th>Created At</th>
                             <th>Accept</th>
                             <th>Reject</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($requests as $request)
+                        @foreach($depositRequests as $depositRequest)
                         <tr>
-                            <td>{{$request->name}}</td>
-                            <td>{{$request->login}}</td>
-                            <td>{{$request->Request_type}}</td>
-                            <td>{{$request->old_value}}</td>
-                            <td> {{$request->new_value}} </td>
-                            <td>{{$request->request_status}}</td>
+                            <td>{{$depositRequest->name}}</td>
+                            <td>{{$depositRequest->login}}</td>
+                            <td>{{$depositRequest->type}}</td>
+                            <td>{{$depositRequest->bank_name}}</td>
+                            <td>{{$depositRequest->recipient_name}}</td>
+                            <td> {{$depositRequest->account_number}} </td>
                             <td>
-                                <form method="post" action="{{route('ChangeLeverageStatus',$request->id)}}">
+                                <a download href="https://www.hululmfx.com/public/files/{{$depositRequest->Remittance_notices}}" target="_blank"> {{$depositRequest->Remittance_notices}}</a>
+                            </td>
+                            <td>{{$depositRequest->amount_transferred}}</td>
+                            <td>{{$depositRequest->status}}</td>
+                            <td>{{$depositRequest->created_at}}</td>
+
+
+                           
+                            <td>
+
+                                <form method="post" action="{{route('ChangeDepositStatus',$depositRequest->id)}}">
                                     @csrf
                                     @method('PUT')
-                                    <input hidden type="text" name="request_status" value="Accepted">
-                                    <input hidden type="text" name="new_value" value="{{$request->new_value}}">
-                                    <button @if($request->request_status =='Accepted' ) disabled @endif class="btn btn-primary">Accept</button>
+                                    <input hidden type="text" name="status" value="Accepted">
+
+                                    <button @if($depositRequest->status =='Accepted' ) disabled @endif class="btn btn-primary">Accept</button>
                                 </form>
                             </td>
+
+                      
                             <td>
-                                <form method="post" action="{{route('ChangeLeverageStatus',$request->id)}}">
+                                <form method="post" action="{{route('ChangeDepositStatus',$depositRequest->id)}}">
                                     @csrf
                                     @method('PUT')
-                                    <input hidden type="text" name="request_status" value="Rejected">
-                                    <button @if($request->request_status =='Rejected' ) disabled @endif class="btn btn-danger">Reject</button>
+                                    <input hidden type="text" name="status" value="Rejected">
+                                    <button @if($depositRequest->status =='Rejected' ) disabled @endif class="btn btn-danger">Reject</button>
                                 </form>
                             </td>
                         </tr>
@@ -60,9 +81,13 @@
                             <th>User Name</th>
                             <th>Account Login</th>
                             <th>Request Type</th>
-                            <th>Old Value</th>
-                            <th>New Value</th>
+                            <th>Bank Name</th>
+                            <th>Recipient Name</th>
+                            <th>Account Number</th>
+                            <th>Remittance Notices</th>
+                            <th>Amount Transferred</th>
                             <th>Request Status</th>
+                            <th>Created At</th>
                             <th>Accept</th>
                             <th>Reject</th>
                         </tr>
