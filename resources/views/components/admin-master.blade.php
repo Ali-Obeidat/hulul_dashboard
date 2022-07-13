@@ -294,7 +294,26 @@
                   <div data-i18n="View All Bonuses">View All Bonuses</div>
                 </a>
               </li>
+              <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <div data-i18n="Public bonuses">Public bonuses</div>
+                </a>
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <a href="{{route('public-Bonus.create')}}" class="menu-link">
+                      <div data-i18n="Add New Public bonuses">Add New Public bonuses</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="{{route('public-Bonus.index')}}" class="menu-link">
+                      <div data-i18n="View All Public Bonuses">View All Public Bonuses</div>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
             </ul>
+
           </li>
           <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -807,7 +826,7 @@
                 <script>
                   document.write(new Date().getFullYear())
                 </script>
-                , made with ❤️ by <a href="https://themeselection.com/" target="_blank" class="footer-link fw-bolder">Hulul Fx</a>
+                , made with ❤️ by <a href="" target="_blank" class="footer-link fw-bolder">Hulul mfx</a>
               </div>
 
             </div>

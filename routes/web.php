@@ -10,6 +10,8 @@ use App\Http\Controllers\BonusController;
 use App\Http\Controllers\DepositWithdrawController;
 use App\Http\Controllers\MtHululController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\PublicBonus;
+use App\Http\Controllers\PublicBonusController;
 use App\Http\Controllers\RealAccountsController;
 use App\Models\UserAccounts;
 use Illuminate\Support\Facades\Auth;
@@ -70,3 +72,7 @@ Route::put('/Change-Deposit-request-status/{id}', [DepositWithdrawController::cl
 Route::get('/Show-Withdraw-request', [DepositWithdrawController::class, 'ShowWithdrawRequestPage'])->middleware('auth')->name('ShowWithdrawRequestPage');
 Route::get('/Show-Accepted-Withdraw-request', [DepositWithdrawController::class, 'AcceptedWithdrawRequestPage'])->middleware('auth')->name('AcceptedWithdrawRequestPage');
 Route::get('/Show-Rejected-Withdraw-request', [DepositWithdrawController::class, 'RejectedWithdrawRequestPage'])->middleware('auth')->name('RejectedWithdrawRequestPage');
+// publicBonus
+// Route::get('/create-public-Bonus-page',[PublicBonus::class,'create'])->name('publicBonus.page')->middleware('auth');
+// Route::post('/create-public-Bonus',[PublicBonus::class,'store'])->name('publicBonus.store')->middleware('auth');
+Route::resource('/public-Bonus', PublicBonusController::class)->middleware('auth');
