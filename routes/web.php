@@ -29,6 +29,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    event(new App\Events\Notifications('Hello World'));
+    
     return view('welcome');
 });
 
