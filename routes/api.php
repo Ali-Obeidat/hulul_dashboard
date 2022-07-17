@@ -96,3 +96,9 @@ Route::get('/get-all-news', [apiNewsController::class, 'getAllNews'])->middlewar
 Route::post('/create-news', [apiNewsController::class, 'create'])->middleware('auth');
 Route::put('/edit-news', [apiNewsController::class, 'update'])->middleware('auth');
 Route::delete('/delete-news/{news_id}', [apiNewsController::class, 'destroy'])->middleware('auth');
+
+// Route::group(['prefix' => 'internal'], function () {
+//     Route::get('sockets/serve', function () {
+//         \Illuminate\Support\Facades\Artisan::call('websockets:serve');
+//     });
+// });

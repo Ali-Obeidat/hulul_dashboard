@@ -46,7 +46,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Login Cover - Pages | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Manager hululmfx Login</title>
     
     <meta name="description" content="Most Powerful &amp; Comprehensive Bootstrap 5 HTML Admin Dashboard Template built for developers!" />
     <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
@@ -110,13 +110,13 @@
     <!-- Content -->
 
     <div class="authentication-wrapper authentication-cover">
-    @yield('content')
+        @yield('content')
     </div>
 
     <!-- / Content -->
 
 
-    
+
 
 
 

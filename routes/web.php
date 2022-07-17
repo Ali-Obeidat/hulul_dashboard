@@ -16,6 +16,7 @@ use App\Http\Controllers\RealAccountsController;
 use App\Models\UserAccounts;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Pusher\Pusher;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +30,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    event(new App\Events\Notifications('Hello World'));
+    $options = array(
+        'cluster' => 'ap2',
+        'useTLS' => true
+    );
     
+    $pusher = new Pusher(
+        env('PUSHER_APP_KEY'),
+        env('PUSHER_APP_SECRET'),
+        env('PUSHER_APP_ID'),
+        $options
+    );
+
+    $data = ['message' => 'ali'];
+    $pusher->trigger('notifications', 'Notifications', $data);
+    // event(new App\Events\Notifications('Hello World'));
+
     return view('welcome');
 });
 
@@ -78,3 +93,7 @@ Route::get('/Show-Rejected-Withdraw-request', [DepositWithdrawController::class,
 // Route::get('/create-public-Bonus-page',[PublicBonus::class,'create'])->name('publicBonus.page')->middleware('auth');
 // Route::post('/create-public-Bonus',[PublicBonus::class,'store'])->name('publicBonus.store')->middleware('auth');
 Route::resource('/public-Bonus', PublicBonusController::class)->middleware('auth');
+
+// Route::get('sockets/serve', function () {
+//     \Illuminate\Support\Facades\Artisan::call('websockets:serve');
+// });
