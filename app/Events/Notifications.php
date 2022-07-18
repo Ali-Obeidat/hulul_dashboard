@@ -20,9 +20,11 @@ class Notifications implements ShouldBroadcast
      * @return void
      */
     public string $message;
+    public  $id;
     public function __construct($message)
     {
         $this->message = $message;
+        // $this->id = $id;
     }
 
     /**
@@ -32,6 +34,6 @@ class Notifications implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('notifications');
+        return new Channel('notifications_' . $this->id);
     }
 }

@@ -43,7 +43,7 @@ Route::get('/', function () {
     );
 
     $data = ['message' => 'ali'];
-    $pusher->trigger('notifications', 'Notifications', $data);
+    $pusher->trigger('notifications' ,'Notifications', $data);
     // event(new App\Events\Notifications('Hello World'));
 
     return view('welcome');
