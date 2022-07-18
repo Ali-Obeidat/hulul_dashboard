@@ -34,6 +34,10 @@ class Notifications implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('notifications_' . $this->id);
+        return new Channel('notifications');
+    }
+    public function broadcastAs()
+    {
+        return ('Notifications');
     }
 }

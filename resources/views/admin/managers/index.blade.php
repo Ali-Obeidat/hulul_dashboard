@@ -9,7 +9,7 @@
 
 
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Manage Managers /</span> View All Managers
+            <span class="fw-light">Manage Managers /</span> View All Managers
         </h4>
 
         <!-- Ajax Sourced Server-side -->
