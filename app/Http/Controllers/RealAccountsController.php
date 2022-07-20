@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Notifications;
 use App\Mail\AcceptRealAccount;
 use App\Mail\RejectRealAccount;
 use App\Models\MtHulul;
+use App\Models\Notification;
 use App\Models\PendingRealAccount;
 use App\Models\RealAccountRequest;
 use Illuminate\Http\Request;
@@ -81,12 +83,20 @@ class RealAccountsController extends Controller
         $userData->save();
 
 
-        // try {
+        try {
 
-        Mail::to($loginUser->email)->send(new AcceptRealAccount($userData));
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
+            Mail::to($loginUser->email)->send(new AcceptRealAccount($userData));
+        } catch (\Throwable $th) {
+        }
+
+        $body = 'Your request to create Real Account has been approved by the admin and the account Login: ' . $result->getLogin();
+        $image = 'wallet-add';
+        event(new Notifications($body, $loginUser->id, $image));
+        Notification::create([
+            'user_id' => $loginUser->id,
+            'notification_body' => $body,
+            'notification_image' => $image,
+        ]);
         return back()->with('success', 'you accepted the real account');
     }
 
@@ -98,13 +108,21 @@ class RealAccountsController extends Controller
         $realAccount->account_status = 'rejected';
         $realAccount->save();
         Mail::to($loginUser->email)->send(new RejectRealAccount($loginUser));
+
+        $body = 'Your request to create Real Account has been rejected by the admin';
+        $image = 'wallet-add';
+        event(new Notifications($body, $loginUser->id, $image));
+        Notification::create([
+            'user_id' => $loginUser->id,
+            'notification_body' => $body,
+            'notification_image' => $image,
+        ]);
         return back()->with('error', 'you rejected the real account');
     }
 
     public function edit($id)
     {
         $account = PendingRealAccount::find($id);
-        // return $account;
         return view('admin.realAccount.changeLeverage', compact('account'));
     }
     // --------------------------------------------------------------------------------
@@ -129,6 +147,7 @@ class RealAccountsController extends Controller
             )
             ->get();
         // return $requests[0]->request_status;
+
         return view('admin.realAccount.SittingRequest.ChangeleverageRequest', compact('requests'));
     }
 
@@ -178,10 +197,28 @@ class RealAccountsController extends Controller
             $accountInfo->save();
             $sittingRequest->request_status = $request['request_status'];
             $sittingRequest->save();
+
+            $body = 'Your request to change Real Account leverage from: ' . $sittingRequest->old_value . ' to: ' . $request['new_value'] . ' has been accepted by the admin';
+            $image = 'leverage';
+            event(new Notifications($body, $accountInfo->user_id, $image));
+            Notification::create([
+                'user_id' => $accountInfo->user_id,
+                'notification_body' => $body,
+                'notification_image' => $image,
+            ]);
             return back()->with('success', 'you accepted the Change in real account sitting');
         } elseif ($request['request_status'] == 'Rejected') {
             $sittingRequest->request_status = $request['request_status'];
             $sittingRequest->save();
+
+            $body = 'Your request to change Real Account leverage from: ' . $sittingRequest->old_value . ' to: ' . $request['new_value'] . ' has been rejected by the admin';
+            $image = 'leverage';
+            event(new Notifications($body, $accountInfo->user_id, $image));
+            Notification::create([
+                'user_id' => $accountInfo->user_id,
+                'notification_body' => $body,
+                'notification_image' => $image,
+            ]);
 
             return back()->with('error', 'you rejected the the Change in real account sitting');
         }
@@ -225,6 +262,7 @@ class RealAccountsController extends Controller
             abort(404, 'Go back');
         }
         if ($request['request_status'] == 'Accepted') {
+            //add balance to account
             try {
                 $api = new LaravelMt5();
                 $balance = new  MTUserProtocol($api);
@@ -233,15 +271,33 @@ class RealAccountsController extends Controller
                 //throw $th;
             }
 
-            // change account leverage in database (mt_hulul table)
-
+            // change request status
             $sittingRequest->request_status = $request['request_status'];
             $sittingRequest->save();
+
+            //send notification 
+            $body = 'Your request to change Real Account balance from: ' . $sittingRequest->old_value . ' to: ' . $request['new_value'] . ' has been accepted by the admin';
+            $image = 'card-send';
+            event(new Notifications($body, $accountInfo->user_id, $image));
+            Notification::create([
+                'user_id' => $accountInfo->user_id,
+                'notification_body' => $body,
+                'notification_image' => $image,
+            ]);
             return back()->with('success', 'you accepted the Change in real account sitting');
         } elseif ($request['request_status'] == 'Rejected') {
+             // change request status
             $sittingRequest->request_status = $request['request_status'];
             $sittingRequest->save();
-
+             //send notification 
+            $body = 'Your request to change Real Account balance from: ' . $sittingRequest->old_value . ' to: ' . $request['new_value'] . ' has been rejected by the admin';
+            $image = 'card-send';
+            event(new Notifications($body, $accountInfo->user_id, $image));
+            Notification::create([
+                'user_id' => $accountInfo->user_id,
+                'notification_body' => $body,
+                'notification_image' => $image,
+            ]);
             return back()->with('error', 'you rejected the the Change in real account sitting');
         }
     }

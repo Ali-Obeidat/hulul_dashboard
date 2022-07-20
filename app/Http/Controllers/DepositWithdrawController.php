@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Notifications;
 use App\Models\DepositWithdraw;
 use App\Models\MtHulul;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 
 class DepositWithdrawController extends Controller
 {
@@ -90,10 +93,9 @@ class DepositWithdrawController extends Controller
 
     public function ChangeDepositStatus(Request $request, $id)
     {
-        // return $request;
 
         $DepositRequest = DepositWithdraw::find($id);
-
+        $accountInfo = MtHulul::find($DepositRequest->account_id);
 
         if ($DepositRequest->status == 'Accepted' && $request['status'] == 'Accepted') {
             abort(404, 'Go back');
@@ -111,20 +113,84 @@ class DepositWithdrawController extends Controller
 
             $DepositRequest->status = $request['status'];
             $DepositRequest->save();
+
+            if ($DepositRequest->type == 'Deposit') {
+
+                $body = 'Deposit ' . $DepositRequest->amount_transferred . ' request to account: ' . $accountInfo->login . ' has been accepted by the admin.';
+                $image = 'money-recive';
+                event(new Notifications($body, $DepositRequest->user_id, $image));
+
+                Notification::create([
+                    'user_id' => $DepositRequest->user_id,
+                    'notification_body' => $body,
+                    'notification_image' => $image,
+                ]);
+            } elseif ($DepositRequest->type == 'Withdraw') {
+                $body = 'Withdrawing ' . $DepositRequest->amount_transferred . ' request from account: ' . $accountInfo->login . ' has been accepted by the admin.';
+                $image = 'money-send';
+                event(new Notifications($body, $DepositRequest->user_id, $image));
+
+                Notification::create([
+                    'user_id' => $DepositRequest->user_id,
+                    'notification_body' => $body,
+                    'notification_image' => $image,
+                ]);
+            }
             return back()->with('success', 'you accepted the deposit request');
         } elseif ($request['status'] == 'Rejected') {
             $DepositRequest->status = $request['status'];
             $DepositRequest->save();
+            if ($DepositRequest->type = 'Deposit') {
 
+                $body = 'Deposit ' . $DepositRequest->amount_transferred . '$ request to account: ' . $accountInfo->login . ' has been rejected by the admin.';
+                $image = 'money-recive';
+                event(new Notifications($body, $DepositRequest->user_id, $image));
+
+                Notification::create([
+                    'user_id' => $DepositRequest->user_id,
+                    'notification_body' => $body,
+                    'notification_image' => $image,
+                ]);
+            } elseif ($DepositRequest->type = 'Withdraw') {
+                $body = 'Withdrawing ' . $DepositRequest->amount_transferred . '$ request from account: ' . $accountInfo->login . ' has been rejected by the admin.';
+                $image = 'money-send';
+                event(new Notifications($body, $DepositRequest->user_id, $image));
+
+                Notification::create([
+                    'user_id' => $DepositRequest->user_id,
+                    'notification_body' => $body,
+                    'notification_image' => $image,
+                ]);
+            }
             return back()->with('error', 'you rejected the deposit request');
         } elseif ($request['status'] == 'deposited') {
             $DepositRequest->status = $request['status'];
             $DepositRequest->save();
 
+            $body =  $DepositRequest->amount_transferred . '$ has been deposited to account: ' . $accountInfo->login . '.';
+            $image = 'money-recive';
+            event(new Notifications($body, $DepositRequest->user_id, $image));
+
+            Notification::create([
+                'user_id' => $DepositRequest->user_id,
+                'notification_body' => $body,
+                'notification_image' => $image,
+            ]);
+
             return back()->with('success', 'you deposited the amount');
         } elseif ($request['status'] == 'withdrawn') {
+
             $DepositRequest->status = $request['status'];
             $DepositRequest->save();
+            $body =  $DepositRequest->amount_transferred . '$ has been withdrawn from account: ' . $accountInfo->login . '.';
+            $image = 'money-send';
+            event(new Notifications($body, $DepositRequest->user_id, $image));
+
+            Notification::create([
+                'user_id' => $DepositRequest->user_id,
+                'notification_body' => $body,
+                'notification_image' => $image,
+            ]);
 
             return back()->with('success', 'you Withdraw the amount');
         }

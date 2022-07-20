@@ -49,20 +49,7 @@ class ManagerController extends Controller
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
-        $options = array(
-            'cluster' => 'ap2',
-            'useTLS' => true
-        );
-
-        $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
-
-        $data = ['message' => 'new manager was created'];
-        $pusher->trigger('notifications' . auth()->user()->id, 'Notifications', $data);
+    
         session()->flash('manager_created');
 
         return redirect(route('Managers.index'));

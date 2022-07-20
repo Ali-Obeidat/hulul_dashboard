@@ -31,22 +31,7 @@ use Pusher\Pusher;
 */
 
 Route::get('/', function () {
-    // $options = array(
-    //     'cluster' => 'ap2',
-    //     'useTLS' => true
-    // );
-    
-    // $pusher = new Pusher(
-    //     env('PUSHER_APP_KEY'),
-    //     env('PUSHER_APP_SECRET'),
-    //     env('PUSHER_APP_ID'),
-    //     $options
-    // );
-
-    // $data = ['message' => 'ali'];
-    // $pusher->trigger('notifications' ,'Notifications', $data);
-    event(new Notifications('Hello World'));
-
+    // event(new Notifications('Hello World'));
     return view('welcome');
 });
 
