@@ -21,6 +21,8 @@ use Laravel\Ui\Presets\React;
 use Tarikh\PhpMeta\MetaTraderClient;
 use Tarikh\PhpMeta\Lib\MTUserProtocol;
 use Tarikhagustia\LaravelMt5\Entities\Trade;
+use Stichoza\GoogleTranslate\GoogleTranslate;
+
 
 
 class RealAccountsController extends Controller
@@ -88,14 +90,28 @@ class RealAccountsController extends Controller
             Mail::to($loginUser->email)->send(new AcceptRealAccount($userData));
         } catch (\Throwable $th) {
         }
-
+        $langs = ['ar', 'en'];
+        $transBody =[];
+        $title = 'accept-realAccount';
         $body = 'Your request to create Real Account has been approved by the admin and the account Login: ' . $result->getLogin();
         $image = 'wallet-add';
-        event(new Notifications($body, $loginUser->id, $image));
+        $info = [
+            'account_id' => $userData->id,
+            'login' => $result->getLogin(),
+        ];
+        foreach ($langs as $lang) {
+            $tr = new GoogleTranslate($lang, null);
+            //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+            array_push($transBody, [$lang => $tr->translate($body)]);
+        }
+        event(new Notifications($title, $transBody, $loginUser->id, $image, $info));
+
         Notification::create([
             'user_id' => $loginUser->id,
+            'title' => $title,
             'notification_body' => $body,
             'notification_image' => $image,
+            'info' => $info,
         ]);
         return back()->with('success', 'you accepted the real account');
     }
@@ -108,14 +124,25 @@ class RealAccountsController extends Controller
         $realAccount->account_status = 'rejected';
         $realAccount->save();
         Mail::to($loginUser->email)->send(new RejectRealAccount($loginUser));
-
+        $langs = ['ar', 'en'];
+        $transBody =[];
+        $title = 'reject-realAccount';
         $body = 'Your request to create Real Account has been rejected by the admin';
         $image = 'wallet-add';
-        event(new Notifications($body, $loginUser->id, $image));
+
+        $info = [];
+        foreach ($langs as $lang) {
+            $tr = new GoogleTranslate($lang, null);
+            //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+            array_push($transBody, [$lang => $tr->translate($body)]);
+        }
+        event(new Notifications($title, $transBody, $loginUser->id, $image, $info));
         Notification::create([
             'user_id' => $loginUser->id,
+            'title' => $title,
             'notification_body' => $body,
             'notification_image' => $image,
+            'info' => $info,
         ]);
         return back()->with('error', 'you rejected the real account');
     }
@@ -197,27 +224,58 @@ class RealAccountsController extends Controller
             $accountInfo->save();
             $sittingRequest->request_status = $request['request_status'];
             $sittingRequest->save();
-
+            $langs = ['ar', 'en'];
+            $transBody =[];
+            $title = 'accept-leverage-change';
             $body = 'Your request to change Real Account leverage from: ' . $sittingRequest->old_value . ' to: ' . $request['new_value'] . ' has been accepted by the admin';
             $image = 'leverage';
-            event(new Notifications($body, $accountInfo->user_id, $image));
+            $info = [
+                'account_id' => $accountInfo->id,
+                'login' => $accountInfo->login,
+                'new_leverage' => $request['new_value'],
+            ];
+            foreach ($langs as $lang) {
+                $tr = new GoogleTranslate($lang, null);
+                //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                array_push($transBody, [$lang => $tr->translate($body)]);
+            }
+            event(new Notifications($title, $transBody, $accountInfo->user_id, $image, $info));
             Notification::create([
                 'user_id' => $accountInfo->user_id,
+                'title' => $title,
                 'notification_body' => $body,
                 'notification_image' => $image,
+                'info' => $info,
             ]);
+
             return back()->with('success', 'you accepted the Change in real account sitting');
         } elseif ($request['request_status'] == 'Rejected') {
             $sittingRequest->request_status = $request['request_status'];
             $sittingRequest->save();
 
+            $langs = ['ar', 'en'];
+            $transBody =[];
+            $title = 'reject-leverage-change';
             $body = 'Your request to change Real Account leverage from: ' . $sittingRequest->old_value . ' to: ' . $request['new_value'] . ' has been rejected by the admin';
             $image = 'leverage';
-            event(new Notifications($body, $accountInfo->user_id, $image));
+
+            $info = [
+                'account_id' => $accountInfo->id,
+                'login' => $accountInfo->login,
+                'new_leverage' => $request['new_value'],
+            ];
+            foreach ($langs as $lang) {
+                $tr = new GoogleTranslate($lang, null);
+                //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                array_push($transBody, [$lang => $tr->translate($body)]);
+            }
+            event(new Notifications($title, $transBody, $accountInfo->user_id, $image, $info));
             Notification::create([
                 'user_id' => $accountInfo->user_id,
+                'title' => $title,
                 'notification_body' => $body,
                 'notification_image' => $image,
+                'info' => $info,
             ]);
 
             return back()->with('error', 'you rejected the the Change in real account sitting');
@@ -275,28 +333,60 @@ class RealAccountsController extends Controller
             $sittingRequest->request_status = $request['request_status'];
             $sittingRequest->save();
 
-            //send notification 
+            //send notification
+            $langs = ['ar', 'en'];
+            $transBody =[];
+            $title = 'accept-balance-change';
             $body = 'Your request to change Real Account balance from: ' . $sittingRequest->old_value . ' to: ' . $request['new_value'] . ' has been accepted by the admin';
             $image = 'card-send';
-            event(new Notifications($body, $accountInfo->user_id, $image));
+            $info = [
+                'account_id' => $accountInfo->id,
+                'login' => $accountInfo->login,
+                
+            ];
+            foreach ($langs as $lang) {
+                $tr = new GoogleTranslate($lang, null);
+                //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                array_push($transBody, [$lang => $tr->translate($body)]);
+            }
+            event(new Notifications($title, $transBody, $accountInfo->user_id, $image, $info));
+
             Notification::create([
                 'user_id' => $accountInfo->user_id,
+                'title' => $title,
                 'notification_body' => $body,
                 'notification_image' => $image,
+                'info' => $info,
             ]);
             return back()->with('success', 'you accepted the Change in real account sitting');
         } elseif ($request['request_status'] == 'Rejected') {
-             // change request status
+            // change request status
             $sittingRequest->request_status = $request['request_status'];
             $sittingRequest->save();
-             //send notification 
+            //send notification 
+            $langs = ['ar', 'en'];
+            $transBody =[];
+            $title = 'reject-balance-change';
             $body = 'Your request to change Real Account balance from: ' . $sittingRequest->old_value . ' to: ' . $request['new_value'] . ' has been rejected by the admin';
             $image = 'card-send';
-            event(new Notifications($body, $accountInfo->user_id, $image));
+            $info = [
+                'account_id' => $accountInfo->id,
+                'login' => $accountInfo->login,
+                
+            ];
+            foreach ($langs as $lang) {
+                $tr = new GoogleTranslate($lang, null);
+                //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                array_push($transBody, [$lang => $tr->translate($body)]);
+            }
+            event(new Notifications($title, $transBody, $accountInfo->user_id, $image, $info));
+
             Notification::create([
                 'user_id' => $accountInfo->user_id,
+                'title' => $title,
                 'notification_body' => $body,
                 'notification_image' => $image,
+                'info' => $info,
             ]);
             return back()->with('error', 'you rejected the the Change in real account sitting');
         }

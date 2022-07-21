@@ -8,7 +8,7 @@ use App\Models\MtHulul;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class DepositWithdrawController extends Controller
 {
@@ -96,7 +96,7 @@ class DepositWithdrawController extends Controller
 
         $DepositRequest = DepositWithdraw::find($id);
         $accountInfo = MtHulul::find($DepositRequest->account_id);
-
+        $langs = ['ar', 'en'];
         if ($DepositRequest->status == 'Accepted' && $request['status'] == 'Accepted') {
             abort(404, 'Go back');
         }
@@ -116,24 +116,56 @@ class DepositWithdrawController extends Controller
 
             if ($DepositRequest->type == 'Deposit') {
 
+                $title = 'Deposit-accept';
+                $transBody = [];
                 $body = 'Deposit ' . $DepositRequest->amount_transferred . ' request to account: ' . $accountInfo->login . ' has been accepted by the admin.';
                 $image = 'money-recive';
-                event(new Notifications($body, $DepositRequest->user_id, $image));
+                $info = [
+                    'account_id' => $DepositRequest->account_id,
+                    'login' => $accountInfo->login,
+                ];
+                foreach ($langs as $lang) {
+                    $tr = new GoogleTranslate($lang, null);
+
+                    //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                    array_push($transBody, [$lang => $tr->translate($body)]);
+                }
+                event(new Notifications($title, $transBody, $DepositRequest->user_id, $image, $info));
 
                 Notification::create([
                     'user_id' => $DepositRequest->user_id,
+                    'title' => $title,
                     'notification_body' => $body,
                     'notification_image' => $image,
+                    'info' => $info,
                 ]);
             } elseif ($DepositRequest->type == 'Withdraw') {
+
+
+                $title = 'Withdraw-accept';
+                $transBody = [];
                 $body = 'Withdrawing ' . $DepositRequest->amount_transferred . ' request from account: ' . $accountInfo->login . ' has been accepted by the admin.';
                 $image = 'money-send';
-                event(new Notifications($body, $DepositRequest->user_id, $image));
+                $info = [
+                    'account_id' => $DepositRequest->account_id,
+                    'login' => $accountInfo->login,
+                ];
+                foreach ($langs as $lang) {
+                    $tr = new GoogleTranslate($lang, null);
+
+                    //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                    array_push($transBody, [$lang => $tr->translate($body)]);
+                }
+                event(new Notifications($title, $transBody, $DepositRequest->user_id, $image, $info));
+
+
 
                 Notification::create([
                     'user_id' => $DepositRequest->user_id,
+                    'title' => $title,
                     'notification_body' => $body,
                     'notification_image' => $image,
+                    'info' => $info,
                 ]);
             }
             return back()->with('success', 'you accepted the deposit request');
@@ -141,10 +173,20 @@ class DepositWithdrawController extends Controller
             $DepositRequest->status = $request['status'];
             $DepositRequest->save();
             if ($DepositRequest->type = 'Deposit') {
-
+                $title = 'Deposit-Reject';
+                $transBody = [];
                 $body = 'Deposit ' . $DepositRequest->amount_transferred . '$ request to account: ' . $accountInfo->login . ' has been rejected by the admin.';
                 $image = 'money-recive';
-                event(new Notifications($body, $DepositRequest->user_id, $image));
+                $info = [
+                    'account_id' => $DepositRequest->account_id,
+                    'login' => $accountInfo->login,
+                ];
+                foreach ($langs as $lang) {
+                    $tr = new GoogleTranslate($lang, null);
+                    //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                    array_push($transBody, [$lang => $tr->translate($body)]);
+                }
+                event(new Notifications($title, $transBody, $DepositRequest->user_id, $image, $info));
 
                 Notification::create([
                     'user_id' => $DepositRequest->user_id,
@@ -152,9 +194,21 @@ class DepositWithdrawController extends Controller
                     'notification_image' => $image,
                 ]);
             } elseif ($DepositRequest->type = 'Withdraw') {
+
+                $title = 'Withdraw-Reject';
+                $transBody = [];
                 $body = 'Withdrawing ' . $DepositRequest->amount_transferred . '$ request from account: ' . $accountInfo->login . ' has been rejected by the admin.';
                 $image = 'money-send';
-                event(new Notifications($body, $DepositRequest->user_id, $image));
+                $info = [
+                    'account_id' => $DepositRequest->account_id,
+                    'login' => $accountInfo->login,
+                ];
+                foreach ($langs as $lang) {
+                    $tr = new GoogleTranslate($lang, null);
+                    //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                    array_push($transBody, [$lang => $tr->translate($body)]);
+                }
+                event(new Notifications($title, $transBody, $DepositRequest->user_id, $image, $info));
 
                 Notification::create([
                     'user_id' => $DepositRequest->user_id,
@@ -164,12 +218,24 @@ class DepositWithdrawController extends Controller
             }
             return back()->with('error', 'you rejected the deposit request');
         } elseif ($request['status'] == 'deposited') {
+
+            $title = 'deposited';
             $DepositRequest->status = $request['status'];
             $DepositRequest->save();
+            $transBody = [];
 
             $body =  $DepositRequest->amount_transferred . '$ has been deposited to account: ' . $accountInfo->login . '.';
             $image = 'money-recive';
-            event(new Notifications($body, $DepositRequest->user_id, $image));
+            $info = [
+                'account_id' => $DepositRequest->account_id,
+                'login' => $accountInfo->login,
+            ];
+            foreach ($langs as $lang) {
+                $tr = new GoogleTranslate($lang, null);
+                //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                array_push($transBody, [$lang => $tr->translate($body)]);
+            }
+            event(new Notifications($title, $transBody, $DepositRequest->user_id, $image, $info));
 
             Notification::create([
                 'user_id' => $DepositRequest->user_id,
@@ -182,9 +248,21 @@ class DepositWithdrawController extends Controller
 
             $DepositRequest->status = $request['status'];
             $DepositRequest->save();
+
+            $title = 'withdrawn';
+            $transBody =[];
             $body =  $DepositRequest->amount_transferred . '$ has been withdrawn from account: ' . $accountInfo->login . '.';
             $image = 'money-send';
-            event(new Notifications($body, $DepositRequest->user_id, $image));
+            $info = [
+                'account_id' => $DepositRequest->account_id,
+                'login' => $accountInfo->login,
+            ];
+            foreach ($langs as $lang) {
+                $tr = new GoogleTranslate($lang, null);
+                //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                array_push($transBody, [$lang => $tr->translate($body)]);
+            }
+            event(new Notifications($title, $transBody, $DepositRequest->user_id, $image, $info));
 
             Notification::create([
                 'user_id' => $DepositRequest->user_id,

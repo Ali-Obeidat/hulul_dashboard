@@ -19,8 +19,7 @@ class MtHululController extends Controller
     {
         $accountInformations = ['balance' => null, 'equity' => null, 'freeMargin' => null];
         $accountsInformations = [];
-        $userAccounts = MtHulul::Where('user_id', auth()->user()->id)->get();
-
+        $userAccounts = MtHulul::all();
         $api = new LaravelMt5();
         foreach ($userAccounts as $demo) {
 
@@ -83,7 +82,7 @@ class MtHululController extends Controller
         // return $id;
         $accountInformations = ['balance' => null, 'equity' => null, 'freeMargin' => null];
         $accountsInformations = [];
-        $userAccounts = MtHulul::Where('user_id', auth()->user()->id)->get();
+        $userAccounts = MtHulul::Where('user_id', $id)->get();
 
         $api = new LaravelMt5();
         foreach ($userAccounts as $demo) {

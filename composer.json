@@ -14,6 +14,7 @@
         "laravel/ui": "^3.4",
         "pusher/pusher-php-server": "^7.0",
         "realrashid/sweet-alert": "^5.0",
+        "stichoza/google-translate-php": "^4.1",
         "tarikhagustia/laravel-mt5": "^1.4"
     },
     "require-dev": {

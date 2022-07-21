@@ -19,14 +19,18 @@ class Notifications implements ShouldBroadcast
      *
      * @return void
      */
-    public string $body;
+    public string $title;
+    public array $body;
+    public array $info;
     public  $userId;
     public  $image;
-    public function __construct($body,$userId,$image)
+    public function __construct($title, $body, $userId, $image, $info)
     {
+        $this->title = $title;
         $this->body = $body;
         $this->userId = $userId;
         $this->image = $image;
+        $this->info = $info;
     }
 
     /**
@@ -36,7 +40,7 @@ class Notifications implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('notifications_'. $this->userId);
+        return new Channel('notifications_' . $this->userId);
     }
     public function broadcastAs()
     {
@@ -45,9 +49,10 @@ class Notifications implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'body'=>$this->body,
-            'image'=>$this->image
+            'title' => $this->title,
+            'body' => $this->body,
+            'image' => $this->image,
+            'info' => $this->info,
         ];
     }
-
 }

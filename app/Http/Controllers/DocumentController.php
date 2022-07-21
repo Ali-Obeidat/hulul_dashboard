@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Notifications;
 use App\Mail\DocumentStatus;
 use App\Models\Document;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
+use Stichoza\GoogleTranslate\GoogleTranslate;
+
 
 class DocumentController extends Controller
 {
@@ -77,6 +81,8 @@ class DocumentController extends Controller
     {
 
         $document = Document::find($id);
+        $langs = ['ar', 'en'];
+        $transBody = [];
         // return $document->user->email;
         if ($request->document_status === 'accepted') {
             if ($document->document_status == $request->document_status) {
@@ -84,6 +90,57 @@ class DocumentController extends Controller
             }
             $document->document_status = $request->document_status;
             $document->save();
+
+            if ($document->type == 'Address confirmation') {
+
+                $title = 'accept-Address-confirmation-document';
+                $body = 'Wonderful!! Confirmation of your place of residence has been successfully approved.';
+                $image = 'location-tick';
+                $info = [
+                    'document_id' => $document->id,
+
+                ];
+                foreach ($langs as $lang) {
+                    $tr = new GoogleTranslate($lang, null);
+                    //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                    array_push($transBody, [$lang => $tr->translate($body)]);
+                }
+
+                event(new Notifications($title, $transBody, $document->user_id, $image, $info));
+
+                Notification::create([
+                    'user_id' => $document->user_id,
+                    'title' => $title,
+                    'notification_body' => $body,
+                    'notification_image' => $image,
+                    'info' => $info,
+                ]);
+            }
+            if ($document->type == 'identity confirmation') {
+                $title = 'accept-identity-confirmation-document';
+                $body = 'Wonderful!! Your identity confirmation has been successfully approved.';
+                $image = 'profile-tick';
+                $info = [
+                    'document_id' => $document->id,
+
+                ];
+                foreach ($langs as $lang) {
+                    $tr = new GoogleTranslate($lang, null);
+                    //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                    array_push($transBody, [$lang => $tr->translate($body)]);
+                }
+
+                event(new Notifications($title, $transBody, $document->user_id, $image, $info));
+
+                Notification::create([
+                    'user_id' => $document->user_id,
+                    'title' => $title,
+                    'notification_body' => $body,
+                    'notification_image' => $image,
+                    'info' => $info,
+                ]);
+            }
+
             Alert::success('Document Status', 'The Document was ' . $request->document_status);
 
             // return $document;
@@ -93,6 +150,57 @@ class DocumentController extends Controller
             }
             $document->document_status = $request->document_status;
             $document->save();
+
+            if ($document->type == 'Address confirmation') {
+
+                $title = 'reject-Address-confirmation-document';
+                $body = 'Confirmation of your place of residence was not approved. Please upload other documents.';
+                $image = 'location-cross';
+                $info = [
+                    'document_id' => $document->id,
+
+                ];
+                foreach ($langs as $lang) {
+                    $tr = new GoogleTranslate($lang, null);
+                    //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                    array_push($transBody, [$lang => $tr->translate($body)]);
+                }
+
+                event(new Notifications($title, $transBody, $document->user_id, $image, $info));
+
+                Notification::create([
+                    'user_id' => $document->user_id,
+                    'title' => $title,
+                    'notification_body' => $body,
+                    'notification_image' => $image,
+                    'info' => $info,
+                ]);
+            }
+            if ($document->type == 'identity confirmation') {
+                $title = 'reject-identity-confirmation-document';
+                $body = 'Your identity confirmation was not approved. Please upload other documents.';
+                $image = 'profile-delete';
+                $info = [
+                    'document_id' => $document->id,
+
+                ];
+                foreach ($langs as $lang) {
+                    $tr = new GoogleTranslate($lang, null);
+                    //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+                    array_push($transBody, [$lang => $tr->translate($body)]);
+                }
+
+                event(new Notifications($title, $transBody, $document->user_id, $image, $info));
+
+                Notification::create([
+                    'user_id' => $document->user_id,
+                    'title' => $title,
+                    'notification_body' => $body,
+                    'notification_image' => $image,
+                    'info' => $info,
+                ]);
+            }
+           
             Alert::error('Document Status', 'The Document was ' . $request->document_status);
         }
 

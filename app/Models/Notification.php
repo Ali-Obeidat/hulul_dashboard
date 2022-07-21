@@ -9,6 +9,11 @@ class Notification extends Model
 {
     use HasFactory;
     protected  $guarded = [];
+
+    protected $casts = [
+        'notification_body' => 'array',
+        'info' => 'array'
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);
