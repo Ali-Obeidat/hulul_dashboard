@@ -1,10 +1,12 @@
 @component('mail::message')
 # Welcome To hulul
 
-The manager {{$userAccount['agreed']}} your {{$userAccount['type']}} request account Login ({{$userAccount['user_login']}}).
+The body of your message.
 
-
+@component('mail::button', ['url' => ''])
+Button Text
+@endcomponent
 
 Thanks,<br>
-hulul Manager
+{{ config('app.name') }}
 @endcomponent

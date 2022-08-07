@@ -32,6 +32,9 @@ class ManagerEmailController extends Controller
         $users = User::all();
         $email = ManagerEmail::find($id);
         foreach ($users as $key => $user) {
+            if ($user->email == null) {
+                continue;
+            }
             try {
                 Mail::to($user->email)->send(new UserEmail($user, $body));
             } catch (\Throwable $th) {

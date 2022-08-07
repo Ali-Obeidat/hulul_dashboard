@@ -1,12 +1,10 @@
 @component('mail::message')
 # Welcome To hulul
 
-FinancialProfile
+Yore financial profile completed successfully.
 
-@component('mail::button', ['url' => ''])
-Button Text
-@endcomponent
+
 
 Thanks,<br>
-{{ config('app.name') }}
+Hulul
 @endcomponent

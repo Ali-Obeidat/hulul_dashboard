@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Email From admin</title>
 </head>
+
 <body>
-  
-    <h1>Hi, {{ $user->name }}</h1>
-    <p>{{ $user->email }}</p>
-    
+
+    <h3>Hi, {{ $user->name }}</h3>
+    <Span>This email from the manager.</Span>
     <p>{{ $body }}</p>
-     
+
     <p>Thank you</p>
 </body>
+
 </html>

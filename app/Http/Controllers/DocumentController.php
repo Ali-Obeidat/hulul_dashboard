@@ -85,9 +85,9 @@ class DocumentController extends Controller
         $transBody = [];
         // return $document->user->email;
         if ($request->document_status === 'accepted') {
-            if ($document->document_status == $request->document_status) {
-                return  'The Document already ' . $request->document_status;
-            }
+            // if ($document->document_status == $request->document_status) {
+            //     return  'The Document already ' . $request->document_status;
+            // }
             $document->document_status = $request->document_status;
             $document->save();
 

@@ -1,8 +1,6 @@
-<h1>Chanage leverage </h1> <br>
+<h1>Changed leverage </h1> 
 
-You Chanage your leverage successfully 
-
-t
+You Changed your leverage successfully.
 
 Thanks,<br>
 Hulul 

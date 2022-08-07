@@ -1,7 +1,7 @@
 @component('mail::message')
-# Hi  
+# Real Account.  
 
-The manager accept your account and the account login is ({{$userData['login']}}).
+The manager accept your request for create real account and the account login is ({{$userData['login']}}).
 
 
 
