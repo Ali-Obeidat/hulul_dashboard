@@ -413,6 +413,8 @@ class RealAccountsController extends Controller
     public function activatedRealAccount($id)
     {
         $accountInfo = MtHulul::find($id);
+        $accountInfo->activated = 1;
+        $accountInfo->save();
         $langs = ['ar', 'en'];
         $transBody = [];
         $title = 'activate-real-account';
