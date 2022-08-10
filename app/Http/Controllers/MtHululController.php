@@ -19,7 +19,7 @@ class MtHululController extends Controller
     {
         $accountInformations = ['balance' => null, 'equity' => null, 'freeMargin' => null];
         $accountsInformations = [];
-        $userAccounts = MtHulul::all();
+        $userAccounts = MtHulul::where('group', 'demo\demoTest')->get();
         $api = new LaravelMt5();
         foreach ($userAccounts as $demo) {
 
@@ -49,7 +49,41 @@ class MtHululController extends Controller
 
         return view('admin.accounts.allUserAccounts', ['mtHulul' => $mtHulul, 'demos' => $accountsInformations]);
     }
+    public function getRealAccounts()
+    {
+        $accountInformations = ['balance' => null, 'equity' => null, 'freeMargin' => null];
+        $accountsInformations = [];
+        $userAccounts = MtHulul::where('group', 'preliminary')->get();
+        $api = new LaravelMt5();
+        foreach ($userAccounts as $demo) {
 
+            $user = $api->getTradingAccounts($demo->login);
+            // $balance = $user->Balance;
+            // $equity = $user->Equity;
+            // $freeMargin = $user->MarginFree;
+
+            $accountInformations['balance'] = $user->Balance;
+            $accountInformations['equity'] = $user->Equity;
+            $accountInformations['freeMargin'] = $user->MarginFree;
+            $accountInformations['login'] = $user->Login;
+            $accountInformations['name'] = $demo->name;
+            $accountInformations['id'] = $demo->id;
+            $accountInformations['email'] = $demo->email;
+            $accountInformations['leverage'] = $demo->leverage;
+            $accountInformations['activated'] = $demo->activated;
+            $accountInformations['group'] = $demo->group;
+            $accountInformations['created_at'] = date('d/m/Y', strtotime($demo->created_at));
+            array_push($accountsInformations, $accountInformations);
+        }
+
+        try {
+            $mtHulul = MtHulul::all();
+        } catch (\Throwable $th) {
+            $mtHulul = '';
+        }
+
+        return view('admin.realAccount.viewRealAccounts', ['mtHulul' => $mtHulul, 'demos' => $accountsInformations]);
+    }
     /**
      * Show the form for creating a new resource.
      *

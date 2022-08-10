@@ -32,6 +32,8 @@ class CreateMtHululsTable extends Migration
             $table->string('invest_password');
             $table->string('phone_password')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->boolean('fixed')->nullable();
+            $table->boolean('activated')->nullable();
             $table->string('color')->nullable();
             $table->timestamps();
         });

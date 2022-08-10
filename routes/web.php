@@ -46,6 +46,7 @@ Route::get('/showCompanyUsers', [UserController::class, 'showCompanyUsers'])->mi
 Route::resource('/Managers', ManagerController::class)->middleware('auth');
 Route::resource('/UsersRequests', UserAccountsController::class)->middleware('auth');
 Route::resource('/UsersAccounts', MtHululController::class)->middleware('auth');
+Route::get('/UsersAccounts', [MtHululController::class,'getRealAccounts'])->middleware('auth')->name('UsersAccounts.getReal');
 Route::get('/allUserAccounts', [UserAccountsController::class, 'showUserAccounts'])->middleware('auth')->name('allUserAccounts');
 Route::resource('/usersDocuments', DocumentController::class)->middleware('auth');
 Route::resource('/ManagerEmails', ManagerEmailController::class)->middleware('auth');
@@ -58,6 +59,7 @@ Route::put('/accept-Real-account/{id}', [RealAccountsController::class, 'accept'
 Route::put('/reject-Real-account/{id}', [RealAccountsController::class, 'reject'])->middleware('auth')->name('reject');
 Route::get('/edit-Real-account-Leverage/{id}', [RealAccountsController::class, 'edit'])->middleware('auth')->name('changeLeveragePage');
 Route::put('/edit-Real-account-Leverage/{id}', [RealAccountsController::class, 'ChangeLeverage'])->middleware('auth')->name('ChangeLeverage');
+Route::put('/activate-Real-account/{id}', [RealAccountsController::class, 'activatedRealAccount'])->middleware('auth')->name('activatedRealAccount');
 
 //sitting Request
 Route::get('/Real-account-leverage-request', [RealAccountsController::class, 'changeLeverageRequestPage'])->middleware('auth')->name('changeLeverageRequestPage');

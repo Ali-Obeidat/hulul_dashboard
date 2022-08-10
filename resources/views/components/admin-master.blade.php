@@ -323,7 +323,12 @@
             <ul class="menu-sub">
               <li class="menu-item">
                 <a href="{{route('UsersAccounts.index')}}" class="menu-link">
-                  <div data-i18n="View Accounts">View Accounts</div>
+                  <div data-i18n="Demo Accounts">Demo Accounts</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="{{route('UsersAccounts.getReal')}}" class="menu-link">
+                  <div data-i18n="Real Accounts">Real Accounts</div>
                 </a>
               </li>
 

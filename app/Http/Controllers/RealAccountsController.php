@@ -91,7 +91,7 @@ class RealAccountsController extends Controller
         } catch (\Throwable $th) {
         }
         $langs = ['ar', 'en'];
-        $transBody =[];
+        $transBody = [];
         $title = 'accept-realAccount';
         $body = 'Your request to create Real Account has been approved by the admin and the account Login: ' . $result->getLogin();
         $image = 'wallet-add';
@@ -123,9 +123,14 @@ class RealAccountsController extends Controller
         $loginUser = LoginUser::find($realAccount->user_id);
         $realAccount->account_status = 'rejected';
         $realAccount->save();
-        Mail::to($loginUser->email)->send(new RejectRealAccount($loginUser));
+        try {
+
+            Mail::to($loginUser->email)->send(new RejectRealAccount($loginUser));
+        } catch (\Throwable $th) {
+        }
+
         $langs = ['ar', 'en'];
-        $transBody =[];
+        $transBody = [];
         $title = 'reject-realAccount';
         $body = 'Your request to create Real Account has been rejected by the admin';
         $image = 'wallet-add';
@@ -225,7 +230,7 @@ class RealAccountsController extends Controller
             $sittingRequest->request_status = $request['request_status'];
             $sittingRequest->save();
             $langs = ['ar', 'en'];
-            $transBody =[];
+            $transBody = [];
             $title = 'accept-leverage-change';
             $body = 'Your request to change Real Account leverage from: ' . $sittingRequest->old_value . ' to: ' . $request['new_value'] . ' has been accepted by the admin';
             $image = 'leverage';
@@ -254,7 +259,7 @@ class RealAccountsController extends Controller
             $sittingRequest->save();
 
             $langs = ['ar', 'en'];
-            $transBody =[];
+            $transBody = [];
             $title = 'reject-leverage-change';
             $body = 'Your request to change Real Account leverage from: ' . $sittingRequest->old_value . ' to: ' . $request['new_value'] . ' has been rejected by the admin';
             $image = 'leverage';
@@ -335,14 +340,14 @@ class RealAccountsController extends Controller
 
             //send notification
             $langs = ['ar', 'en'];
-            $transBody =[];
+            $transBody = [];
             $title = 'accept-balance-change';
             $body = 'Your request to change Real Account balance from: ' . $sittingRequest->old_value . ' to: ' . $request['new_value'] . ' has been accepted by the admin';
             $image = 'card-send';
             $info = [
                 'account_id' => $accountInfo->id,
                 'login' => $accountInfo->login,
-                
+
             ];
             foreach ($langs as $lang) {
                 $tr = new GoogleTranslate($lang, null);
@@ -365,14 +370,14 @@ class RealAccountsController extends Controller
             $sittingRequest->save();
             //send notification 
             $langs = ['ar', 'en'];
-            $transBody =[];
+            $transBody = [];
             $title = 'reject-balance-change';
             $body = 'Your request to change Real Account balance from: ' . $sittingRequest->old_value . ' to: ' . $request['new_value'] . ' has been rejected by the admin';
             $image = 'card-send';
             $info = [
                 'account_id' => $accountInfo->id,
                 'login' => $accountInfo->login,
-                
+
             ];
             foreach ($langs as $lang) {
                 $tr = new GoogleTranslate($lang, null);
@@ -404,5 +409,35 @@ class RealAccountsController extends Controller
 
         Alert::success('Real Account leverage', 'leverage was change successfully');
         return redirect(route('showAllRequest'));
+    }
+    public function activatedRealAccount($id)
+    {
+        $accountInfo = MtHulul::find($id);
+        $langs = ['ar', 'en'];
+        $transBody = [];
+        $title = 'activate-real-account';
+        $body = 'The admin activated your real account: ' . $accountInfo->login;
+        $image = 'card-send';
+        $info = [
+            'account_id' => $accountInfo->id,
+            'login' => $accountInfo->login,
+
+        ];
+        foreach ($langs as $lang) {
+            $tr = new GoogleTranslate($lang, null);
+            //  $transBody = [...$transBody, $lang => $tr->translate($body)];
+            array_push($transBody, [$lang => $tr->translate($body)]);
+        }
+        event(new Notifications($title, $transBody, $accountInfo->user_id, $image, $info));
+
+        Notification::create([
+            'user_id' => $accountInfo->user_id,
+            'title' => $title,
+            'notification_body' => $body,
+            'notification_image' => $image,
+            'info' => $info,
+        ]);
+
+        return back()->with('success', 'you activated the real account successfully');
     }
 }
