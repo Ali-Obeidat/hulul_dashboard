@@ -257,7 +257,11 @@
                   </li>
                 </ul>
               </li>
-
+              <li class="menu-item">
+                <a href="{{route('transfer_balance.index')}}" class="menu-link">
+                  <div data-i18n="Transfer Balance Requests">Transfer Balance Requests</div>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="menu-item">

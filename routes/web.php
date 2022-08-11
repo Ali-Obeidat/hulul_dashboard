@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\Notifications;
+use App\Http\Controllers\balanceTransferController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ManagerEmailController;
@@ -46,7 +47,7 @@ Route::get('/showCompanyUsers', [UserController::class, 'showCompanyUsers'])->mi
 Route::resource('/Managers', ManagerController::class)->middleware('auth');
 Route::resource('/UsersRequests', UserAccountsController::class)->middleware('auth');
 Route::resource('/UsersAccounts', MtHululController::class)->middleware('auth');
-Route::get('/UsersAccounts', [MtHululController::class,'getRealAccounts'])->middleware('auth')->name('UsersAccounts.getReal');
+Route::get('/realAccount', [MtHululController::class, 'getRealAccounts'])->middleware('auth')->name('UsersAccounts.getReal');
 Route::get('/allUserAccounts', [UserAccountsController::class, 'showUserAccounts'])->middleware('auth')->name('allUserAccounts');
 Route::resource('/usersDocuments', DocumentController::class)->middleware('auth');
 Route::resource('/ManagerEmails', ManagerEmailController::class)->middleware('auth');
@@ -85,3 +86,7 @@ Route::resource('/public-Bonus', PublicBonusController::class)->middleware('auth
 // Route::get('sockets/serve', function () {
 //     \Illuminate\Support\Facades\Artisan::call('websockets:serve');
 // });
+
+// transfer balance routes
+Route::get('/transfer-balance-requests', [balanceTransferController::class, 'index'])->middleware('auth')->name('transfer_balance.index');
+Route::put('/transfer-balance-status/{id}', [balanceTransferController::class, 'updateBalanceTransferStatus'])->middleware('auth')->name('balanceTransferStatus');
