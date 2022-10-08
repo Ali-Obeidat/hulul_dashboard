@@ -12,6 +12,7 @@ use App\Http\Controllers\BonusController;
 use App\Http\Controllers\DepositWithdrawController;
 use App\Http\Controllers\MtHululController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\CMSController;
 use App\Http\Controllers\PublicBonus;
 use App\Http\Controllers\PublicBonusController;
 use App\Http\Controllers\RealAccountsController;
@@ -90,3 +91,7 @@ Route::resource('/public-Bonus', PublicBonusController::class)->middleware('auth
 // transfer balance routes
 Route::get('/transfer-balance-requests', [balanceTransferController::class, 'index'])->middleware('auth')->name('transfer_balance.index');
 Route::put('/transfer-balance-status/{id}', [balanceTransferController::class, 'updateBalanceTransferStatus'])->middleware('auth')->name('balanceTransferStatus');
+
+
+//cms
+Route::resource('/cms', CMSController::class)->middleware('auth');

@@ -415,6 +415,7 @@ class HomeController extends Controller
             $FiveCountries[] = (string)(explode(',', $key)[0]);
         }
         // return $FiveCountries; 
+        $finalCountriesNum = 0;
         $finalFiveCountries = [];
         try {
             $finalCountriesNum = array_slice($CountriesNum, 0, 5);

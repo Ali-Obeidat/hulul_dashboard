@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
     @endsection
     @section('content')
-    <div class="container-xxl flex-grow-1 container-p-y" style="padding-left: 85px; padding-right: 85px;">
+    <div class="container-xxl flex-grow-1 container-p-y" style="padding-left: 20px; padding-right: 20px;">
 
 
         <h4 class="fw-bold py-3 mb-4">
