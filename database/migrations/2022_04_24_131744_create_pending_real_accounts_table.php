@@ -18,7 +18,7 @@ class CreatePendingRealAccountsTable extends Migration
             $table->string('name');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('login');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('account_type');
             $table->string('currency');
             $table->string('group');
@@ -33,7 +33,7 @@ class CreatePendingRealAccountsTable extends Migration
             $table->string('invest_password');
             $table->string('phone_password')->nullable();
             $table->string('account_status')->default('pending');
-
+            $table->string('color')->nullable();
             $table->timestamps();
         });
     }

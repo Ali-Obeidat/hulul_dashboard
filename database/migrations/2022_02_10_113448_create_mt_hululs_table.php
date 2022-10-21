@@ -15,10 +15,13 @@ class CreateMtHululsTable extends Migration
     {
         Schema::create('mt_hululs', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('login');
-            $table->string('email');
-            $table->foreignId('account_type')->references('id')->on('account_types')->onDelete('cascade')->unique();
+            $table->string('email')->nullable();
+            $table->unsignedInteger('account_type');
+            $table->foreign('account_type')
+                ->references('type_id')
+                ->on('account_types');
             $table->string('currency');
             $table->string('group');
             $table->string('leverage');

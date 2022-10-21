@@ -14,8 +14,7 @@ class CreateAccountTypesTable extends Migration
     public function up()
     {
         Schema::create('account_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->increments('type_id');            $table->string('name');
             $table->float('pips');
             $table->string('commission');
             $table->string('min_deposit');
