@@ -54,17 +54,17 @@ class UserAccountsController extends Controller
     public function update(Request $request, $id)
     {
         // $requestStatus = $request['agreed'];
-
-        $userAccount = UserAccounts::find($id);
-        if ($userAccount->agreed == $request['agreed']) {
-            return "The " . $userAccount->type . " request already " . $request['agreed'];
+        /** @var DepositWithdraw  $Deposit_Withdraw */
+        $Deposit_Withdraw = UserAccounts::find($id);
+        if ($Deposit_Withdraw->agreed == $request['agreed']) {
+            return "The " . $Deposit_Withdraw->type . " request already " . $request['agreed'];
         }
-        $userAccount->agreed = $request['agreed'];
-        $userAccount->save();
+        $Deposit_Withdraw->agreed = $request['agreed'];
+        $Deposit_Withdraw->save();
         // return $userAccount['user_login'];
 
         try {
-            Mail::to($userAccount->user->email)->send(new AgreeddEmail($userAccount));
+            Mail::to($Deposit_Withdraw->user->email)->send(new AgreeddEmail($Deposit_Withdraw));
         } catch (\Throwable $th) {
             //throw $th;
         }
