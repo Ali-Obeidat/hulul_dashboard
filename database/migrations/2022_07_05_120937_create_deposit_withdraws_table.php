@@ -23,6 +23,7 @@ class CreateDepositWithdrawsTable extends Migration
             $table->string('account_number');
             $table->string('transfer_currency');
             $table->text('Remittance_notices')->nullable();
+            $table->text('agreed')->nullable();
             $table->string('amount_transferred');
             $table->string('status');
             $table->timestamps();
