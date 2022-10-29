@@ -49,14 +49,14 @@ class UserAccountsController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\UserAccounts $userAccounts
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function update(Request $request, $id)
     {
         // $requestStatus = $request['agreed'];
-        /** @var DepositWithdraw  $Deposit_Withdraw */
-        $Deposit_Withdraw = UserAccounts::find($id);
-        if ($Deposit_Withdraw->agreed == $request['agreed']) {
+        /** @var DepositWithdraw $Deposit_Withdraw */
+        $Deposit_Withdraw = DepositWithdraw::find($id)->first();
+        if ($Deposit_Withdraw->agreed === $request['agreed']) {
             return "The " . $Deposit_Withdraw->type . " request already " . $request['agreed'];
         }
         $Deposit_Withdraw->agreed = $request['agreed'];
