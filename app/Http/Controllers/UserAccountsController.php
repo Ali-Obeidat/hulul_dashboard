@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AgreeddEmail;
+use App\Models\DepositWithdraw;
 use App\Models\MtHulul;
 use App\Models\User;
 use App\Models\UserAccounts;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -14,11 +18,12 @@ class UserAccountsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
-        $Deposit_Withdraw = UserAccounts::with('user')->get();
+        /** @var DepositWithdraw $Deposit_Withdraw */
+        $Deposit_Withdraw = DepositWithdraw::with('user')->get();
         // return $Deposit_Withdraw  ;
         return view('admin.requests.DepositWithdraw', compact('Deposit_Withdraw'));
     }
@@ -38,24 +43,21 @@ class UserAccountsController extends Controller
         return view('admin.requests.DepositWithdraw', compact('Deposit_Withdraw', 'requestStatus'));
     }
 
-  
-
-   
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\UserAccounts  $userAccounts
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\UserAccounts $userAccounts
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $id)
+    public function update(Request $request, $id)
     {
         // $requestStatus = $request['agreed'];
 
         $userAccount = UserAccounts::find($id);
-        if ($userAccount->agreed == $request['agreed'] ) {
-            return "The ". $userAccount->type ." request already ". $request['agreed'];
+        if ($userAccount->agreed == $request['agreed']) {
+            return "The " . $userAccount->type . " request already " . $request['agreed'];
         }
         $userAccount->agreed = $request['agreed'];
         $userAccount->save();
@@ -72,7 +74,7 @@ class UserAccountsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\UserAccounts  $userAccounts
+     * @param \App\Models\UserAccounts $userAccounts
      * @return \Illuminate\Http\Response
      */
     public function destroy(UserAccounts $userAccounts)
